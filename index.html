@@ -157,6 +157,314 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="远川山离">
+      <meta itemprop="description" content="人生天地间，忽如远行客。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远川山离的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">考研-计算机网络体系</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-05 14:14:07 / 修改时间：14:16:41" itemprop="dateCreated datePublished" datetime="2022-11-05T14:14:07+08:00">2022-11-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">计算机网络考研复习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="注意：这部分为习题该书习题的总结，包涵部分补充。"><a href="#注意：这部分为习题该书习题的总结，包涵部分补充。" class="headerlink" title="注意：这部分为习题该书习题的总结，包涵部分补充。"></a>注意：这部分为习题该书习题的总结，包涵部分补充。</h2><hr>
+<h2 id="1-计算机网络概念"><a href="#1-计算机网络概念" class="headerlink" title="1.计算机网络概念"></a>1.计算机网络概念</h2><ol>
+<li>计算机网络是将一些互联，自治的计算机系统组成的集合，进而实现资源共享。<blockquote>
+<p>tips:数据通信是网络最基础和最重要的功能，包括资源共享只不过是这个功能的衍生。</p>
+</blockquote>
+</li>
+<li>根据计算机的发展阶段，而发展中从广义观点-&gt;资源共享观点-&gt;用户透明性观点而对计算机的定义。</li>
+</ol>
+<ul>
+<li>1.广义观点为：能够实现远程信息处理和资源共享的系统均是计算机网络。</li>
+<li>2.资源共享观点：包涵目的，组成单元和网络协议。</li>
+<li>3.用户透明性：即整个计算机网络中的资源对于连接该网络的计算机是透明的。</li>
+</ul>
+<hr>
+<h2 id="2-计算机网络的组成"><a href="#2-计算机网络的组成" class="headerlink" title="2.计算机网络的组成"></a>2.计算机网络的组成</h2><ol>
+<li>从组成部分看分为：硬件,软件,协议。</li>
+</ol>
+<ul>
+<li>1.硬件部分包括主机(端系统),通信链路，交换设备(比如路由器),通信处理机(网卡)。</li>
+<li>2.软件大多在应用层</li>
+<li>3.协议：值得注意的是，协议是组成部分计算机网络的核心。</li>
+</ul>
+<ol start="2">
+<li>从工作方式看：边缘部分和核心部分.</li>
+</ol>
+<ul>
+<li>1.边缘部分为互联网中的主机组成，主要作用为进行通信和资源共享。</li>
+<li>2.核心部分为大量网络和路由器组成。</li>
+</ul>
+<ol start="3">
+<li>从功能组成看:通信子网和资源子网。</li>
+</ol>
+<ul>
+<li>1.通信子网主要就是通讯部分组成，比如传输介质，通信设备，协议等。</li>
+<li>2.资源子网主要为实现资源共享功能的设备及其软件的集合。</li>
+</ul>
+<blockquote>
+<p>tips:计算机网络的功能主要包括:1.数据通信。2.资源共享。3.分布式处理。4.提高可靠性(即互联网中的计算机可互为替代机)。5.负载均衡。值得注意的是，数据通信是计算机网络的最基础和最重要功能，后面的那么功能均可以视为数据通信的衍生。</p>
+</blockquote>
+<hr>
+<h2 id="3-计算机网络的分类"><a href="#3-计算机网络的分类" class="headerlink" title="3.计算机网络的分类"></a>3.计算机网络的分类</h2><ol>
+<li>按分布范围分类：1.广域网(远程网)-&gt;2.城域网-&gt;3.局域网-&gt;4.个人区域网。<blockquote>
+<p>tips1:广域网使用的是点对点技术，局域网使用的是广播技术。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:城域网大多数采用以太网技术，因此大多数也将城域网放入局域网讨论。</p>
+</blockquote>
+<blockquote>
+<p>tips3:如果中央处理器的距离非常近，比如小于1m，那么一般称为多处理器系统，而不称为计算机网络。</p>
+</blockquote>
+<ol start="2">
+<li><p>按照传输技术分类：点对点和广播.</p>
+<blockquote>
+<p>tips1:点对点不一定要主机相连，是指通过中间节点进行接收，储存转发。</p>
+</blockquote>
+</li>
+<li><p>按照拓扑结构分类</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>网状拓扑结构指网络节点和通信线路之间的几何关系。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>分类分为1.总线形。2.星形。3.环形。4.网状。<blockquote>
+<p>tips1:网状一般用于广域网。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips2:总线形和环形本质上都是一条线连接多个主机，星形则是一个中央设备连接多个主机。网状结构是一个节点可以连接多个其他节点形成。</p>
+</blockquote>
+<blockquote>
+<p>tips3:以上基本的4种网络拓扑结构能够形成更复杂的网络。</p>
+</blockquote>
+<ol start="4">
+<li>按照交换技术分类</li>
+</ol>
+<ul>
+<li>1.电路交换网络：一条电路连接两个短缺，特点是比特流直达，但信道利用率低。</li>
+<li>2.报文交换网络。</li>
+<li>3.分组交换网络：形成多个小的分组进行储存转发。而报文交换则是将收到整个报文后才进行储存转发。</li>
+</ul>
+<ol start="5">
+<li>按照传输介质分类：1.有线。2.无线。</li>
+</ol>
+<blockquote>
+<p>tips：计算机网络标准的4个阶段：1.互联网草案。2.建议标准。3.草案建议标准。4.因特网标准。</p>
+</blockquote>
+<hr>
+<h2 id="4-计算机网络性能指标。"><a href="#4-计算机网络性能指标。" class="headerlink" title="4.计算机网络性能指标。"></a>4.计算机网络性能指标。</h2><ol>
+<li>速率，带宽，吞吐率的区别：</li>
+</ol>
+<ul>
+<li>1.速率单位为bit&#x2F;s，为当前传输的比特速度。</li>
+<li>2.带宽为最大的速率。</li>
+<li>3.吞吐率指某个单位时间的实际数据率，包括受时延的影响的数据率影响，并且单位之间不一定是1s。</li>
+</ul>
+<hr>
+<h2 id="5-错题"><a href="#5-错题" class="headerlink" title="5.错题"></a>5.错题</h2><ol>
+<li>计算机网络种没有:1.客户机2.服务器。3.操作系统。4.数据库管理系统。</li>
+</ol>
+<ul>
+<li>没有4.数据库管理系统。</li>
+</ul>
+<ol start="2">
+<li>计算机的网络的拓扑结构主要取决于它的<br>1.资源子网。2.路由器。3.通信资源。4.交换机。</li>
+</ol>
+<ul>
+<li>3.通信子网。原因参照通信子网的定义。</li>
+</ul>
+<ol start="3">
+<li>广播式网络错误的是：1.共享广播信道。2.不存在路由选择问题。3.可以不要网络层。4.不需要网络服务点：</li>
+</ol>
+<ul>
+<li>选择4.值得注意的是，因为广播式网络一般用于局域网，因此不存在需要路由和网络层的问题。</li>
+</ul>
+<hr>
+<h2 id="6-计算机网络体系结构与参考模型"><a href="#6-计算机网络体系结构与参考模型" class="headerlink" title="6.计算机网络体系结构与参考模型"></a>6.计算机网络体系结构与参考模型</h2><ol>
+<li>在计算机的分层结构中，最低层称为1层，依次累加。在第n层的活动元素通常称为第n层实体。<blockquote>
+<p>tips:实体指任何可发送或者接收信息的硬件或软件进程，通常是一个特定的软件模块。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:不同机器上的同一层称为对等层。同一层的实体称为对等实体。</p>
+</blockquote>
+<ol start="2">
+<li><p>在计算机的所有分层中，其中传递报文都分为两部分SDU(服务数据单元,即数据)和PCI(协议控制单元,即控制部分，一般为首部)。合起来称为PDU(协议数据单元)。</p>
+<blockquote>
+<p>tips:PDU在每一层的称呼不同，比如物理层为比特，数据链路层为帧，网络层为分组，传输层为报文段。</p>
+</blockquote>
+</li>
+<li><p>网络协议，接口和服务的概念。</p>
+</li>
+</ol>
+<ul>
+<li>1.协议：规则的集合，由语法，语义，同步三部分组成。在同一层的同一实体间运行。</li>
+<li>2.接口：同一个结点内相邻两层交换信息的连接点。</li>
+<li>3.服务:可以理解为特殊的接口，下层为上层的提供的功能调用。<blockquote>
+<p>tips:协议是水平的，服务是垂直的。<br>tips:并非在一层的所有功能都是服务，只有高层实体’看见’的的功能才称为服务。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li><p>面向连接和无连接服务：是否需要预先建立连接，面向连接需要(比如TCP)。无连接不需要(比如UDP,IP)</p>
+</li>
+<li><p>可靠服务和不可靠服务:可靠服务即提供纠错，检错，应答机制。不可靠服务即尽量尽量正确的</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:1.TCP就是面向连接+可靠服务协议。2.UDP就是无连接服务+不可靠服务。</p>
+</blockquote>
+<ol start="6">
+<li>有应答服务和无应答服务：有应答服务是指接收方在收到数据后向发送方给出相应的应答。无应答则不会对接收的数据进行回应。</li>
+</ol>
+<hr>
+<h2 id="7-ISO-x2F-OSI参考模型和TCP-x2F-IP协议。"><a href="#7-ISO-x2F-OSI参考模型和TCP-x2F-IP协议。" class="headerlink" title="7.ISO&#x2F;OSI参考模型和TCP&#x2F;IP协议。"></a>7.ISO&#x2F;OSI参考模型和TCP&#x2F;IP协议。</h2><ol>
+<li>ISO&#x2F;OSI：开放系统互联参考模型，第三层为通信子网，其余高层为资源子网。</li>
+</ol>
+<ul>
+<li>1.层次为:1.物理层-&gt;2.数据链路层-&gt;3.网络层-&gt;4.传输层-&gt;5.会话层-&gt;6.表示层<br>-&gt;7.应用层</li>
+<li>物理层：屏蔽材料的各种差距，实现比特流的透明传输。<br>值得注意的是，物理层也是有协议的，该协议主要包涵通信链路与通信结点，通信链路上传输的信号和电气特征。</li>
+<li>数据链路层:传输单位为帧,主要任务是将网络层传来的IP数据报组成帧，主要功能为:成帧，差错控制，流量控制，和传输管理。<br>值得注意的是，广播式网络包涵控制对共享信道的访问。数据链路层为此有一个特殊的字层，介质访问层。</li>
+<li>网络层:传输单位为数据报，它关心通信子网的运行控制，主要任务为把网络层的协议数据单元(分组)从源端传递到目的端。主要功能为进行路由选择，并实现流量控制，拥塞控制，差错控制，网际互联等操作。</li>
+<li>传输层:也称为运输层，传输单位是报文段(TCP)或者用户数据报(UDP),主要负责主机间进程的通信，功能为端到端连接提供可靠的传输服务，为端到端连接提供流量控制，差错储存，服务质量，数据传输管理。</li>
+<li>会话层:会话层允许不同主机上的各个进程之间进行对话。</li>
+<li>表示层:主要处理两个通信系统中交换信息的表示方式。比如不同机器采用的编码，数据结构，相互交换。</li>
+<li>应用层:是用户与网络的界面，因此使用的协议也最多。</li>
+</ul>
+<blockquote>
+<p>tips:数据链路层的差错控制为:传输过程中原始的比特流可能发生错误，如果发生错误，那么数据链路层的协议会发现并直接丢弃。而网络层的差错控制为:两个结点约定的差错控制，如果能够纠错就纠错，不能纠错就丢弃。传输层的差错控制为会使用协议对差错进行校验，丢弃和重传等操作。<br>区别在于数据链路层针对原始比特流，网络层针对网络分组的头部，传输层(如果使用TCP协议)针对收到的报文段</p>
+</blockquote>
+<blockquote>
+<p>tips2:数据链路层的流量控制是控制发送速率，使得接收方不会来不及接收发送方发送的数据。网络层的拥塞控制为控制传输的流量，防止随着流量的增加而降低信道传输效率，最后直接堵塞。<br>传输层的控制为专有协议控制信息的接收，防止缓冲溢出。</p>
+</blockquote>
+<ol start="2">
+<li>TCP&#x2F;IP模型为：1.网络接口层-&gt;2.网际层-&gt;3.传输层-&gt;4.应用层。</li>
+</ol>
+<ul>
+<li>1.TCP网络接口层对应ISO&#x2F;OSI的物理层和数据链路层。</li>
+<li>2.网际层对应网络层</li>
+<li>3.应用层对ISO应用层+表示层+会话层</li>
+</ul>
+<blockquote>
+<p>tips：OSI模型在网络层支持面向连接和无连接通信，但在传输层仅只有面向连接通信。而TCP模型认为可靠性是端到端的问题，因此它在网际层只有一种无连接的通信模式，面向连接由传输层支持。</p>
+</blockquote>
+<blockquote>
+<p>tips2:数据链路层提供点到点通信(主机之间的通信，点指一个硬件地址或IP地址)，而传输层提供端到端服务(进程之间的通信)。</p>
+</blockquote>
+<blockquote>
+<p>tips3:TCP&#x2F;IP模型为事实上的国际标准</p>
+</blockquote>
+<hr>
+<h2 id="8-错题"><a href="#8-错题" class="headerlink" title="8.错题"></a>8.错题</h2><ol>
+<li>不是网络分层的目标为：2.因为具体的功能为分层具体实现，不作标准化，因而也不是分层的主要目标。</li>
+</ol>
+<ul>
+<li>1.提供标准语言</li>
+<li>2.定义功能执行的方法</li>
+<li>3.定义标准界面</li>
+<li>4.增加功能之间的独立性</li>
+</ul>
+<ol start="2">
+<li>OSI模型的数据链路层功能为：4 即保证源比特流的完整</li>
+</ol>
+<ul>
+<li>1.提供用户和网络的接口</li>
+<li>2.处理信号通过介质的传输</li>
+<li>3.控制报文通过网络的路由选择</li>
+<li>4.保证数据正确的顺序和完整性</li>
+</ul>
+<ol start="3">
+<li>TCP&#x2F;IP模型的网络层提供的是</li>
+</ol>
+<ul>
+<li>1.无连接不可靠的数据报服务</li>
+<li>2.无连接可靠的数据报服务</li>
+<li>3.无连接不可靠的虚电路服务</li>
+<li>4.有连接可靠的虚电路服务<blockquote>
+<p>tips:连接为两个结点是否会预先通信一遍</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>tips2:可靠为:是否会进行纠错，重传等服务</p>
+</blockquote>
+<blockquote>
+<p>tips3:虚电路是指逻辑上的数据电路(具有需要建立连接，一直占用通信资源效率低，但时延低的特性。)，而分组转发的网络层使用的是数据报服务。</p>
+</blockquote>
+<ol start="4">
+<li><p>路由器在网络层，交换机在链路层，集线器在物理层。</p>
+</li>
+<li><p>TCP协议的要素的连接过程要点一般只有时序，没有语义和语法。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/7-CPU%E7%9A%84%E7%BB%93%E6%9E%84%E5%92%8C%E5%8A%9F%E8%83%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -182,7 +490,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-10-28 22:18:24 / 修改时间：22:20:53" itemprop="dateCreated datePublished" datetime="2022-10-28T22:18:24+08:00">2022-10-28</time>
+              <time title="创建时间：2022-10-28 22:18:24 / 修改时间：22:25:10" itemprop="dateCreated datePublished" datetime="2022-10-28T22:18:24+08:00">2022-10-28</time>
             </span>
 
           
@@ -361,9 +669,6 @@
 <li>1.保护现场为:保护程序断点和CPU内部各个寄存器内容。</li>
 <li>2.恢复现场：将寄存器内容恢复到中断前的状态。</li>
 </ul>
-<ol start="7">
-<li>中断屏蔽技术：</li>
-</ol>
 
       
     </div>
@@ -2270,244 +2575,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="远川山离">
-      <meta itemprop="description" content="人生天地间，忽如远行客。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远川山离的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/" class="post-title-link" itemprop="url">5.运输层</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-17 08:36:14" itemprop="dateCreated datePublished" datetime="2022-10-17T08:36:14+08:00">2022-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-24 09:40:17" itemprop="dateModified" datetime="2022-10-24T09:40:17+08:00">2022-10-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-运输层协议概述"><a href="#1-运输层协议概述" class="headerlink" title="1.运输层协议概述"></a>1.运输层协议概述</h2><ol>
-<li>运输粗的分用和复用：</li>
-</ol>
-<ul>
-<li>1.复用指不同应用程序使用同一个运输层协议</li>
-<li>2.接收方在剥去报文的首部后能够把这些数据正确交付给目的应用进程。<blockquote>
-<p>tips:值得注意的是，网络层为主机之间的通信提供服务。而运输层在网络层的基础上，为应用进程之间通讯提供服务。</p>
-</blockquote>
-</li>
-</ul>
-<ol start="2">
-<li>运输层协议：两个运输实体之间提供端到端的逻辑通信服务。这些服务会因为运输层使用的不同协议出现很大的不同。</li>
-</ol>
-<ul>
-<li>1.UDP:无连接，尽最大可能交付数据。</li>
-<li>2.TCP:面向连接，尽管网络不可靠，但由TCP提供的逻辑通信信道相当于一条全双工的可靠信道。</li>
-</ul>
-<hr>
-<h2 id="2-运输层的两个主要协议"><a href="#2-运输层的两个主要协议" class="headerlink" title="2.运输层的两个主要协议"></a>2.运输层的两个主要协议</h2><ol>
-<li>两个协议分别为:1.UDP(User Datagram Protocol).2.TCP(Transmission Control Protocol)<blockquote>
-<p>tips:运输层的数据单位叫做运输协议数据单元TPDU(Transport Protocol Data Unit)</p>
-</blockquote>
-</li>
-</ol>
-<ul>
-<li>1.UDP:不需要建立连接,收到报文不需要确认，不提供可靠交付。</li>
-<li>2.TCP:面向连接的服务，传输数据前必须建立连接，结束后要释放连接，并且不提供广播和多播服务，因为TCP的可靠性，所以会额外增加许多开销。</li>
-</ul>
-<ol start="2">
-<li>端口号:一台主机的多个进程可以同时进行通信，为了使得相应进程能够获取到对应的数据，因此给每种进程划分出端口号，相应的进程的收发数据就从这个端口进行。<blockquote>
-<p>tips；值得注意的是，软件和硬件的端口不是同一种，软件的端口号是指分配的一块地址的名字，硬件的端口号是指连接硬件的接口，</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>tips2:目前1~1023端口被花费给一些知名的程序，这类端口被称为登记端口号。客户端使用的端口号称为短暂端口号。</p>
-</blockquote>
-<ol start="3">
-<li>用户数据报协议(UDP)特点:</li>
-</ol>
-<ul>
-<li>1.无连接。</li>
-<li>2.尽最大努力交付。</li>
-<li>3.面向报文。</li>
-<li>4.没有拥塞控制。</li>
-<li>5.UDP支持一对一，一对多，多对一和多对多通信。</li>
-<li>6.首部开销小。</li>
-</ul>
-<ol start="4">
-<li>UDP首部格式:</li>
-</ol>
-<ul>
-<li>1.源端口</li>
-<li>2.目的端口</li>
-<li>3.长度</li>
-<li>4.检验和</li>
-</ul>
-<ol start="5">
-<li>传输控制协议TCP的特点：</li>
-</ol>
-<ul>
-<li>1.TCP面向连接，即需要建立连接。</li>
-<li>2.只能点对点通信。</li>
-<li>3.提供可靠交付，即TCP连接的数据无差错，不丢失，不重复。</li>
-<li>4.面向字节流，即TCP仅仅将数据看成一串无结构的字节流。<blockquote>
-<p>tips:TCP建立的是虚连接，即逻辑连接。</p>
-</blockquote>
-</li>
-</ul>
-<blockquote>
-<p>tips2: TCP连接的端口为套接字(IP:端口)</p>
-</blockquote>
-<ol start="6">
-<li>可靠传输的工作原理</li>
-</ol>
-<ul>
-<li><p>1.需要解决的问题：1.传输信道不产生差错。2.无论发送方的数据多快，接收方都来得及接收。</p>
-</li>
-<li><p>2.解决方法：</p>
-<ul>
-<li><p>1.产生差错：使用超时重传，每次发送完一个分组时，设置一个超时计时器，如果在超时计时器过期之前收到确认，就撤销超时计时器，否则重新发送分组。</p>
-</li>
-<li><p>2.停止等待协议：即每次发送完一个分组就等待发送，等待对方确认，收到确认后再发送下一个分组。</p>
-</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>tips:超时计数器需要注意的三点：1.必须暂时保留已发送的分组副本(用于超时重发)。2.分租和确认分组都需要进行编号。3.重传计时器的时间需要比数据接收的时间长一些，因为需要确认返回的时间。</p>
-</blockquote>
-<ul>
-<li><p>3.确认丢失和确认迟到：用于接收方返回给发送方一些报文。</p>
-</li>
-<li><p>4.信道利用率：停止等待协议优点是简单，但信道利用率太低，因此当使用流水线传输的时候，就需要使用ARQ协议和滑动窗口协议。<br>ARQ协议：发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置。<br>滑动窗口：三个指针，1.指向已发送已确认数据的数据的结尾+2.指向已发送但未确认数据的结尾+3.指向允许发送但尚未发送的结尾+剩下的为不允许发送。</p>
-<blockquote>
-<p>tips：之所以使用滑动窗口的原因在于控制发送发速率使得接收方能够接收。</p>
-</blockquote>
-</li>
-</ul>
-<ol start="7">
-<li>TCP报文段的首部格式：</li>
-</ol>
-<ul>
-<li>1.源端口和目的端口:各占2字节。</li>
-<li>2.序号:4字节。</li>
-<li>3.确认号：4字节，期望收到对方下一个报文的第一个数据字节的序号。<blockquote>
-<p>tips:若确认号为n，那么说明序号n-1为止的所有数据都已经确认收到。</p>
-</blockquote>
-</li>
-<li>4.数据偏移：占4位，注意是位不是字节。</li>
-<li>5.保留:6位。</li>
-<li>6.紧急URG(URgent):紧急报文，尽快传送，不要按照原来的排队顺序传送。URG&#x3D;1时有效。</li>
-<li>7.确认号ACK:ack&#x3D;1时有效。</li>
-<li>8.推送(PuSH):立即发送，不要等到缓存满。</li>
-<li>9.复位：重置位。</li>
-<li>10.同步：同步序号</li>
-<li>11.终止：用于释放一个连接</li>
-<li>12.窗口：2字节，指发送本报文段一方的接收窗口。</li>
-<li>13.检验和：2字节，</li>
-<li>14.紧急指针：2字节。指出紧急报文的字节数</li>
-<li>15.选项：长度可变，最长40字节。</li>
-</ul>
-<ol start="8">
-<li>TCP的流量控制</li>
-</ol>
-<ul>
-<li>1.利用滑动窗口实现流量控制，而流量控制就是让发送方的发送速率不要太快，使得接收方能够接收。</li>
-<li>2.TCP窗口的单位是字节，不是报文段。</li>
-</ul>
-<ol start="9">
-<li>TCP的拥塞控制</li>
-</ol>
-<ul>
-<li>1.介绍：计算机网络中的链路容量(即带宽)，交换节点的缓存和处理机等都是网络资源。若在某一段时间内，若对网络中的某一项资源的需求超过了该资源所能提供的部分，网络性能变坏就称为拥塞(congestion)。即∑对资源的需求&gt;可用资源</li>
-</ul>
-<p>值得注意是，单纯的提高某部分的网络性能并不能很好的解决拥塞，反而会造成严重的网络资源浪费，解决方法为使用拥塞控制：防止过多的数据注入到网络中，防止网络中的链路或者路由器不至于过载。</p>
-<ul>
-<li>2.拥塞控制的4种算法：1.慢开始。2.拥塞避免。3.快重传。4.快恢复。<ul>
-<li>1.慢开始和拥塞避免(一般一起使用)。慢开始：即注入网络的数据字节由小逐渐变大，也就是逐渐增大拥塞窗口的数值。</li>
-<li>2.拥塞避免：即避免拥塞窗口增长的过于缓慢。</li>
-<li>3.快重传和快恢复：快重传：快重传首先不要求接收方等待自己发送数据才捎带确认，而是立即发送确认，使用快重传能够让对方早知道发生了个别报文段的丢失。</li>
-<li>4.快恢复：对于丢失的个别报文段，执行快恢复算法。</li>
-</ul>
-</li>
-</ul>
-<ol start="10">
-<li><p>流量控制和拥塞控制的区别：1.流量控制减少发送量的原因是接收方来不及接收。拥塞控制的原因在于穿过通道被堵塞，导致的包括超时重传等错误，而接收方有能力接收目前网络中发送的数据。</p>
-<blockquote>
-<p>tips:死锁，即拥塞状态导致的网络吞量变成了0。</p>
-</blockquote>
-</li>
-<li><p>主动列队管理(AQM)</p>
-</li>
-</ol>
-<ul>
-<li>1.主要用于防止网络出现全局同步的现象。</li>
-</ul>
-<ol start="12">
-<li>TCP运输连接管理</li>
-</ol>
-<ul>
-<li>1.TCP的运输连接的三个阶段：1.连接建立。2.数据传送。3.连接释放。</li>
-<li>2.TCP连接建立：1A向B发出请求连接报文段。2.B收到后，如果同意建立连接，则向A发送确认。3.A收到B的确认后，再向B发送收到确认。这是三次握手，四次魔兽是指B发送给A的报文可以拆分成确认报文和同步报文。</li>
-<li>3.TCP释放：1.A向B发送释放报文段，停止发送数据，关闭TCP连接。2.B收到释放报文的报文段后发出确认，B层TCP通知应用层，然后TCP连接处于半关闭状态。如果B没有要向A发送的数据，即重复A的行为即可。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2577,20 +2644,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
