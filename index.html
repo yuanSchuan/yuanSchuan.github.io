@@ -157,6 +157,244 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E4%BC%A0%E8%BE%93%E5%B1%82%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="远川山离">
+      <meta itemprop="description" content="人生天地间，忽如远行客。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远川山离的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E4%BC%A0%E8%BE%93%E5%B1%82%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">计网-传输层复习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-29 14:36:55 / 修改时间：14:38:55" itemprop="dateCreated datePublished" datetime="2022-11-29T14:36:55+08:00">2022-11-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-传输层功能和与网络层的易混淆点"><a href="#1-传输层功能和与网络层的易混淆点" class="headerlink" title="1.传输层功能和与网络层的易混淆点"></a>1.传输层功能和与网络层的易混淆点</h2><ol>
+<li>传输层概述：主要为应用层进程之间提供逻辑通信(端对端)，是面向通信的最高层，也是用户功能的最低层。为主机提供端对端的通信服务。</li>
+</ol>
+<p>值得注意的是，网络层是为主机之间提供通信服务。具体实现区别在于网络使用IP地址，而传输层使用的一种接口，套接字格式:为IP地址,端口号。</p>
+<blockquote>
+<p>tips:端口，提供储存和缓存服务，同一个应用接收和发送需要不同的端口。换句话说，只有为应用程序指定了端口，应用程序才知道正确的收发数据。</p>
+</blockquote>
+<ol start="2">
+<li>复用和分用：传输层的复用是指不同应用进程可以使用同一个传输层协议(比如tcp),分用指传输层剥去报文首部后能够将这些数据交付到正确的应用程序(端口)中。</li>
+</ol>
+<p>注意：网络层也有复用和分用。复用指不同协议的数据可以被封装成IP数据报发出，分用指接收方在剥去首部后能够把数据交付给相应的协议。</p>
+<ol start="3">
+<li>物理层，数据链路层，网络层，传输层对数据错误的处理。</li>
+</ol>
+<ul>
+<li><p>1.物理层进行检错和纠错：主要对于比特，比如传输过程中的信号失真。</p>
+</li>
+<li><p>2.数据链路层仅仅进行检错，不进行纠错：如果帧数据发送错误直接丢弃。</p>
+</li>
+<li><p>3.网络层进行纠错和检错：但仅仅针对IP层首部，不对数据部分进行纠错和检错。</p>
+</li>
+<li><p>4.传输层进行纠错和检错：报错首部和数据部分。</p>
+</li>
+</ul>
+<p>值得注意的是，数据链路层保证的帧不出差错，传输层的纠错主要针对失序，和帧因为错误，拥塞被丢弃而需要重传。</p>
+<blockquote>
+<p>tips:这样的设计其实主要为了减轻服务器这种集中转发的压力，尽量将数据分开处理。</p>
+</blockquote>
+<ol start="4">
+<li><p>传输层可以同时提供面向连接和无连接。而网络层提供不能同是提供，只能单独提供面向连接服务(虚电路)或者无连接服务(数据报)。</p>
+</li>
+<li><p>UDP和TCP概述</p>
+</li>
+</ol>
+<ul>
+<li><p>1.UDP主要面向无连接，并且尽最大努力交付，不保证数据可靠。主要用于(TFPF（小文件传输协议），DNS,SNMP和RTP(实时传输协议，比如视频))</p>
+</li>
+<li><p>2.TCP有建立三次握手，断开4次挥手，面向连接，保证数据可靠，主要用于文件传输协议(FTP),超文本传输协议(HTTP)，远程登陆(TELNET)。</p>
+</li>
+</ul>
+<p>注意1：IP数据报和UDP数据报的区别:UDP数据结构对于路由器是不可见的。</p>
+<p>注意2：虚电路和TCP数据报的区别：TCP在逻辑层抽象的逻辑信道中传输，对路由器不可见。虚电路所经过的交换结点都必须保存虚电路状态信息，网络层采用虚电路则无法提供无连接服务。但在运输层采用TCP不影响网络层提供无连接服务。</p>
+<hr>
+<h2 id="2-UDP协议"><a href="#2-UDP协议" class="headerlink" title="2.UDP协议"></a>2.UDP协议</h2><ol>
+<li>概述：UDP包装IP数据报仅仅增加了复用，分用和差错检测。因此使用UDP几乎就是和IP数据报打交道。UDP首部为8B(Byte)。</li>
+</ol>
+<p>注意1：UDP和TCP的分用都是在首部添加端口号来实现的。</p>
+<p>注意2：UDP差错检测需时会在首部加上12B的伪首部，只用于校验和临时添加，不会向上递交，也不会向下传递。</p>
+<ol start="2">
+<li>UDP的一些特点：</li>
+</ol>
+<ul>
+<li><p>1.UDP无需连接，IP无需连接，TCP需要建立连接。</p>
+</li>
+<li><p>2.UDP无连接状态，TCP需要在主机端维护包括序号，确认号参数等连接状态。</p>
+</li>
+<li><p>3.UDP分组开销小，首部为8B,TCP为12B。</p>
+</li>
+<li><p>4.UDP没有拥塞控制能够更好的控制发送时间。</p>
+</li>
+<li><p>5.UDP可以进行1对1，1对多，多对多。而TCP只能进行1对1.</p>
+</li>
+</ul>
+<hr>
+<h2 id="3-TCP"><a href="#3-TCP" class="headerlink" title="3.TCP"></a>3.TCP</h2><p>注意：TCP传送的数据单元为报文段。</p>
+<ol>
+<li>TCP的特点：</li>
+</ol>
+<ul>
+<li><p>1.TCP面向连接的传输层下协议，连接的是一条逻辑连接。</p>
+</li>
+<li><p>2.只能进行端对端连接，1对1.</p>
+</li>
+<li><p>3.提供给无差错服务，即TCP可保证传递给应用层的数据和发送方一致。</p>
+</li>
+<li><p>4.提供全双工通信。</p>
+</li>
+<li><ol start="5">
+<li>面向字节流，即将数据视为字节组成。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>TCP首部</li>
+</ol>
+<ul>
+<li><p>1.TCP首部长度为固定长度为20B(即最小长度),若需要扩充，必须以4B为单位扩充，即4B的倍数。</p>
+</li>
+<li><p>2.首部的重点字段介绍</p>
+<ul>
+<li><p>1.序号4B（seq）:因为TCP是面向字节流的，不是一块数据需要加1，而是计算一块数据中的所有字节数。比如数据发送的第一块为28字节，那么第二块发送的序号则是29开始。</p>
+</li>
+<li><p>2.数据偏移：指数据部分的开始位数，可以理解为首部长度。</p>
+</li>
+<li><p>3.确认位ACK,ACK&#x3D;1时数据才有效，&#x3D;0无效。</p>
+</li>
+<li><p>3.1确认号ack:字母为小写，表示期望对方发送的下一段数据的开始序号。</p>
+</li>
+</ul>
+<p>注意：TCP建立连接后所有报文的ACK为&#x3D;1。</p>
+<ul>
+<li>4.同步位SYN，当SYN&#x3D;1时，表示这是一个连接请求或者连接接收报文。</li>
+</ul>
+<p>注意，SYN&#x3D;1,ACK&#x3D;0表明这是一个请求连接报文，如果同意连接，则返回SYN&#x3D;1,ACK&#x3D;1。</p>
+<ul>
+<li>5.终止位FIN：用于释放连接，当FIN&#x3D;1时，表示此报文段的发送发数据发送完毕，需要要求释放连接。</li>
+</ul>
+<p>可以理解为发送FIN&#x3D;1的一方传输结束，只会发送通知，不会发送数据，但依旧可以接收数据。</p>
+<ul>
+<li>6.1）Push推送&#x3D;1，则立刻发送，不必等缓存满。2）RST复位&#x3D;1，TCP出现严重差错(比如主机崩溃)需要重新建立连接。3）窗口：表示允许对方发送的数据量。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>TCP连接建立：</li>
+</ol>
+<ul>
+<li>1.主动方：SYN&#x3D;1,seq&#x3D;x.</li>
+<li>2.被动方 ：SYN&#x3D;1,ACK&#x3D;1,seq&#x3D;y,ack&#x3D;x+1</li>
+<li>3.主动方:ACK&#x3D;1,seq&#x3D;x+1,ack&#x3D;y+1</li>
+</ul>
+<p>语言表述：</p>
+<ul>
+<li>1.主动方请求建立连接(SYN&#x3D;1),填写发送的报文序号x。 </li>
+<li>2.被动方同意建立连接(ACK&#x3D;1),SYN&#x3D;1表明是请求报文。填写发送报文序号y,期望收到序号x+1。</li>
+<li>3.主动方同意建立连接(ACK&#x3D;1),填写发送报文序号x+1,期望收到y+1</li>
+</ul>
+<p>值得注意的是：被动方(服务器方)分配资源是在第二次握手时完成的，因此使得服务器易受到SYN洪泛攻击。</p>
+<ol start="4">
+<li>TCP连接释放(不显示seq和ack)</li>
+</ol>
+<ul>
+<li>1.主动方:FIn&#x3D;1</li>
+<li>2.被动方:ACK&#x3D;1</li>
+<li>3.被动方:FIN&#x3D;1,ACK&#x3D;1</li>
+<li>4.主动方:ACK&#x3D;1</li>
+</ul>
+<p>语言表述</p>
+<ul>
+<li>1.主动方FIN&#x3D;1,表示不再发送数据，要求结束连接。</li>
+<li>2.被动方ACK&#x3D;1,表示收到要求结束连接请求。</li>
+<li>3.被动方如果不再发送数据，则FIN&#x3D;1，发送给主动方。</li>
+<li>4.主动方ACK&#x3D;1,表示接收到被动方结束连接的要求。(被动方资源关闭)</li>
+</ul>
+<p>注意：主动方在发送完结束4后，依旧要等待2MSL(最长报文段寿命)后才会关闭资源(以防该报文被动方没有收到)。</p>
+<ol start="5">
+<li>TCP连接维护的一些信息：</li>
+</ol>
+<ul>
+<li>1.序号。</li>
+<li>2.确认号：在缓存区缓存那些已发出但未收到确认的数据，用于重传。</li>
+<li>3.重传，重传的条件有2个。<ul>
+<li>1.超时：每发送一个报文段都会给该报文段附加一个计时器，到计时器到时间了，会重发数据报。</li>
+<li>2.冗余ACK:如果对方期望的ack大于目前未确认的ack,那么就会重传之间没有确认的ack。</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li>TCP流量控制：</li>
+</ol>
+<ul>
+<li><p>1.概述：TCP的发送窗口会在对方的接收窗口rwnd(通过首部的接收窗口获取)大小和自己判断的拥塞窗口cwnd(当前网络的拥挤情况)之间取最小值修改为当前的发送窗口。</p>
+</li>
+<li><p>2.流量控制算法</p>
+<ul>
+<li>1.慢开始算法：每次发送后拥塞窗口翻倍，比如1，2，4，8…,慢开始算法有设置慢开始门限ssthresh,当达到ssthresh后，就执行用拥塞避免算法。</li>
+</ul>
+<p>注意1并不一定从1开始，可能2，4，8，16…</p>
+<p>注意2：慢开始增长最高为ssthresh,比如阈值为7，那么1，2，4，7之后使用拥塞避免算法，而不是1,2,4,8。</p>
+<ul>
+<li>2.拥塞避免算法：每次发送后拥塞窗口+1，出现拥塞后(数据报超时)，将拥塞窗口设置为1，重新开始慢开始。</li>
+</ul>
+</li>
+<li><p>3.快重传和快恢复。</p>
+<ul>
+<li>1.快重传：收到三个冗余ack后直接重传对象未收到的报文段。</li>
+<li>2.快恢复,当发送方连续收到3个冗余ACK后，将慢开始的ssthresh设置为此时拥塞窗口的一半，然后将拥塞窗口&#x2F;2(即等于此时慢开始的ssthresh)，然后开始执行拥塞避免算法。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2566,173 +2804,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/3-%E5%82%A8%E5%AD%98%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="远川山离">
-      <meta itemprop="description" content="人生天地间，忽如远行客。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远川山离的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/3-%E5%82%A8%E5%AD%98%E5%99%A8/" class="post-title-link" itemprop="url">3.储存器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-27 21:37:12 / 修改时间：21:38:33" itemprop="dateCreated datePublished" datetime="2022-10-27T21:37:12+08:00">2022-10-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-储存器分类"><a href="#1-储存器分类" class="headerlink" title="1.储存器分类"></a>1.储存器分类</h2><ol>
-<li>按照储存介质分类</li>
-</ol>
-<ul>
-<li>1.半导体储存器:易失性储存器。</li>
-<li>2.磁表面储存器:非易失性储存器。</li>
-<li>3.磁芯储存器：永久记忆储存器（现在已经不再使用）</li>
-<li>4.光盘储存器:非易失性储存器。<blockquote>
-<p>tips:易失：断电后数据丢失。非易性数据：断电后数据依旧存在。</p>
-</blockquote>
-</li>
-</ul>
-<ol start="2">
-<li>按存取方式分类：</li>
-</ol>
-<ul>
-<li>1.随机储存器：任何一个储存单元的内容都可以随机存取。</li>
-<li>2.只读储存器：只读储存器只能对储存的内容进行读取，不能重新写入。</li>
-<li>3.串行访问储存器：按照物理位置先后顺序寻找地址。（又称顺序存取储存器）。</li>
-<li>4.直接存取储存器：比如磁盘的磁道对前段直接访问。</li>
-</ul>
-<ol start="3">
-<li>按照作用分类：</li>
-</ol>
-<ul>
-<li>1.主储存器：可以直接与CPU直接进行信息交换。</li>
-<li>2.辅助储存器：主储存器的后援储存器，用于存放当前暂时不用的程序和数据，但不能与CPU直接交换信息。</li>
-<li>3.缓冲储存器：主要用于两个不同速度的部件中，中和过大的速度差距，起到缓冲的作用。</li>
-</ul>
-<hr>
-<h2 id="2-主储存器"><a href="#2-主储存器" class="headerlink" title="2.主储存器"></a>2.主储存器</h2><ol>
-<li><p>读取数据过程：CPU将该字的地址发送至MAR,经地址总线送至主存，然后发出读命令，主存接到读命令后，按照地址单元完成读操作并且将单元的内容送到地址总线上。</p>
-</li>
-<li><p>主存的主要技术指标：1.储存容量。2.储存速度。</p>
-</li>
-</ol>
-<ul>
-<li><p>1.储存容量:&#x3D;储存单元个数*储存字长。或者&#x3D;储存单元个数*储存字长&#x2F;8</p>
-</li>
-<li><p>2.储存速度：存取时间和存取周期示。<br>存取时间称为储存器访问时间，指储存器完成一次操作到完成该操作所需要的全部时间。存取时间又分为读取时间和写入时间。</p>
-<p>存取周期是指：储存器连续进行两次独立储存器操作。</p>
-</li>
-</ul>
-<ol start="3">
-<li>储存器带宽：单位时间内储存器存取的信息量。</li>
-</ol>
-<hr>
-<h2 id="3-随机存取储存器-Random-adress-Memories"><a href="#3-随机存取储存器-Random-adress-Memories" class="headerlink" title="3.随机存取储存器(Random adress Memories)"></a>3.随机存取储存器(Random adress Memories)</h2><ol>
-<li><p>主要分类为1.静态RAM和2.动态RAM</p>
-</li>
-<li><p>静态RAM：信息读出后，仍保存原状态，不需要再生。电源断电时，原存信息会丢失。故它属易失性半导体储存器。</p>
-</li>
-<li><p>动态随机RAM：需要不断刷新电容，以恢复一次原状态。</p>
-<blockquote>
-<p>tips:静态和动态的区别在于动态需要不断刷新电容以维持信息状态，而静态不需要。</p>
-</blockquote>
-</li>
-</ol>
-<hr>
-<h2 id="4-只读储存器-ROM"><a href="#4-只读储存器-ROM" class="headerlink" title="4.只读储存器(ROM)"></a>4.只读储存器(ROM)</h2><ol>
-<li>简介：随着需要出现了能够任意改变ROM的原始信息。</li>
-<li>ROM信息出现：PROM,EPROM,EEPROM</li>
-</ol>
-<ul>
-<li>1.PROM：一次性编程的只读储存器。</li>
-<li>2.EPROM:可擦除可编程只读储存器</li>
-<li>3.RRPROM:快擦型储存器。</li>
-</ul>
-<blockquote>
-<p>tips:储存器的校验使用汉明码进行校验。</p>
-</blockquote>
-<hr>
-<h2 id="5-高速缓冲储存器"><a href="#5-高速缓冲储存器" class="headerlink" title="5.高速缓冲储存器"></a>5.高速缓冲储存器</h2><ol>
-<li><p>概念：因为IO设备向主存请求级别高于CPU，致使CPU出现出现一段空等的时间,而主存可提前将CPU要使用的数据存入高速缓存中,一旦主存与IO设备交换时，CPU可直接从高速缓存中读取所需信息，不必空等而影响效率。</p>
-</li>
-<li><p>工作原理：主存被划分成若干块，若干块分为若干字。形成一部分的对于缓存的映射。CPU会先访问缓存Cache，如果缓冲命中，将直接从缓冲复制到CPU。如果不命中，那么就访问主存，将这个块映射到缓冲储存器复制到CPU。</p>
-</li>
-<li><p>Cache的基本结构：1.Cache储存体。2.地址映射变换机构。3.替换机构。4.Cache的读写操作。</p>
-</li>
-<li><p>Cache的主存地址映射：1.直接映射。2.全相联映射。3.组相联映射。</p>
-</li>
-</ol>
-<ul>
-<li>1.直接映射：每个主存块只能固定的对应某个缓存块，缓存空间得不到充分的利用。</li>
-<li>2.全相联映射：允许主存中每一个字块映射到Cache中任何一个位置上，但逻辑电路较多，成本较高。</li>
-<li>3.组相联映射：直接映射和全相联映射的一种折中。又称为二路组相联。</li>
-</ul>
-<ol start="5">
-<li>替换策列：当缓存满时，需要使用替换策略，分别为：1.先进先出(即先进先出)。2.近期最少使用(近期最少使用的被替代)。3.随机法(随替换)。</li>
-</ol>
-<hr>
-<h2 id="6-辅助储存器"><a href="#6-辅助储存器" class="headerlink" title="6.辅助储存器"></a>6.辅助储存器</h2><ol>
-<li><p>概念：辅助储存器又称为外部储存器。与主存相比，具有容量大，速度慢，价格低的特点，可脱机保存，属于易失性储存器。</p>
-</li>
-<li><p>辅助储存器分类：1.硬磁盘储存器。2.软磁盘储存器。3.磁带储存器。4.光盘储存器。</p>
-<blockquote>
-<p>tips:磁表面由于磁介质表面的缺陷，尘埃等原因，采用循环冗余校验码。</p>
-</blockquote>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2802,7 +2873,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
