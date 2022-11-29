@@ -157,6 +157,403 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="远川山离">
+      <meta itemprop="description" content="人生天地间，忽如远行客。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远川山离的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">考研-计网网络层复习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-29 09:10:49 / 修改时间：09:11:38" itemprop="dateCreated datePublished" datetime="2022-11-29T09:10:49+08:00">2022-11-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-网络层的一些基础知识"><a href="#1-网络层的一些基础知识" class="headerlink" title="1.网络层的一些基础知识"></a>1.网络层的一些基础知识</h2><ol>
+<li>中继系统：用于将多个同层网络互联，连接后形成更大的同层。比如交换机与交换机连接是更大的局域网。</li>
+</ol>
+<ul>
+<li><p>1.物理层中继系统：1.转发器。2.集线器。</p>
+</li>
+<li><p>2.数据链路层中继系统：1.网桥。2.交换机。</p>
+</li>
+<li><p>3.网络层中继系统：1.路由器。</p>
+</li>
+<li><p>4.网络层以上中继设备：网关。</p>
+</li>
+</ul>
+<p>注意：历史原因，有些文献将路由器称之为网关。</p>
+<ol start="2">
+<li>路由器的主要功能：1.路由选择。2.分组转发。</li>
+</ol>
+<ul>
+<li><p>1.路由选择，确定路径，也就是，根据路由协议构造路由表。</p>
+</li>
+<li><p>2.分组转发：根据路由表衍生出的转发表，选择合适的端口转发数据。</p>
+</li>
+</ul>
+<ol start="3">
+<li>网络层可以分为数据层面和控制层面。</li>
+</ol>
+<ul>
+<li><p>1.数据层面：也称转发层面，主要功能为转发。</p>
+</li>
+<li><p>2.控制层面：主要功能为路由选择。</p>
+</li>
+</ul>
+<ol start="4">
+<li>拥塞控制：网络层的拥塞控制为对同行子网进行拥塞控制，主要方法包括开环控制和闭环控制。</li>
+</ol>
+<ul>
+<li><p>1.开环控制：一开始就将拥塞的因素考虑到，中途不再修改，控制手段包括1.何时接收新流量。2.何时丢弃分组。决定时不考虑当前<br>网络状态，因为一开始就准备好了。</p>
+</li>
+<li><p>2.闭环控制，一开始不考虑拥塞，在运行时用监测网络系统去检测。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:关于拥塞控制和流量控制的区别  </p>
+</blockquote>
+<p>拥塞控制一般考虑的是全局的一个拥塞情况，根据全局的拥塞情况进行传输控制。<br>流量控制一般考虑的是具体点对点的数据传输，通过抑制发送端的速率使得接收端能够及时接收数据。</p>
+<blockquote>
+<p>tips2:网络层和传输层均有拥塞控制，网络层的拥塞控制实现介质是路由器，以检测整个网络拓扑拥塞情况的变化。传输层拥塞控制通过具体端，根据数据是否接收，以及接收的时间，次数对网络进行判断，处理拥塞。</p>
+</blockquote>
+<ol start="5">
+<li>错题</li>
+</ol>
+<ul>
+<li>1.路由器连接的异构网络是指：3<ul>
+<li>1.网络拓扑结构不同。</li>
+<li>2.网络种的计算机操作体系不同。</li>
+<li>3.数据链路层和物理层均不同。</li>
+</ul>
+</li>
+</ul>
+<p>原因是因为数据链路层和物理层决定网络的物理结构。</p>
+<ul>
+<li>2.在路由器连接的多个局域网中，要求每个局域网：物理层，数据链路层和网络层协议可以不同，而网络层以上协议必须相同。</li>
+</ul>
+<p>路由器可以兼容IPv4和IPv6，因此网络协议可以不同。</p>
+<ul>
+<li>3.路由器的路由器通常包涵：目的地址 掩码 下一条地址</li>
+</ul>
+<hr>
+<h2 id="2-路由算法"><a href="#2-路由算法" class="headerlink" title="2.路由算法"></a>2.路由算法</h2><ol>
+<li>路由算法的分类</li>
+</ol>
+<ul>
+<li><p>1.静态路由算法：又称非自适应路由算法，由网络管理员手动配置，当网络拓扑结构发生变化时，由网络管理员手动修改。</p>
+</li>
+<li><p>2.动态路由算法：又称自适应路由算法。主要通过路由器之间彼此交换信息，然后按照一定优化算法出来，在一定时间间隙内会不断更新，以适应不断变化的网络。</p>
+</li>
+</ul>
+<ol start="2">
+<li>路由算法</li>
+</ol>
+<ul>
+<li>1.距离-向量路由算法(RIP算法)：<ul>
+<li><p>1.概述：所有结点与邻近结点定期交换整个路由表，并且所有结点都会接听x结点发送的路由表信息，并在发现1)出现新的路由路径。2)发现更短的路径。时更新路由表。</p>
+</li>
+<li><p>2.在这种算法中，每段距离定义为一跳数，每经过一跳，距离+1.</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:这种算法需要所有结点与邻近结点传递整个路由表，因此在大的网络中通信量会非常大，因此，一般用于小型网络。。</p>
+</blockquote>
+<ul>
+<li>2.链路状态路由算法(OSPF算法):<ul>
+<li><p>1.概述：主要特征为每个结点都知道整个网络的拓扑图，进而生成最合适的路由表。会主动测试邻近结点的状态(包括链路状态)，定期的会将链路状态信息传递给所有结点(与RIP不同的时，它传递给邻近结点，邻近结点接收检查后，转发给其他结点，进而传递给整个自治域，但RIP则是直接传给全部整个，而每个结点都会重新发送一次)。</p>
+</li>
+<li><p>2.链路状态发生变化后使用Dijkstra计算最短路径。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>层次路由</li>
+</ol>
+<ul>
+<li><p>1.概述：路由器为了减少需要维护的路由表量，需要对路由器再进行划分。将整个互联路划分成许多个较小的自治系统。</p>
+</li>
+<li><p>2.内部网关协议(IGP):也称域内路由选择，具体协议比如RIP和OSFP等。</p>
+</li>
+<li><p>2.外部网关协议(EGP):域间路由选择，用于将不同自治系统之间选择最优路径并通信，具体协议比如EGP。</p>
+</li>
+</ul>
+<p>值得注意的是，使用层次路由OSFP会将一个路由系统再划分为若干区域，以减少泛洪带来的巨大通信量。</p>
+<p>注意2：每个小的自治系统与外部自治系统连接时，会有专门路由器与外部连接，这些连接外部的路由器又组成了更大的拓扑网络。</p>
+<ol start="4">
+<li>错题：</li>
+</ol>
+<ul>
+<li><ol>
+<li>路由器交付说法错误的是：直接交付时，两台机器可以不再在同一网段内。</li>
+</ol>
+</li>
+</ul>
+<p>注意：如果不在同一网段会采用简介交付，而不是直接。</p>
+<hr>
+<h2 id="3-IPv4"><a href="#3-IPv4" class="headerlink" title="3.IPv4"></a>3.IPv4</h2><p>前情概述：网络层使用的协议为IPv4或者IPv6,二者区别主要在首部固定字段，一些首部功能，最重要的是所能表示的地址后者比前者大的多。</p>
+<ol>
+<li>组成部分：(仅介绍一些常用和易混淆的)</li>
+</ol>
+<ul>
+<li><p>1.版本：指ip协议版本,ipv4为4.</p>
+</li>
+<li><p>2.首部长度，总长度，片偏移的基本单位分别为4B,1B,8B</p>
+</li>
+<li><p>3.标识：每产生一个数据报，就产生一个标识。主要用于分片后，根据相同的标识拼接成一个数据报。</p>
+</li>
+</ul>
+<p>注意：这不是序号，主要用于分片，而IPv6不允许过程中分片(但允许开始时分片)，因此也没有标识字段。</p>
+<ul>
+<li><p>4.标志MF:MF&#x3D;1表示还有一个分片，0表示没有分片。DF&#x3D;0时才表示允许分片。</p>
+</li>
+<li><p>5.片偏移：某片相对于原分组的相对位置。</p>
+</li>
+<li><p>6.协议：不是ip协议，而是上层的传输层协议，用于区分TCP还是UDP。</p>
+</li>
+</ul>
+<ol start="2">
+<li>分片：链路层的最大数据量称为最大传送单元(MTU),如果网络层数据报大于MTU那么就需要分片。以下介绍分片的注意点：</li>
+</ol>
+<ul>
+<li><p>1.IPv4首部长度为20,每次分片需要多填充20字节。</p>
+</li>
+<li><p>2.片偏移的倍数必须是8的倍数，这意味着除开最后一片外，其他分片都是8的倍数。比如50B,那么必须填充至56B。</p>
+</li>
+<li><p>3.以太网MTU为1500B，广域网一般为576B。</p>
+</li>
+</ul>
+<ol start="3">
+<li>IPv4的IP地址</li>
+</ol>
+<ul>
+<li><p>1.IP地址为：网络号+主机号。  共32位，每8位用一个.分隔。<br>为了区分网络号，分为ABCDE类地址。区分为：网络号前1，2，3，4值固定。</p>
+<ul>
+<li><p>1.A类地址第一位固定为0，后7位随意(不可为全0和全1),因此值为1~126。</p>
+</li>
+<li><p>2.B类地址第1，2位固定为10，后6位随意，因此值为128~191</p>
+</li>
+<li><p>3.C类地址为1，2，3固定为110，后5位随意，因此值为192~223</p>
+</li>
+<li><p>4.D类地址固定为1110，因此值为224~239：此地址为多播地址。</p>
+</li>
+<li><p>5.E类地址240~255：保留今后使用。</p>
+</li>
+</ul>
+</li>
+<li><p>2.特殊IP地址</p>
+<ul>
+<li>1.网络和主机号全0都表示自己，组合表示本网络的本主机。</li>
+<li>2.网络和主机号全1都表示广播地址，组合表示整个广播域的广播地址。注意，路由器可以分隔广播域。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>网络地址转换(NAT)：格式为(全球IP地址：端口)转化成(本地IP地址 ：端口)。主要用于将全球的共有IP地址通过添加端口映射成多个本地IP,用于缓解IPv4地址的耗尽。</li>
+</ol>
+<p>有意思的是，NAT由于端口其实工作在传输层。</p>
+<ol start="5">
+<li>子网划分与子网掩码，CIDR</li>
+</ol>
+<ul>
+<li><p>1.子网划分为(&lt;网络号&gt;&lt;子网号&gt;&lt;主机号&gt;)，即从主机号从划分出子网号。</p>
+</li>
+<li><p>2.CIDR通过子网掩码消除了传统通过网络号来区分不同网段，直接使用掩码对IP地址进行计算。ip地址和掩码进行and运算，即11得1,10得0，00得0。而掩码1与1之间必须为1，比如&#x2F;24掩码，前24位为1，后8位为0.</p>
+</li>
+<li><p>3.路由聚合：两个ip，取网络号中相同部分的，后面设0。用于路由器的路由跳转。<br>比如192.32.6.9和193.32.7.6可以聚合为192.32.0.0</p>
+</li>
+</ul>
+<p>值得注意的是，对于聚合路由，路由器会优先选择后缀最长的部分转发。比如192.32.0.0和192.32.6.0。会优先转发后者。</p>
+<ol start="5">
+<li>网络层的转发过程</li>
+</ol>
+<ul>
+<li><p>1.路由表根据(目的网络，下一条地址转跳)。</p>
+</li>
+<li><p>2.转发优先级：1.特定主机路由。2.聚合路由(越长越先)。3.默认路由。4，报告出错。</p>
+</li>
+</ul>
+<p>值得注意的是：路由器得到下一条路由后，会将IP地址转化成MAC地址并填入帧首部，根据MAC地址找到下一条路由器。</p>
+<blockquote>
+<p>tips:路由器由于互联多个网络，不仅有多个IP地址，也有多个硬件地址。分别分配在不同的端口。</p>
+</blockquote>
+<ol start="6">
+<li>地址解析协议(ARP):将IP地址转化成MAC地址。工作在网络层。</li>
+</ol>
+<ul>
+<li>1.工作流程：<ul>
+<li>1.如果有目标ip地址的mac地址，则直接转化。</li>
+<li>2.如果没有目标ip地址的mac地址，则将目标mac地址设置为FF…全一，向网络广播。</li>
+<li>3.如果主机A收到APR的广播帧请求，则返回该主机A的MAC地址给ARP。</li>
+</ul>
+</li>
+</ul>
+<ol start="7">
+<li>动态主机配置协议(DHCP)：基于UDP的应用层协议，主要用于给主机动态分配ip地址。</li>
+</ol>
+<ul>
+<li>1.工作流程<ul>
+<li>1.主机广播寻找DHCP服务器。</li>
+<li>2.DHCP服务器收到消息后返回动态ip地址给主机。</li>
+<li>3.主机如果接受该地址返回确认信息。</li>
+<li>4.DHCP正式给主机分配该IP。</li>
+</ul>
+</li>
+</ul>
+<ol start="8">
+<li>ICMP(网际控制报文协议)：主要用于报告差错或者异常。以ip数据报形式发送。</li>
+</ol>
+<ul>
+<li><p>1.差错报文类型</p>
+<ul>
+<li><p>1.终点不可达。</p>
+</li>
+<li><p>2.源点抑制：因为拥塞而丢弃数据报，抑制源点数据发送。</p>
+</li>
+<li><p>3.时间超过：即ip首部的生存时间达到限定值被丢弃。</p>
+</li>
+<li><p>4.参数问题：首部字段值不正确。</p>
+</li>
+<li><p>5.改变路由(重定向):下次发送给更好的路由器，优化路由线路。</p>
+</li>
+<li><p>2.报告类型为1.路由器询问和通告报文。2.回送请求和回答报文。3.时间戳请求和回答报文。4.地址掩码请求和回答报文。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:ping常常用来测试主机之间的连通性，工作在应用层，直接使用网络层的ICMP。</p>
+</blockquote>
+<hr>
+</li>
+</ul>
+<h2 id="4-IPv6"><a href="#4-IPv6" class="headerlink" title="4.IPv6"></a>4.IPv6</h2><ol>
+<li>注意点(与ipv4的一部分差别)</li>
+</ol>
+<ul>
+<li><p>1.ipv4与ipv6不兼容，路由器无法转发ipv6一般使用隧道技术传输，即将ipv6再包装在ipv4报文中，或者使得路由器同时可以转发ipv6或者ipv4报文，但这种路由器更贵。</p>
+</li>
+<li><p>2.ipv6地址为128位，ipv4为32位。</p>
+</li>
+<li><p>3.ipv6首部位数8的倍数，ipv4为4的倍数。</p>
+</li>
+<li><p>4.ipv6仅仅允许在源主机分片，不允许路由分片，所以一般称ipv6不允许分片。</p>
+</li>
+</ul>
+<ol start="2">
+<li>ipv6地址表示</li>
+</ol>
+<ul>
+<li><p>1.ipv6使用:分隔。ipv4使用.分隔。</p>
+</li>
+<li><p>2.ipv6每16位:分隔一次，且使用16进制数(4位)表示。ipv4每8位分隔一次，且使用8进制数(3位)表示.</p>
+</li>
+<li><p>3.每一段全0可以用0表示，比如000.1234.000&#x3D;0.1234.0<br>如果多个0连接在一起使用::表示，比如0000.0000.0000.1234&#x3D;::1234,只能使用一次，后面有多个0000也不可以使用::，因为需要其他用位来计算一共省略了几段0。比如上述三段0&#x3D;16*3&#x3D;48，那么剩下为(128-48)&#x2F;16&#x3D;5，即5段，如果有多个::，则无法计算。</p>
+</li>
+</ul>
+<hr>
+<h2 id="5-组播"><a href="#5-组播" class="headerlink" title="5.组播"></a>5.组播</h2><ol>
+<li>概念：使用UDP协议，并且使用ICMP进行消息控制，发送者只发送一次，在路径不同时复制成两份分开传播，而不用给每个主机单独发送消息。IPv4使用D类地址作为组播地址，ipv6也有专门划分。</li>
+</ol>
+<p>注意：组播仅保证最大程度交付，不产生差错报文，ICMP主要用于告知路由器需要转发的消息。</p>
+<hr>
+<h2 id="6-移动IP"><a href="#6-移动IP" class="headerlink" title="6.移动IP"></a>6.移动IP</h2><ol>
+<li>三个术语</li>
+</ol>
+<ul>
+<li><ol>
+<li>移动结点：即具有永久IP地址的移动结点。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>本地代理：一个移动结点的永久归属网络。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>外部代理：移动IP移动到的外部网络接口。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>通信过程：</li>
+</ol>
+<ul>
+<li>1.移动结点在本地代理是正常转发。</li>
+<li>2.移动结点离开本地代理并进入外部代理时，需要向本地代理注册当前位置地址，即转发地址。</li>
+<li>3.当本地代理会创建一条通往注册结点的通道，将收到的消息发向外部代理的地址（注册地址）。</li>
+<li>4.移动结点发送消息则直接通过外部代理发送消息。</li>
+<li>5.回到本地网络时注销。</li>
+</ul>
+<blockquote>
+<p>tips：移动IP为移动主机设计连个IP地址，地址和辅地址(转交地址)。</p>
+</blockquote>
+<hr>
+<h2 id="7-网络层设备"><a href="#7-网络层设备" class="headerlink" title="7.网络层设备"></a>7.网络层设备</h2><ol>
+<li><p>冲突域：物理介质上所有结点的集合，这些结点会引发介质争用。链路层设备可以划分冲突域。</p>
+</li>
+<li><p>广播域：收到同样消息广播消息的结点集合，路由器可以划分广播域。</p>
+</li>
+<li><p>路由器的组成和功能</p>
+</li>
+</ol>
+<ul>
+<li><p>1.直接交付和间接交付：路由器的地址(目标端口地址)如果和主机处于同一网络(即网络号相同，CIDR为掩码掩盖到的位数相同)，则直接交付。处于不同网络，需要查找路由表，则为间接交付。</p>
+</li>
+<li><p>2.路由器主要功能为构造路由表和分组转发。构造路由表属于路由选择部分，也成为控制部分。分组转发由交换结构，出，入端口组成。</p>
+</li>
+<li><p>3.路由表格式：目的网络IP,子网掩码,下一条IP地址，接口(即路由器的哪个接口负责转发，因为每个接口对应一个网段。)</p>
+</li>
+</ul>
+<blockquote>
+<p>tips注意：路由表总是由软件构造，而转发表可以由软件，也可以由硬件构造。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/21/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80/Vue%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2327,168 +2724,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/2-%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="远川山离">
-      <meta itemprop="description" content="人生天地间，忽如远行客。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远川山离的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/2-%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">2.系统总线</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-24 09:30:40 / 修改时间：09:33:43" itemprop="dateCreated datePublished" datetime="2022-10-24T09:30:40+08:00">2022-10-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-总线的基本概念"><a href="#1-总线的基本概念" class="headerlink" title="1.总线的基本概念"></a>1.总线的基本概念</h2><ol>
-<li>计算机各个部件之间的连接方式</li>
-</ol>
-<ul>
-<li>1.分散连线：各个部件之间的单独连线。</li>
-<li>2.总线连接：将各个部件连接到一组公共信息传输线。</li>
-</ul>
-<ol start="2">
-<li>总线介绍：</li>
-</ol>
-<ul>
-<li>1.储存总线：连接CPU和主存。</li>
-<li>2.输出总线：建立CPU和各个IO设备之间的交换通道。</li>
-</ul>
-<ol start="3">
-<li>总线分类：</li>
-</ol>
-<ul>
-<li><p>1.片内总线：芯片内部的总线。比如cpu芯片内部，寄存器与寄存器之间，寄存器与算逻单元之间都由片内总线连接。</p>
-</li>
-<li><p>2.系统总线：系统总线又分为数据总线，地址总线，控制总线。</p>
-<ul>
-<li>1.数据总线：用来传输各功能部件之间的数据信息。</li>
-<li>2.地址总线：主要用来指出数据总线上的源数据或目的数据在主存单元的地址或IO设备的地址。</li>
-<li>3.控制总线:用于发出各种控制信号的传输线。</li>
-</ul>
-</li>
-<li><p>3.通信总线：主要用于计算机系统与其他系统(比如控制仪器)之间的通信。</p>
-<blockquote>
-<p>tips:通信总线的传输方式分为：串行通信和并行通信。串行通信指一条传输线一个个传输，并行指多条传输线一个个传输。</p>
-</blockquote>
-</li>
-</ul>
-<hr>
-<h2 id="2-总线特性："><a href="#2-总线特性：" class="headerlink" title="2.总线特性："></a>2.总线特性：</h2><ol>
-<li>机械特性：指机械连接方式上的一些性能，比如插头和插座的使用标准。</li>
-<li>电气特性：每一根传输线上信号的传递方向和有效的电平范围。</li>
-<li>功能特性：传输线的功能，比如地址总线用来指出地址码。</li>
-<li>时间特性：用于指出什么时间内有效。</li>
-</ol>
-<hr>
-<h2 id="3-总线性能指标"><a href="#3-总线性能指标" class="headerlink" title="3.总线性能指标"></a>3.总线性能指标</h2><ol>
-<li>总线宽度：数据总线的根数，用bit表示。比如8位，16位。</li>
-<li>总线带宽：总线的数据传输速率：单位时间内总线上传输数据的位数。</li>
-<li>时钟同步&#x2F;异步：同步：数据与时钟同步工作。与时钟不同步工作的总线位异步总线。</li>
-<li>总线复用：一条信号线上分时传送两种信号。</li>
-<li>信号线数：即地址总线，数据总线，控制总线三种总线数的总和。</li>
-<li>总线的控制方式：突发工作，自动配置。</li>
-<li>其他指标：比如负载能力。</li>
-</ol>
-<hr>
-<h2 id="4-总线结构"><a href="#4-总线结构" class="headerlink" title="4.总线结构"></a>4.总线结构</h2><ol>
-<li>总线结构通常可分为单总线结构和多总线结构。</li>
-<li>单总线特点在于将所有的IO设备都挂在了一起。</li>
-<li>多总线结构的特点在于将速度较低的IO设备从单总线上分离，形成主存总线与IO总线分开的结构。</li>
-</ol>
-<hr>
-<h2 id="5-总线控制"><a href="#5-总线控制" class="headerlink" title="5.总线控制"></a>5.总线控制</h2><p>前提：总线上连接的各类设备按照对总线有无控制功能分为：主设备(对总线有控制功能)，从设备(对总线无控制功能)。</p>
-<ol>
-<li><p>总线判优控制分为集中式和分布式：1.集中式：控制逻辑集中在一起。分布式：将控制逻辑分散在与总线连接的各个部件和设备上。</p>
-</li>
-<li><p>集中控制的三种仲裁方式：</p>
-</li>
-</ol>
-<ul>
-<li>1.链式查询：离总线控制部件越近的设备具有最高优先级。</li>
-<li>2.计时器定时查询：在总线未被使用的情况下，总线控制部件的计时器会开始计时并通过设备地址线向各个设备发出一组地址信号，当某个请求占据总线设备地址与计数器一致时，获得总线使用权。</li>
-<li>3.独立请求方式：每一台设备均有一对总线请求线BR和总线同意线BG。</li>
-</ul>
-<hr>
-<h2 id="6-总线通信控制"><a href="#6-总线通信控制" class="headerlink" title="6.总线通信控制"></a>6.总线通信控制</h2><ol>
-<li>经过的周期：</li>
-</ol>
-<ul>
-<li>1.申请分配阶段，由需要使用总线的主模块提出申请，经总线仲裁机构决定将总线使用授权于某一申请者。</li>
-<li>2.寻址阶段，取得了使用权的主模块通过总线</li>
-<li>3.传数阶段：主模块与从模块进行数据交换。</li>
-<li>4.结束阶段：主模块相关信息从系统总线撤出，让出总线使用权。</li>
-</ul>
-<ol start="2">
-<li><p>同步通信：由统一时标控制数据传送称为同步通信。</p>
-</li>
-<li><p>异步通信：没有公共时钟标准，采用应答方式(又称握手方式)，即当主模块发出请求信号时，一直等待从模块返回响应信号后才开始通信。</p>
-</li>
-<li><p>异步通信的应答方法</p>
-</li>
-</ol>
-<ul>
-<li>1.不互锁方式：主模块发送请求信号后，不必等待从模块的回答。</li>
-<li>2.半互锁方式：主模块发出请求信号后，必须等到从模块回答信号后再撤销其请求信号。</li>
-<li>3.全互锁方式：主模块发出请求信号后，必须等到从模块回答信号后再撤销其请求信号。并且从模块必须获知主模块请求信号撤销后，再撤销其回答，双方存在互锁关系。</li>
-</ul>
-<ol start="5">
-<li>半同步通信：既像同步通信一样保留地址命令发出的时间，都按照参照时钟的某个前沿开始，又像异步通信一样允许不同速度的工作，并且为此增加了一条等待”wait”响应时间线。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2558,7 +2793,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

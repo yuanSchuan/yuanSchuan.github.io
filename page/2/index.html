@@ -157,6 +157,168 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/2-%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="远川山离">
+      <meta itemprop="description" content="人生天地间，忽如远行客。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远川山离的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/2-%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">2.系统总线</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-24 09:30:40 / 修改时间：09:33:43" itemprop="dateCreated datePublished" datetime="2022-10-24T09:30:40+08:00">2022-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机组成原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-总线的基本概念"><a href="#1-总线的基本概念" class="headerlink" title="1.总线的基本概念"></a>1.总线的基本概念</h2><ol>
+<li>计算机各个部件之间的连接方式</li>
+</ol>
+<ul>
+<li>1.分散连线：各个部件之间的单独连线。</li>
+<li>2.总线连接：将各个部件连接到一组公共信息传输线。</li>
+</ul>
+<ol start="2">
+<li>总线介绍：</li>
+</ol>
+<ul>
+<li>1.储存总线：连接CPU和主存。</li>
+<li>2.输出总线：建立CPU和各个IO设备之间的交换通道。</li>
+</ul>
+<ol start="3">
+<li>总线分类：</li>
+</ol>
+<ul>
+<li><p>1.片内总线：芯片内部的总线。比如cpu芯片内部，寄存器与寄存器之间，寄存器与算逻单元之间都由片内总线连接。</p>
+</li>
+<li><p>2.系统总线：系统总线又分为数据总线，地址总线，控制总线。</p>
+<ul>
+<li>1.数据总线：用来传输各功能部件之间的数据信息。</li>
+<li>2.地址总线：主要用来指出数据总线上的源数据或目的数据在主存单元的地址或IO设备的地址。</li>
+<li>3.控制总线:用于发出各种控制信号的传输线。</li>
+</ul>
+</li>
+<li><p>3.通信总线：主要用于计算机系统与其他系统(比如控制仪器)之间的通信。</p>
+<blockquote>
+<p>tips:通信总线的传输方式分为：串行通信和并行通信。串行通信指一条传输线一个个传输，并行指多条传输线一个个传输。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="2-总线特性："><a href="#2-总线特性：" class="headerlink" title="2.总线特性："></a>2.总线特性：</h2><ol>
+<li>机械特性：指机械连接方式上的一些性能，比如插头和插座的使用标准。</li>
+<li>电气特性：每一根传输线上信号的传递方向和有效的电平范围。</li>
+<li>功能特性：传输线的功能，比如地址总线用来指出地址码。</li>
+<li>时间特性：用于指出什么时间内有效。</li>
+</ol>
+<hr>
+<h2 id="3-总线性能指标"><a href="#3-总线性能指标" class="headerlink" title="3.总线性能指标"></a>3.总线性能指标</h2><ol>
+<li>总线宽度：数据总线的根数，用bit表示。比如8位，16位。</li>
+<li>总线带宽：总线的数据传输速率：单位时间内总线上传输数据的位数。</li>
+<li>时钟同步&#x2F;异步：同步：数据与时钟同步工作。与时钟不同步工作的总线位异步总线。</li>
+<li>总线复用：一条信号线上分时传送两种信号。</li>
+<li>信号线数：即地址总线，数据总线，控制总线三种总线数的总和。</li>
+<li>总线的控制方式：突发工作，自动配置。</li>
+<li>其他指标：比如负载能力。</li>
+</ol>
+<hr>
+<h2 id="4-总线结构"><a href="#4-总线结构" class="headerlink" title="4.总线结构"></a>4.总线结构</h2><ol>
+<li>总线结构通常可分为单总线结构和多总线结构。</li>
+<li>单总线特点在于将所有的IO设备都挂在了一起。</li>
+<li>多总线结构的特点在于将速度较低的IO设备从单总线上分离，形成主存总线与IO总线分开的结构。</li>
+</ol>
+<hr>
+<h2 id="5-总线控制"><a href="#5-总线控制" class="headerlink" title="5.总线控制"></a>5.总线控制</h2><p>前提：总线上连接的各类设备按照对总线有无控制功能分为：主设备(对总线有控制功能)，从设备(对总线无控制功能)。</p>
+<ol>
+<li><p>总线判优控制分为集中式和分布式：1.集中式：控制逻辑集中在一起。分布式：将控制逻辑分散在与总线连接的各个部件和设备上。</p>
+</li>
+<li><p>集中控制的三种仲裁方式：</p>
+</li>
+</ol>
+<ul>
+<li>1.链式查询：离总线控制部件越近的设备具有最高优先级。</li>
+<li>2.计时器定时查询：在总线未被使用的情况下，总线控制部件的计时器会开始计时并通过设备地址线向各个设备发出一组地址信号，当某个请求占据总线设备地址与计数器一致时，获得总线使用权。</li>
+<li>3.独立请求方式：每一台设备均有一对总线请求线BR和总线同意线BG。</li>
+</ul>
+<hr>
+<h2 id="6-总线通信控制"><a href="#6-总线通信控制" class="headerlink" title="6.总线通信控制"></a>6.总线通信控制</h2><ol>
+<li>经过的周期：</li>
+</ol>
+<ul>
+<li>1.申请分配阶段，由需要使用总线的主模块提出申请，经总线仲裁机构决定将总线使用授权于某一申请者。</li>
+<li>2.寻址阶段，取得了使用权的主模块通过总线</li>
+<li>3.传数阶段：主模块与从模块进行数据交换。</li>
+<li>4.结束阶段：主模块相关信息从系统总线撤出，让出总线使用权。</li>
+</ul>
+<ol start="2">
+<li><p>同步通信：由统一时标控制数据传送称为同步通信。</p>
+</li>
+<li><p>异步通信：没有公共时钟标准，采用应答方式(又称握手方式)，即当主模块发出请求信号时，一直等待从模块返回响应信号后才开始通信。</p>
+</li>
+<li><p>异步通信的应答方法</p>
+</li>
+</ol>
+<ul>
+<li>1.不互锁方式：主模块发送请求信号后，不必等待从模块的回答。</li>
+<li>2.半互锁方式：主模块发出请求信号后，必须等到从模块回答信号后再撤销其请求信号。</li>
+<li>3.全互锁方式：主模块发出请求信号后，必须等到从模块回答信号后再撤销其请求信号。并且从模块必须获知主模块请求信号撤销后，再撤销其回答，双方存在互锁关系。</li>
+</ul>
+<ol start="5">
+<li>半同步通信：既像同步通信一样保留地址命令发出的时间，都按照参照时钟的某个前沿开始，又像异步通信一样允许不同速度的工作，并且为此增加了一条等待”wait”响应时间线。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E6%A6%82%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3552,76 +3714,6 @@ max()和min()分别取最大值和最小值。
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/05/BlogsBuiding/blogmatters/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="远川山离">
-      <meta itemprop="description" content="人生天地间，忽如远行客。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远川山离的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/05/BlogsBuiding/blogmatters/" class="post-title-link" itemprop="url">blogmatters</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-05 15:14:42 / 修改时间：15:16:41" itemprop="dateCreated datePublished" datetime="2022-10-05T15:14:42+08:00">2022-10-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/blogs/" itemprop="url" rel="index"><span itemprop="name">blogs</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ol>
-<li>添加标签或者分类时上传失败，可能是中文没有加-,或者tags:后无空格</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3691,7 +3783,7 @@ max()和min()分别取最大值和最小值。
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
