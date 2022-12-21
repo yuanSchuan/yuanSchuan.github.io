@@ -157,6 +157,182 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="远川山离">
+      <meta itemprop="description" content="人生天地间，忽如远行客。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远川山离的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" class="post-title-link" itemprop="url">计网实验</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-21 23:56:21 / 修改时间：23:57:57" itemprop="dateCreated datePublished" datetime="2022-12-21T23:56:21+08:00">2022-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%80%9D%E7%A7%91%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" itemprop="url" rel="index"><span itemprop="name">思科计网实验</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-连接的线：设备不同用直通线-实线-相同用交叉线-虚线-。"><a href="#1-连接的线：设备不同用直通线-实线-相同用交叉线-虚线-。" class="headerlink" title="1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。"></a>1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。</h2><ul>
+<li><p>1.比如主机与交换机用直线。</p>
+</li>
+<li><p>2.交换机与交换机用交叉线，路由器与路由器用交叉线。</p>
+</li>
+<li><p>3，交换机与路由用直线。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行-因为没有可用端口，即没有指定端口，收到的数据也会被丢弃-。"><a href="#2-所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行-因为没有可用端口，即没有指定端口，收到的数据也会被丢弃-。" class="headerlink" title="2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。"></a>2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。</h2><p>需要注意的是，如果与路由器连接，那么网关需要填写路由器通向这个主机的端口ip，否则无法通信。</p>
+<blockquote>
+<p>tips1:网关是一个局域网与外部连接的窗口，需要配置网关交换机才知道将信息发往哪个外部地址</p>
+</blockquote>
+<blockquote>
+<p>tip2:同一网段，相同的网络号，即掩码前的数字相同。比如192.56.3.1&#x2F;24和192.56.3.2&#x2F;24。因为前24位相同为同一网段。</p>
+</blockquote>
+<hr>
+<h2 id="3-端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC-物理地址-，互联网-不同局域网间-必须有IP。"><a href="#3-端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC-物理地址-，互联网-不同局域网间-必须有IP。" class="headerlink" title="3. 端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC(物理地址)，互联网(不同局域网间)必须有IP。"></a>3. 端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC(物理地址)，互联网(不同局域网间)必须有IP。</h2><ul>
+<li><p>1.进入端口：interface 端口名字</p>
+</li>
+<li><p>2.给端口配置IP地址:ip address ip地址 掩码</p>
+</li>
+<li><p>3.注意，端口配置完后不会自动开启端口功能，需要使用no shutdown开启端口功能</p>
+</li>
+</ul>
+<hr>
+<h2 id="4-局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下"><a href="#4-局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下" class="headerlink" title="4. 局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下:"></a>4. 局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下:</h2><ul>
+<li><p>1.vlan id(id可以是任意数字)</p>
+</li>
+<li><p>2.name word(word可以是任意名字)</p>
+</li>
+<li><p>3.删除vlan:no vlan id(要删除的vlanid)</p>
+</li>
+<li><p>4.进入vlan:in vlan id，注意：这也是启动vlan(将down状态转化成up)</p>
+</li>
+</ul>
+<p>注意1：vlan需要分配到具体的端口才有用，因为每个端口唯一连接一个主机，分配到具体端口相当于直接将该主机分配到某个虚拟局域网。</p>
+<ul>
+<li>5.将某个端口归类给Vlan(首先需要进入端口):1. interface 端口名 2. switchport access vlan vlanid</li>
+</ul>
+<p>注意2：要使得vlan之间相互通信，为该局域网的vlan分配ip，借助三层交换机进行路由，才能通信，过程为进入vlan,即in vlan id，后ip adress…，<br>注意是三层交换机,因为路由器是不可以进行vlan创建的，</p>
+<h2 id="特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。"><a href="#特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。" class="headerlink" title="特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。"></a>特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。</h2><ul>
+<li>6.使用trunk进行不同交换机间通信:分别在二层和三层交换机连接的两个端口配置trunk：switchport mode trunk</li>
+</ul>
+<p>当然，要将trunk转换成接口即:switchport mode access</p>
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><h2 id="1-trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）"><a href="#1-trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）" class="headerlink" title="1.trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）"></a>1.trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）</h2><h2 id="2-路由可以帮助不同vlan进行路由-本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip-。注意区分二者。"><a href="#2-路由可以帮助不同vlan进行路由-本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip-。注意区分二者。" class="headerlink" title="2.路由可以帮助不同vlan进行路由(本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip)。注意区分二者。"></a>2.路由可以帮助不同vlan进行路由(本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip)。注意区分二者。</h2><hr>
+<h2 id="5-路由不同网段-或不同局域网-通信需要路由：设置ip为-ip-address-ip地址-掩码"><a href="#5-路由不同网段-或不同局域网-通信需要路由：设置ip为-ip-address-ip地址-掩码" class="headerlink" title="5. 路由不同网段(或不同局域网)通信需要路由：设置ip为:ip address ip地址 掩码"></a>5. 路由不同网段(或不同局域网)通信需要路由：设置ip为:ip address ip地址 掩码</h2><ul>
+<li><p>1.需要为路由器和路由器之间的端口设置ip地址，这两个ip地址需要在同一网段。</p>
+</li>
+<li><p>2.路由器和交换机连接，只需要为路由器连接的端口设置ip地址即可，交换机端不需要。</p>
+</li>
+<li><p>3.路由器连接的交换机A，交换机A局域网下面的主机需要和路由器连接交换机A的端口ip处于同一网段，并且填写的网关要是这个ip地址。</p>
+</li>
+<li><p>4.路由器需要配置静态路由表，格式为(目的地址 掩码 下一条地址),目的地址只需要填网络号即可，比如192.56.3.3&#x2F;24。目的地址为192.56.3.0。<br>而下一条地址不是本路由器的端口地址，而是本路由器接下来要传递的邻接路由器的端口ip,这个IP必须写全，比如192.56.1.2。</p>
+</li>
+</ul>
+<p>配置静态路由的指令为:ip route 目的地址网络号 掩码 下一条地址</p>
+<blockquote>
+<p>tips:要删除静态路由在ip route改为no ip route即可</p>
+</blockquote>
+<ul>
+<li>5.动态路由：这边使用rip动态路由协议进行动态路由</li>
+</ul>
+<p>指令1进入rip:router rip</p>
+<p>指令2配置rip的网络号:network 网络号</p>
+<blockquote>
+<p>tips：注意，rip配置的是本路由器的网络号，需要将本路由器的哪个端口连接的网络与其他路由器互联,使用network 路由器端口网络号即可。</p>
+</blockquote>
+<p>另外可以使用version指令配置rip版本，默认为version 2</p>
+<p>关于可变长子网使用，因为version 2默认为边界汇总，要使用可变长子网的指令为<br>no auto-summary</p>
+<p>需要注意的是，存在交换机和路由一体的机器，目的是为了降低成本。因此需要接口转换，即将交换机口与路由器口互换。</p>
+<ul>
+<li><p>1.将交换机口换成路由器口：no switchport,换回则switchport.</p>
+</li>
+<li><p>2.配置ip的方法有两种：一种是将交换机端口转化成路由器端口配置成指定ip,另一种是将端口与虚拟局域网vlan绑定，然后配置vlanIP。后者可以<br>直接将虚拟局域网的整个作为传输目标，进而不用一个个配置。</p>
+<ul>
+<li><p>1.第一种直接用 1) interface 端口名  选择端口，然后 2) no switchport，转换模式，最后设置端口ip地址 3) ip address ip地址 掩码</p>
+</li>
+<li><p>2.第二种为 1) in vlan id 进入vlan，然后设置vlanip地址 2) ip address ip地址 掩码</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>最后，交换机要选择2811,因为前面的不能拓展端口</p>
+<h2 id="一定要注意！！！！！！，这种一体复用交换机一定要使用ip-routing指令开启路由功能！！！！！！，否则配置完也无法使用。"><a href="#一定要注意！！！！！！，这种一体复用交换机一定要使用ip-routing指令开启路由功能！！！！！！，否则配置完也无法使用。" class="headerlink" title="一定要注意！！！！！！，这种一体复用交换机一定要使用ip routing指令开启路由功能！！！！！！，否则配置完也无法使用。"></a>一定要注意！！！！！！，这种一体复用交换机一定要使用ip routing指令开启路由功能！！！！！！，否则配置完也无法使用。</h2><hr>
+<h1 id="以下的DHCP-DNS-HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字-参数。"><a href="#以下的DHCP-DNS-HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字-参数。" class="headerlink" title="以下的DHCP,DNS,HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字+参数。"></a>以下的DHCP,DNS,HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字+参数。</h1><h2 id="6-DHCP：用于动态的给主机分配ip-过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接"><a href="#6-DHCP：用于动态的给主机分配ip-过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接" class="headerlink" title="6.DHCP：用于动态的给主机分配ip,过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接"></a>6.DHCP：用于动态的给主机分配ip,过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接</h2><ol>
+<li><p>从主机模块拖入Genetic,与一个交换机相连,点击打开，在config下的serveice中有DHCP配置。</p>
+</li>
+<li><p>主要：分别填入默认网关(交换机连接的路由器端口，这个是给所有的从这里获取ip的地址的网关)，填写分配开始地址。如果有DNS，填入DNS地址。</p>
+</li>
+<li><p>如果在同一局域网下，无需配置，如果在不同局域网下需要使用ip helper-address DHCP服务器地址,以下介绍ip helper-address服务器地址的注意点</p>
+</li>
+</ol>
+<h2 id="注意-ip-helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip-那个就进入那个vlan使用该指令。"><a href="#注意-ip-helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip-那个就进入那个vlan使用该指令。" class="headerlink" title="注意:ip helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip,那个就进入那个vlan使用该指令。"></a>注意:ip helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip,那个就进入那个vlan使用该指令。</h2><hr>
+<h2 id="7-DNS与HTTP：DNS提供网址与ip地址的转换-输入网址转化成ip地址-，进入指定ip地址，服务HTTP会返回一个html页面-当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。"><a href="#7-DNS与HTTP：DNS提供网址与ip地址的转换-输入网址转化成ip地址-，进入指定ip地址，服务HTTP会返回一个html页面-当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。" class="headerlink" title="7. DNS与HTTP：DNS提供网址与ip地址的转换(输入网址转化成ip地址)，进入指定ip地址，服务HTTP会返回一个html页面(当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。)"></a>7. DNS与HTTP：DNS提供网址与ip地址的转换(输入网址转化成ip地址)，进入指定ip地址，服务HTTP会返回一个html页面(当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。)</h2><ul>
+<li><p>1.二者都在服务器confige的service下面</p>
+</li>
+<li><p>2.DNS配置中的name是网址(比如<a target="_blank" rel="noopener" href="http://www.xxxx.com),address是这个网址要转换的ip地址,当主机的dns配置为该dns服务器的ip地址时,会为该主机提供dns解析./">www.xxxx.com)，address是这个网址要转换的ip地址，当主机的DNS配置为该DNS服务器的ip地址时，会为该主机提供DNS解析。</a></p>
+</li>
+</ul>
+<blockquote>
+<p>注意，若使用dhcp则需要在dhcp配置dns地址</p>
+</blockquote>
+<ul>
+<li>3.http：考点为在主机的浏览器中输入网址,经过DNS解析后去往该ip的服务器地址，该服务器开启http服务，则会返回数据该请求主机的浏览器进程。</li>
+</ul>
+<blockquote>
+<p>开始http和dns的方法均在第一点，记得dhcp,dns,http要点on才会开启服务。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/16/python/python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -188,7 +364,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-19 17:55:38" itemprop="dateModified" datetime="2022-12-19T17:55:38+08:00">2022-12-19</time>
+                <time title="修改时间：2022-12-19 19:22:08" itemprop="dateModified" datetime="2022-12-19T19:22:08+08:00">2022-12-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,8 +468,7 @@
 <p>tips:注意string虽然是数组，但不可以修改</p>
 <p>设str&#x3D;’123456’</p>
 <ul>
-<li><p>1.字符串使用：str[se,se]</p>
-<ul>
+<li>1.字符串使用：str[se,se]<ul>
 <li>1.\str[]一个参数，[0]，[2]分别表示输出第一个和第三个字符</li>
 <li>2.[1:3] ,输出第二个到第四个字符</li>
 <li>3.[0:-1]输出第一个到最后一个,[0:-2]输出第一个到倒数第二个</li>
@@ -301,6 +476,11 @@
 <li>5.str*2,str**都表示输出2次，*3输出三次</li>
 </ul>
 </li>
+</ul>
+<blockquote>
+<p>tips:str[::-1]表示逆序输出，注意。</p>
+</blockquote>
+<ul>
 <li><p>2.字符串的一些方法</p>
 <ul>
 <li>1.split(),以参数切开。比如’,’，则每遇到一个，切开。’’则切成一个个字母，注意，<br>使用split返回的是一个列表list</li>
@@ -396,6 +576,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = lambda a : a + 10</span><br><span class="line">print(x(5))</span><br></pre></td></tr></table></figure>
 <p>输出值为15</p>
 </li>
+<li><p>关于静态函数,@staticmethod用于定义静态方法，但静态变量只能采用定义在外面的方法曲线救国。在静态函数中定义没意义，因为如果在里面初始化，那么每次执行该静态变量都会初始化，与类的对象方法无异。</p>
+</li>
 </ol>
 <blockquote>
 <p>tips:关于试题：python函数可以分为内置函数和自定义函数</p>
@@ -477,7 +659,18 @@
 </li>
 </ol>
 <hr>
-<h2 id="9-一些特殊的函数和包"><a href="#9-一些特殊的函数和包" class="headerlink" title="9.一些特殊的函数和包"></a>9.一些特殊的函数和包</h2><ol>
+<h2 id="9-装饰"><a href="#9-装饰" class="headerlink" title="9.装饰"></a>9.装饰</h2><p>python能够在函数中定义函数，以函数为参数执行函数。<br>而装饰@可以理解为一个函数，用于执行或者在不改变函数本身的情况下修改函数的功能。</p>
+<ol>
+<li>自己创建一个函数装饰器：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def 自定义函数1(x):</span><br><span class="line">    x()</span><br><span class="line">    def 内部函数:</span><br><span class="line">       print(&#x27;在执行内部函数&#x27;)</span><br><span class="line">    return 内部函数</span><br><span class="line"></span><br><span class="line">@自定义函数1</span><br><span class="line">def 自定义函数2()</span><br><span class="line">    print(&#x27;在执行2&#x27;)</span><br><span class="line"></span><br><span class="line">print(自定义函数2)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>以上代码的执行结果为:在执行2，在执行内部函数</p>
+<p>在以上代码中，@创建该函数装饰器，被作为装饰器的函数(函数1)必须要返回一个函数（内部函数），在调用自定义函数2时，会自动执行自定义函数1，并且会执行返回的函数(内部函数)。</p>
+<p>并且值得注意的是，自定义函数的一个参数指向被装饰的函数的地址，所以执行这个参数()，等于<br>执行那个函数</p>
+<ol start="2">
+<li>将类作为装饰器:需要在类内部定义__call__函数，使得类能够像函数一样被调用。</li>
+</ol>
+<hr>
+<h2 id="10-一些特殊的函数和包"><a href="#10-一些特殊的函数和包" class="headerlink" title="10.一些特殊的函数和包"></a>10.一些特殊的函数和包</h2><ol>
 <li>random:用于生成随机数(仅介绍一些常用的)</li>
 </ol>
 <ul>
@@ -2728,146 +2921,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/6-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="远川山离">
-      <meta itemprop="description" content="人生天地间，忽如远行客。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="远川山离的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/6-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">6.指令系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-28 22:18:08 / 修改时间：22:20:09" itemprop="dateCreated datePublished" datetime="2022-10-28T22:18:08+08:00">2022-10-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-机器指令概述"><a href="#1-机器指令概述" class="headerlink" title="1.机器指令概述"></a>1.机器指令概述</h2><ol>
-<li>概述：机器语言由一条条语句构成，每一条语句准确的表达某种语义。语义表达某种操作。全部的机器指令集合称为机器的指令系统，指令系统集反应了机器的功能。</li>
-</ol>
-<hr>
-<h2 id="2-指令的一般格式-操作码字段和地址码字段"><a href="#2-指令的一般格式-操作码字段和地址码字段" class="headerlink" title="2.指令的一般格式:操作码字段和地址码字段"></a>2.指令的一般格式:操作码字段和地址码字段</h2><ol>
-<li>操作码：用来指明该指令所要完成的操作。比如加法，移位等操作。</li>
-<li>地址码:用来指明该指令的原操作地址，地址可以是主存地址，寄存器地址，甚至是IO地址。</li>
-</ol>
-<ul>
-<li>1.三地址指令：一般为第一个地址和第二个地址的数据进行OP(某种运算),存入第三个地址。</li>
-<li>2.两地址指令:第一个地址与第二个地址进行运算，并将结果存入第一个地址。</li>
-<li>3.一地址指令:存放运算的操作数，存放运算的中间结果。</li>
-<li>4.零地址指令:比如空操作，停机等指令。</li>
-</ul>
-<hr>
-<h2 id="3-操作数类型"><a href="#3-操作数类型" class="headerlink" title="3.操作数类型"></a>3.操作数类型</h2><ol>
-<li>地址：地址实际上也是一种数据。</li>
-<li>数字</li>
-<li>字符：普遍采用ASCII码</li>
-<li>逻辑数据:逻辑运算时，n个0,1的组合不被看作算数，而是逻辑数。</li>
-</ol>
-<hr>
-<h2 id="4-数据在储存器中的存放方式"><a href="#4-数据在储存器中的存放方式" class="headerlink" title="4.数据在储存器中的存放方式"></a>4.数据在储存器中的存放方式</h2><ol>
-<li>概述：字长一定是2的倍数，对于没有满足字长长度的数据，需要进行填充。</li>
-</ol>
-<hr>
-<h2 id="5-操作类型"><a href="#5-操作类型" class="headerlink" title="5.操作类型"></a>5.操作类型</h2><ol>
-<li>数据传送:包括在寄存器和储存单元之间传送数据。</li>
-<li>算数逻辑运算</li>
-<li>移位</li>
-<li>转移：跳转至相应的指令段执行</li>
-</ol>
-<ul>
-<li>1.无条件转移</li>
-<li>2.条件转移</li>
-<li>3.调用与返回</li>
-<li>4.陷阱与陷阱指令：意外中断</li>
-<li>5.输入输出</li>
-</ul>
-<hr>
-<h2 id="6-寻址方式"><a href="#6-寻址方式" class="headerlink" title="6.寻址方式"></a>6.寻址方式</h2><ol>
-<li>指令寻址:</li>
-</ol>
-<ul>
-<li>1.顺序寻址:即通过PC+1,自动形成下一条指令的地址。</li>
-<li>2.通过转移指令实现</li>
-</ul>
-<ol start="2">
-<li>数据寻址:操作码+寻址特征+形式寻址,又称形式地址，因为地址码字段通常不代表操作数的真实地址。</li>
-</ol>
-<ul>
-<li>1.立即寻址：即立即数(不是操作数地址，而是操作数本身)</li>
-<li>2.直接寻址：数据的真实地址</li>
-<li>3.隐含寻址:不明显的操作数地址，隐含在某个操作码或者地址数中。</li>
-<li>4.间接寻址:储存的是数据的储存地址的储存单元。</li>
-<li>5.寄存器寻址：指明了寄存器编号,取某个寄存器的值。</li>
-<li>6.寄存器间接寻址:取寄存器中的值在，将这个值视作地址进行查询。</li>
-<li>7.基址查询:需要基址寄存器BR,形式地址与基址寄存器相加。</li>
-<li>8.变址寻址:形式地址与变址寄存器内容相加。</li>
-<li>9.相对寻址:将PC中的内容与形式地址相加。</li>
-</ul>
-<ol start="3">
-<li>关于RISC和CISC比较的优点：</li>
-</ol>
-<ul>
-<li>1.充分利用VLSI芯片面积</li>
-<li>2.提高计算机运算速度</li>
-<li>3.便于设计，可降低成本，提高可靠性。</li>
-<li>4.有效支持高级语言<blockquote>
-<p>tips:RISC是CISC在某种程度上精简。</p>
-</blockquote>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2937,14 +2990,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -28,7 +28,7 @@
 <meta property="og:description" content="1.一些基础python特点 命名的和其他语言一样，第一个字符必须是字母或者_  ‘’,””都表示字符串，python没有char类型，只有字符串类型。  字符串之间可以+运算连接，**表示重复2遍。  print(,end&#x3D;’’)表示不换行  特殊运算：    1.乘方：2**5,2的5次方 2.除法,&#x2F;得到浮点数。&#x2F;&#x2F;得到整数   注释为#，单行和’’’">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-12-16T13:51:19.000Z">
-<meta property="article:modified_time" content="2022-12-19T09:55:38.422Z">
+<meta property="article:modified_time" content="2022-12-19T11:22:08.399Z">
 <meta property="article:author" content="远川山离">
 <meta property="article:tag" content="编程语言">
 <meta name="twitter:card" content="summary">
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-19 17:55:38" itemprop="dateModified" datetime="2022-12-19T17:55:38+08:00">2022-12-19</time>
+                <time title="修改时间：2022-12-19 19:22:08" itemprop="dateModified" datetime="2022-12-19T19:22:08+08:00">2022-12-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -295,8 +295,7 @@
 <p>tips:注意string虽然是数组，但不可以修改</p>
 <p>设str&#x3D;’123456’</p>
 <ul>
-<li><p>1.字符串使用：str[se,se]</p>
-<ul>
+<li>1.字符串使用：str[se,se]<ul>
 <li>1.\str[]一个参数，[0]，[2]分别表示输出第一个和第三个字符</li>
 <li>2.[1:3] ,输出第二个到第四个字符</li>
 <li>3.[0:-1]输出第一个到最后一个,[0:-2]输出第一个到倒数第二个</li>
@@ -304,6 +303,11 @@
 <li>5.str*2,str**都表示输出2次，*3输出三次</li>
 </ul>
 </li>
+</ul>
+<blockquote>
+<p>tips:str[::-1]表示逆序输出，注意。</p>
+</blockquote>
+<ul>
 <li><p>2.字符串的一些方法</p>
 <ul>
 <li>1.split(),以参数切开。比如’,’，则每遇到一个，切开。’’则切成一个个字母，注意，<br>使用split返回的是一个列表list</li>
@@ -399,6 +403,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = lambda a : a + 10</span><br><span class="line">print(x(5))</span><br></pre></td></tr></table></figure>
 <p>输出值为15</p>
 </li>
+<li><p>关于静态函数,@staticmethod用于定义静态方法，但静态变量只能采用定义在外面的方法曲线救国。在静态函数中定义没意义，因为如果在里面初始化，那么每次执行该静态变量都会初始化，与类的对象方法无异。</p>
+</li>
 </ol>
 <blockquote>
 <p>tips:关于试题：python函数可以分为内置函数和自定义函数</p>
@@ -480,7 +486,18 @@
 </li>
 </ol>
 <hr>
-<h2 id="9-一些特殊的函数和包"><a href="#9-一些特殊的函数和包" class="headerlink" title="9.一些特殊的函数和包"></a>9.一些特殊的函数和包</h2><ol>
+<h2 id="9-装饰"><a href="#9-装饰" class="headerlink" title="9.装饰"></a>9.装饰</h2><p>python能够在函数中定义函数，以函数为参数执行函数。<br>而装饰@可以理解为一个函数，用于执行或者在不改变函数本身的情况下修改函数的功能。</p>
+<ol>
+<li>自己创建一个函数装饰器：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def 自定义函数1(x):</span><br><span class="line">    x()</span><br><span class="line">    def 内部函数:</span><br><span class="line">       print(&#x27;在执行内部函数&#x27;)</span><br><span class="line">    return 内部函数</span><br><span class="line"></span><br><span class="line">@自定义函数1</span><br><span class="line">def 自定义函数2()</span><br><span class="line">    print(&#x27;在执行2&#x27;)</span><br><span class="line"></span><br><span class="line">print(自定义函数2)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>以上代码的执行结果为:在执行2，在执行内部函数</p>
+<p>在以上代码中，@创建该函数装饰器，被作为装饰器的函数(函数1)必须要返回一个函数（内部函数），在调用自定义函数2时，会自动执行自定义函数1，并且会执行返回的函数(内部函数)。</p>
+<p>并且值得注意的是，自定义函数的一个参数指向被装饰的函数的地址，所以执行这个参数()，等于<br>执行那个函数</p>
+<ol start="2">
+<li>将类作为装饰器:需要在类内部定义__call__函数，使得类能够像函数一样被调用。</li>
+</ol>
+<hr>
+<h2 id="10-一些特殊的函数和包"><a href="#10-一些特殊的函数和包" class="headerlink" title="10.一些特殊的函数和包"></a>10.一些特殊的函数和包</h2><ol>
 <li>random:用于生成随机数(仅介绍一些常用的)</li>
 </ol>
 <ul>
@@ -530,7 +547,10 @@
     <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/" rel="prev" title="考研-计网应用层">
       <i class="fa fa-chevron-left"></i> 考研-计网应用层
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" rel="next" title="计网实验">
+      计网实验 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -589,7 +609,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80python%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1.一些基础python特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-python%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">2.python基础类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%81%E7%A8%8B%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">3.流程语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4.函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%8C%85%E4%B8%8E%E5%BC%95%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">5.模块，包与引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">6.</span> <span class="nav-text">6.输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">7.异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">8.类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E5%87%BD%E6%95%B0%E5%92%8C%E5%8C%85"><span class="nav-number">9.</span> <span class="nav-text">9.一些特殊的函数和包</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80python%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1.一些基础python特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-python%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">2.python基础类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%81%E7%A8%8B%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">3.流程语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4.函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%8C%85%E4%B8%8E%E5%BC%95%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">5.模块，包与引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">6.</span> <span class="nav-text">6.输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">7.异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">8.类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%A3%85%E9%A5%B0"><span class="nav-number">9.</span> <span class="nav-text">9.装饰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E5%87%BD%E6%95%B0%E5%92%8C%E5%8C%85"><span class="nav-number">10.</span> <span class="nav-text">10.一些特殊的函数和包</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -603,14 +623,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
