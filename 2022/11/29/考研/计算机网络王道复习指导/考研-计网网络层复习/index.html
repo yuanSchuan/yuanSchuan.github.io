@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.网络层的一些基础知识 中继系统：用于将多个同层网络互联，连接后形成更大的同层。比如交换机与交换机连接是更大的局域网。   1.物理层中继系统：1.转发器。2.集线器。  2.数据链路层中继系统：1.网桥。2.交换机。  3.网络层中继系统：1.路由器。  4.网络层以上中继设备：网关。   注意：历史原因，有些文献将路由器称之为网关。  路由器的主要功能：1.路由选择。2.分组转发。   1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="考研-计网网络层复习">
+<meta property="og:url" content="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.网络层的一些基础知识 中继系统：用于将多个同层网络互联，连接后形成更大的同层。比如交换机与交换机连接是更大的局域网。   1.物理层中继系统：1.转发器。2.集线器。  2.数据链路层中继系统：1.网桥。2.交换机。  3.网络层中继系统：1.路由器。  4.网络层以上中继设备：网关。   注意：历史原因，有些文献将路由器称之为网关。  路由器的主要功能：1.路由选择。2.分组转发。   1.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-29T01:10:49.000Z">
+<meta property="article:modified_time" content="2022-11-29T01:14:45.782Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>考研-计网网络层复习 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          考研-计网网络层复习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-29 09:10:49 / 修改时间：09:14:45" itemprop="dateCreated datePublished" datetime="2022-11-29T09:10:49+08:00">2022-11-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">计算机网络考研复习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-网络层的一些基础知识"><a href="#1-网络层的一些基础知识" class="headerlink" title="1.网络层的一些基础知识"></a>1.网络层的一些基础知识</h2><ol>
+<li>中继系统：用于将多个同层网络互联，连接后形成更大的同层。比如交换机与交换机连接是更大的局域网。</li>
+</ol>
+<ul>
+<li><p>1.物理层中继系统：1.转发器。2.集线器。</p>
+</li>
+<li><p>2.数据链路层中继系统：1.网桥。2.交换机。</p>
+</li>
+<li><p>3.网络层中继系统：1.路由器。</p>
+</li>
+<li><p>4.网络层以上中继设备：网关。</p>
+</li>
+</ul>
+<p>注意：历史原因，有些文献将路由器称之为网关。</p>
+<ol start="2">
+<li>路由器的主要功能：1.路由选择。2.分组转发。</li>
+</ol>
+<ul>
+<li><p>1.路由选择，确定路径，也就是，根据路由协议构造路由表。</p>
+</li>
+<li><p>2.分组转发：根据路由表衍生出的转发表，选择合适的端口转发数据。</p>
+</li>
+</ul>
+<ol start="3">
+<li>网络层可以分为数据层面和控制层面。</li>
+</ol>
+<ul>
+<li><p>1.数据层面：也称转发层面，主要功能为转发。</p>
+</li>
+<li><p>2.控制层面：主要功能为路由选择。</p>
+</li>
+</ul>
+<ol start="4">
+<li>拥塞控制：网络层的拥塞控制为对同行子网进行拥塞控制，主要方法包括开环控制和闭环控制。</li>
+</ol>
+<ul>
+<li><p>1.开环控制：一开始就将拥塞的因素考虑到，中途不再修改，控制手段包括1.何时接收新流量。2.何时丢弃分组。决定时不考虑当前<br>网络状态，因为一开始就准备好了。</p>
+</li>
+<li><p>2.闭环控制，一开始不考虑拥塞，在运行时用监测网络系统去检测。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:关于拥塞控制和流量控制的区别  </p>
+</blockquote>
+<p>拥塞控制一般考虑的是全局的一个拥塞情况，根据全局的拥塞情况进行传输控制。<br>流量控制一般考虑的是具体点对点的数据传输，通过抑制发送端的速率使得接收端能够及时接收数据。</p>
+<blockquote>
+<p>tips2:网络层和传输层均有拥塞控制，网络层的拥塞控制实现介质是路由器，以检测整个网络拓扑拥塞情况的变化。传输层拥塞控制通过具体端，根据数据是否接收，以及接收的时间，次数对网络进行判断，处理拥塞。</p>
+</blockquote>
+<ol start="5">
+<li>错题</li>
+</ol>
+<ul>
+<li>1.路由器连接的异构网络是指：3<ul>
+<li>1.网络拓扑结构不同。</li>
+<li>2.网络种的计算机操作体系不同。</li>
+<li>3.数据链路层和物理层均不同。</li>
+</ul>
+</li>
+</ul>
+<p>原因是因为数据链路层和物理层决定网络的物理结构。</p>
+<ul>
+<li>2.在路由器连接的多个局域网中，要求每个局域网：物理层，数据链路层和网络层协议可以不同，而网络层以上协议必须相同。</li>
+</ul>
+<p>路由器可以兼容IPv4和IPv6，因此网络协议可以不同。</p>
+<ul>
+<li>3.路由器的路由器通常包涵：目的地址 掩码 下一条地址</li>
+</ul>
+<hr>
+<h2 id="2-路由算法"><a href="#2-路由算法" class="headerlink" title="2.路由算法"></a>2.路由算法</h2><ol>
+<li>路由算法的分类</li>
+</ol>
+<ul>
+<li><p>1.静态路由算法：又称非自适应路由算法，由网络管理员手动配置，当网络拓扑结构发生变化时，由网络管理员手动修改。</p>
+</li>
+<li><p>2.动态路由算法：又称自适应路由算法。主要通过路由器之间彼此交换信息，然后按照一定优化算法出来，在一定时间间隙内会不断更新，以适应不断变化的网络。</p>
+</li>
+</ul>
+<ol start="2">
+<li>路由算法</li>
+</ol>
+<ul>
+<li>1.距离-向量路由算法(RIP算法)：<ul>
+<li><p>1.概述：所有结点与邻近结点定期交换整个路由表，并且所有结点都会接听x结点发送的路由表信息，并在发现1)出现新的路由路径。2)发现更短的路径。时更新路由表。</p>
+</li>
+<li><p>2.在这种算法中，每段距离定义为一跳数，每经过一跳，距离+1.</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:这种算法需要所有结点与邻近结点传递整个路由表，因此在大的网络中通信量会非常大，因此，一般用于小型网络。。</p>
+</blockquote>
+<ul>
+<li>2.链路状态路由算法(OSPF算法):<ul>
+<li><p>1.概述：主要特征为每个结点都知道整个网络的拓扑图，进而生成最合适的路由表。会主动测试邻近结点的状态(包括链路状态)，定期的会将链路状态信息传递给所有结点(与RIP不同的时，它传递给邻近结点，邻近结点接收检查后，转发给其他结点，进而传递给整个自治域，但RIP则是直接传给全部整个，而每个结点都会重新发送一次)。</p>
+</li>
+<li><p>2.链路状态发生变化后使用Dijkstra计算最短路径。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>层次路由</li>
+</ol>
+<ul>
+<li><p>1.概述：路由器为了减少需要维护的路由表量，需要对路由器再进行划分。将整个互联路划分成许多个较小的自治系统。</p>
+</li>
+<li><p>2.内部网关协议(IGP):也称域内路由选择，具体协议比如RIP和OSFP等。</p>
+</li>
+<li><p>2.外部网关协议(EGP):域间路由选择，用于将不同自治系统之间选择最优路径并通信，具体协议比如EGP。</p>
+</li>
+</ul>
+<p>值得注意的是，使用层次路由OSFP会将一个路由系统再划分为若干区域，以减少泛洪带来的巨大通信量。</p>
+<p>注意2：每个小的自治系统与外部自治系统连接时，会有专门路由器与外部连接，这些连接外部的路由器又组成了更大的拓扑网络。</p>
+<ol start="4">
+<li>错题：</li>
+</ol>
+<ul>
+<li><ol>
+<li>路由器交付说法错误的是：直接交付时，两台机器可以不再在同一网段内。</li>
+</ol>
+</li>
+</ul>
+<p>注意：如果不在同一网段会采用简介交付，而不是直接。</p>
+<hr>
+<h2 id="3-IPv4"><a href="#3-IPv4" class="headerlink" title="3.IPv4"></a>3.IPv4</h2><p>前情概述：网络层使用的协议为IPv4或者IPv6,二者区别主要在首部固定字段，一些首部功能，最重要的是所能表示的地址后者比前者大的多。</p>
+<ol>
+<li>组成部分：(仅介绍一些常用和易混淆的)</li>
+</ol>
+<ul>
+<li><p>1.版本：指ip协议版本,ipv4为4.</p>
+</li>
+<li><p>2.首部长度，总长度，片偏移的基本单位分别为4B,1B,8B</p>
+</li>
+<li><p>3.标识：每产生一个数据报，就产生一个标识。主要用于分片后，根据相同的标识拼接成一个数据报。</p>
+</li>
+</ul>
+<p>注意：这不是序号，主要用于分片，而IPv6不允许过程中分片(但允许开始时分片)，因此也没有标识字段。</p>
+<ul>
+<li><p>4.标志MF:MF&#x3D;1表示还有一个分片，0表示没有分片。DF&#x3D;0时才表示允许分片。</p>
+</li>
+<li><p>5.片偏移：某片相对于原分组的相对位置。</p>
+</li>
+<li><p>6.协议：不是ip协议，而是上层的传输层协议，用于区分TCP还是UDP。</p>
+</li>
+</ul>
+<ol start="2">
+<li>分片：链路层的最大数据量称为最大传送单元(MTU),如果网络层数据报大于MTU那么就需要分片。以下介绍分片的注意点：</li>
+</ol>
+<ul>
+<li><p>1.IPv4首部长度为20,每次分片需要多填充20字节。</p>
+</li>
+<li><p>2.片偏移的倍数必须是8的倍数，这意味着除开最后一片外，其他分片都是8的倍数。比如50B,那么必须填充至56B。</p>
+</li>
+<li><p>3.以太网MTU为1500B，广域网一般为576B。</p>
+</li>
+</ul>
+<ol start="3">
+<li>IPv4的IP地址</li>
+</ol>
+<ul>
+<li><p>1.IP地址为：网络号+主机号。  共32位，每8位用一个.分隔。<br>为了区分网络号，分为ABCDE类地址。区分为：网络号前1，2，3，4值固定。</p>
+<ul>
+<li><p>1.A类地址第一位固定为0，后7位随意(不可为全0和全1),因此值为1~126。</p>
+</li>
+<li><p>2.B类地址第1，2位固定为10，后6位随意，因此值为128~191</p>
+</li>
+<li><p>3.C类地址为1，2，3固定为110，后5位随意，因此值为192~223</p>
+</li>
+<li><p>4.D类地址固定为1110，因此值为224~239：此地址为多播地址。</p>
+</li>
+<li><p>5.E类地址240~255：保留今后使用。</p>
+</li>
+</ul>
+</li>
+<li><p>2.特殊IP地址</p>
+<ul>
+<li>1.网络和主机号全0都表示自己，组合表示本网络的本主机。</li>
+<li>2.网络和主机号全1都表示广播地址，组合表示整个广播域的广播地址。注意，路由器可以分隔广播域。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>网络地址转换(NAT)：格式为(全球IP地址：端口)转化成(本地IP地址 ：端口)。主要用于将全球的共有IP地址通过添加端口映射成多个本地IP,用于缓解IPv4地址的耗尽。</li>
+</ol>
+<p>有意思的是，NAT由于端口其实工作在传输层。</p>
+<ol start="5">
+<li>子网划分与子网掩码，CIDR</li>
+</ol>
+<ul>
+<li><p>1.子网划分为(&lt;网络号&gt;&lt;子网号&gt;&lt;主机号&gt;)，即从主机号从划分出子网号。</p>
+</li>
+<li><p>2.CIDR通过子网掩码消除了传统通过网络号来区分不同网段，直接使用掩码对IP地址进行计算。ip地址和掩码进行and运算，即11得1,10得0，00得0。而掩码1与1之间必须为1，比如&#x2F;24掩码，前24位为1，后8位为0.</p>
+</li>
+<li><p>3.路由聚合：两个ip，取网络号中相同部分的，后面设0。用于路由器的路由跳转。<br>比如192.32.6.9和193.32.7.6可以聚合为192.32.0.0</p>
+</li>
+</ul>
+<p>值得注意的是，对于聚合路由，路由器会优先选择后缀最长的部分转发。比如192.32.0.0和192.32.6.0。会优先转发后者。</p>
+<ol start="5">
+<li>网络层的转发过程</li>
+</ol>
+<ul>
+<li><p>1.路由表根据(目的网络，下一条地址转跳)。</p>
+</li>
+<li><p>2.转发优先级：1.特定主机路由。2.聚合路由(越长越先)。3.默认路由。4，报告出错。</p>
+</li>
+</ul>
+<p>值得注意的是：路由器得到下一条路由后，会将IP地址转化成MAC地址并填入帧首部，根据MAC地址找到下一条路由器。</p>
+<blockquote>
+<p>tips:路由器由于互联多个网络，不仅有多个IP地址，也有多个硬件地址。分别分配在不同的端口。</p>
+</blockquote>
+<ol start="6">
+<li>地址解析协议(ARP):将IP地址转化成MAC地址。工作在网络层。</li>
+</ol>
+<ul>
+<li>1.工作流程：<ul>
+<li>1.如果有目标ip地址的mac地址，则直接转化。</li>
+<li>2.如果没有目标ip地址的mac地址，则将目标mac地址设置为FF…全一，向网络广播。</li>
+<li>3.如果主机A收到APR的广播帧请求，则返回该主机A的MAC地址给ARP。</li>
+</ul>
+</li>
+</ul>
+<ol start="7">
+<li>动态主机配置协议(DHCP)：基于UDP的应用层协议，主要用于给主机动态分配ip地址。</li>
+</ol>
+<ul>
+<li>1.工作流程<ul>
+<li>1.主机广播寻找DHCP服务器。</li>
+<li>2.DHCP服务器收到消息后返回动态ip地址给主机。</li>
+<li>3.主机如果接受该地址返回确认信息。</li>
+<li>4.DHCP正式给主机分配该IP。</li>
+</ul>
+</li>
+</ul>
+<ol start="8">
+<li>ICMP(网际控制报文协议)：主要用于报告差错或者异常。以ip数据报形式发送。</li>
+</ol>
+<ul>
+<li><p>1.差错报文类型</p>
+<ul>
+<li><p>1.终点不可达。</p>
+</li>
+<li><p>2.源点抑制：因为拥塞而丢弃数据报，抑制源点数据发送。</p>
+</li>
+<li><p>3.时间超过：即ip首部的生存时间达到限定值被丢弃。</p>
+</li>
+<li><p>4.参数问题：首部字段值不正确。</p>
+</li>
+<li><p>5.改变路由(重定向):下次发送给更好的路由器，优化路由线路。</p>
+</li>
+<li><p>2.报告类型为1.路由器询问和通告报文。2.回送请求和回答报文。3.时间戳请求和回答报文。4.地址掩码请求和回答报文。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:ping常常用来测试主机之间的连通性，工作在应用层，直接使用网络层的ICMP。</p>
+</blockquote>
+<hr>
+</li>
+</ul>
+<h2 id="4-IPv6"><a href="#4-IPv6" class="headerlink" title="4.IPv6"></a>4.IPv6</h2><ol>
+<li>注意点(与ipv4的一部分差别)</li>
+</ol>
+<ul>
+<li><p>1.ipv4与ipv6不兼容，路由器无法转发ipv6一般使用隧道技术传输，即将ipv6再包装在ipv4报文中，或者使得路由器同时可以转发ipv6或者ipv4报文，但这种路由器更贵。</p>
+</li>
+<li><p>2.ipv6地址为128位，ipv4为32位。</p>
+</li>
+<li><p>3.ipv6首部位数8的倍数，ipv4为4的倍数。</p>
+</li>
+<li><p>4.ipv6仅仅允许在源主机分片，不允许路由分片，所以一般称ipv6不允许分片。</p>
+</li>
+</ul>
+<ol start="2">
+<li>ipv6地址表示</li>
+</ol>
+<ul>
+<li><p>1.ipv6使用:分隔。ipv4使用.分隔。</p>
+</li>
+<li><p>2.ipv6每16位:分隔一次，且使用16进制数(4位)表示。ipv4每8位分隔一次，且使用8进制数(3位)表示.</p>
+</li>
+<li><p>3.每一段全0可以用0表示，比如000.1234.000&#x3D;0.1234.0<br>如果多个0连接在一起使用::表示，比如0000.0000.0000.1234&#x3D;::1234,只能使用一次，后面有多个0000也不可以使用::，因为需要其他用位来计算一共省略了几段0。比如上述三段0&#x3D;16*3&#x3D;48，那么剩下为(128-48)&#x2F;16&#x3D;5，即5段，如果有多个::，则无法计算。</p>
+</li>
+</ul>
+<hr>
+<h2 id="5-组播"><a href="#5-组播" class="headerlink" title="5.组播"></a>5.组播</h2><ol>
+<li>概念：使用UDP协议，并且使用ICMP进行消息控制，发送者只发送一次，在路径不同时复制成两份分开传播，而不用给每个主机单独发送消息。IPv4使用D类地址作为组播地址，ipv6也有专门划分。</li>
+</ol>
+<p>注意：组播仅保证最大程度交付，不产生差错报文，ICMP主要用于告知路由器需要转发的消息。</p>
+<hr>
+<h2 id="6-移动IP"><a href="#6-移动IP" class="headerlink" title="6.移动IP"></a>6.移动IP</h2><ol>
+<li>三个术语</li>
+</ol>
+<ul>
+<li><ol>
+<li>移动结点：即具有永久IP地址的移动结点。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>本地代理：一个移动结点的永久归属网络。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>外部代理：移动IP移动到的外部网络接口。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>通信过程：</li>
+</ol>
+<ul>
+<li>1.移动结点在本地代理是正常转发。</li>
+<li>2.移动结点离开本地代理并进入外部代理时，需要向本地代理注册当前位置地址，即转发地址。</li>
+<li>3.当本地代理会创建一条通往注册结点的通道，将收到的消息发向外部代理的地址（注册地址）。</li>
+<li>4.移动结点发送消息则直接通过外部代理发送消息。</li>
+<li>5.回到本地网络时注销。</li>
+</ul>
+<blockquote>
+<p>tips：移动IP为移动主机设计连个IP地址，地址和辅地址(转交地址)。</p>
+</blockquote>
+<hr>
+<h2 id="7-网络层设备"><a href="#7-网络层设备" class="headerlink" title="7.网络层设备"></a>7.网络层设备</h2><ol>
+<li><p>冲突域：物理介质上所有结点的集合，这些结点会引发介质争用。链路层设备可以划分冲突域。</p>
+</li>
+<li><p>广播域：收到同样消息广播消息的结点集合，路由器可以划分广播域。</p>
+</li>
+<li><p>路由器的组成和功能</p>
+</li>
+</ol>
+<ul>
+<li><p>1.直接交付和间接交付：路由器的地址(目标端口地址)如果和主机处于同一网络(即网络号相同，CIDR为掩码掩盖到的位数相同)，则直接交付。处于不同网络，需要查找路由表，则为间接交付。</p>
+</li>
+<li><p>2.路由器主要功能为构造路由表和分组转发。构造路由表属于路由选择部分，也成为控制部分。分组转发由交换结构，出，入端口组成。</p>
+</li>
+<li><p>3.路由表格式：目的网络IP,子网掩码,下一条IP地址，接口(即路由器的哪个接口负责转发，因为每个接口对应一个网段。)</p>
+</li>
+</ul>
+<blockquote>
+<p>tips注意：路由表总是由软件构造，而转发表可以由软件，也可以由硬件构造。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/21/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80/Vue%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="prev" title="Vue框架使用说明">
+      <i class="fa fa-chevron-left"></i> Vue框架使用说明
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E4%BC%A0%E8%BE%93%E5%B1%82%E5%A4%8D%E4%B9%A0/" rel="next" title="计网-传输层复习">
+      计网-传输层复习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">1.网络层的一些基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2.路由算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-IPv4"><span class="nav-number">3.</span> <span class="nav-text">3.IPv4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-IPv6"><span class="nav-number">4.</span> <span class="nav-text">4.IPv6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%84%E6%92%AD"><span class="nav-number">5.</span> <span class="nav-text">5.组播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%A7%BB%E5%8A%A8IP"><span class="nav-number">6.</span> <span class="nav-text">6.移动IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E7%BD%91%E7%BB%9C%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="nav-number">7.</span> <span class="nav-text">7.网络层设备</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

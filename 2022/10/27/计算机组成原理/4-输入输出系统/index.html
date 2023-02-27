@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.输入输出系统的发展概况 早期：IO设备与主存设备交换信息必须通过CPU。   具有以下特点 1.每个IO设备都必须配备一套独立的逻辑电路与CPU相联 2.输入输出过程穿插在CPU执行过程中进行，进而不得不暂停CPU的工作，浪费CPU的工作时间。 3.IO设备与CPU连接十分紧密，变成了一个不可分割的整体，更换IO设备十分困难。  DMA:Direct Memory Access:直接访问储存器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.输入输出系统">
+<meta property="og:url" content="http://example.com/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/4-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.输入输出系统的发展概况 早期：IO设备与主存设备交换信息必须通过CPU。   具有以下特点 1.每个IO设备都必须配备一套独立的逻辑电路与CPU相联 2.输入输出过程穿插在CPU执行过程中进行，进而不得不暂停CPU的工作，浪费CPU的工作时间。 3.IO设备与CPU连接十分紧密，变成了一个不可分割的整体，更换IO设备十分困难。  DMA:Direct Memory Access:直接访问储存器">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-27T13:37:25.000Z">
+<meta property="article:modified_time" content="2022-10-27T13:39:08.353Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/4-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.输入输出系统 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/4-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.输入输出系统
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-27 21:37:25 / 修改时间：21:39:08" itemprop="dateCreated datePublished" datetime="2022-10-27T21:37:25+08:00">2022-10-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机组成原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-输入输出系统的发展概况"><a href="#1-输入输出系统的发展概况" class="headerlink" title="1.输入输出系统的发展概况"></a>1.输入输出系统的发展概况</h2><ol>
+<li>早期：IO设备与主存设备交换信息必须通过CPU。</li>
+</ol>
+<ul>
+<li>具有以下特点</li>
+<li>1.每个IO设备都必须配备一套独立的逻辑电路与CPU相联</li>
+<li>2.输入输出过程穿插在CPU执行过程中进行，进而不得不暂停CPU的工作，浪费CPU的工作时间。</li>
+<li>3.IO设备与CPU连接十分紧密，变成了一个不可分割的整体，更换IO设备十分困难。</li>
+</ul>
+<p>DMA:Direct Memory Access:直接访问储存器<br>2. 接口模块和DMA阶段：接口模块和DAM阶段：</p>
+<ul>
+<li>特点：</li>
+<li>1.计算机采用总线结构，IO设备通过接口与总线相连进而与主机交互。</li>
+<li>2.IO设备与主存之间有一条直接的数据通路。</li>
+</ul>
+<ol start="3">
+<li><p>通道结构阶段：通道类似于一种特殊功能的处理器，但又不完全独立，从属于CPU，CPU不直接管理，用于负责IO设备以及实现主存与IO设备之间的信息交换。中小型计算机一般使用DMA即可，而通道一般用于中大型计算机。</p>
+</li>
+<li><p>具有IO处理机的阶段：IO处理机又称外围处理机(Periheral Processor)，基本独立于主机工作，既可以完成IO通道又要完成IO控制，完成码制变换，格式处理，数据块检错，纠错等操作。于CPU并行的工作性更高。</p>
+</li>
+</ol>
+<hr>
+<h2 id="2-输入输出系统的组成："><a href="#2-输入输出系统的组成：" class="headerlink" title="2. 输入输出系统的组成："></a>2. 输入输出系统的组成：</h2><ol>
+<li><p>概述：输入输出系统由IO硬件和IO软件两部分组成。</p>
+</li>
+<li><p>IO软件</p>
+</li>
+</ol>
+<ul>
+<li>(1)主要任务<ul>
+<li>1.将用户编制的程序(或数据)输入到主机内</li>
+<li>2.将运算结果输送到用户</li>
+<li>3.实现输入输出系统与主机的协调。</li>
+</ul>
+</li>
+<li>(2)软件指令:操作码+命令码+设备码，分为IO指令和通道指令</li>
+<li>(3)IO指令作用<ul>
+<li>将数据从IO设备输入主机</li>
+<li>将数据从主机输出至IO设备</li>
+<li>状态测试:比如利用命令码检测各个IO设备是否处于忙的状态，还是准备就绪状态，以便主机与IO交换设备交换信息。</li>
+<li>形成某些操作命令:比如读，写文件。</li>
+</ul>
+</li>
+<li>(4)通道指令:又称为通道控制字，对具有通道的IO系统专门设置的指令。</li>
+</ul>
+<ol start="3">
+<li>IO硬件：对于带有接口Io系统，一般包括接口和IO设备两个部分。对于有通道的IO系统，一个通道与一个以上的设备控制器相连，控制设备又可控制若干个同一类型的设备。</li>
+</ol>
+<hr>
+<h2 id="3-IO设备与主机的联系方式："><a href="#3-IO设备与主机的联系方式：" class="headerlink" title="3.IO设备与主机的联系方式："></a>3.IO设备与主机的联系方式：</h2><ol>
+<li>IO设备的编址方式：通常将IO设备码看作地址码，用两种地址码的编址方式：统一编址和不统一编址。</li>
+</ol>
+<ul>
+<li>1.统一编址：将IO地址看作储存器地址的一部分，</li>
+<li>2.不统一编址：IO设备地址与储存器地址分开，对IO设备的访问有专门的IO指令。</li>
+</ul>
+<ol start="2">
+<li><p>设备寻址：为每台设备赋予一个设备号，IO指令的设备码能够直接指出设备号，通过接口电路的设备选择电路，便可选中要交换的信息。</p>
+</li>
+<li><p>传送方式：并行传送和串行传送。</p>
+</li>
+</ol>
+<ul>
+<li>1.并行：多条线路一次传送多个比特。</li>
+<li>2.串行：一条线路一次传送一个比特。</li>
+</ul>
+<ol start="4">
+<li>联络方式：3种：(1)立即响应。(2)异步工作采用应答应答信号联络。(3)同步工作采用同步时标联络。</li>
+</ol>
+<ul>
+<li>1.立即响应：IO指令一到，立即响应。</li>
+<li>2.应答信号：IO设备与CPU各自完成自身的任务，一旦出现联络信号，彼此才准备交换信息，这种一问一答的联络方式称为异步联络。</li>
+<li>3.同步时标联络：使用专用电路产生同步时标来控制同步工作。</li>
+</ul>
+<ol start="5">
+<li>IO设备与主机的连接方式：1.辐射式(每个IO设备都有一套控制线路和信号线，一般出现在计算机发展的初始阶段)。2.总线式(通过一组总线，将所有的IO设备与主机连接)。</li>
+</ol>
+<hr>
+<h2 id="4-IO设备与主机信息传送的控制方式"><a href="#4-IO设备与主机信息传送的控制方式" class="headerlink" title="4.IO设备与主机信息传送的控制方式"></a>4.IO设备与主机信息传送的控制方式</h2><p>概述：分为1.程序查询。2.程序中断。3.直接储存器存取。4.IO通道。5.IO处理机。</p>
+<ol>
+<li>程序查询方式：CPU不断查询IO设备是否准备，进而控制IO设备与主机交换信息。</li>
+<li>程序中断方式：只有在IO设备准备就绪并向CPU发出中断信号才予以响应。</li>
+<li>DMA方式：主存和IO设备之间有一条数据通路，若DMA与CPU同时访问内存，CPU会将总线控制权给DAM。</li>
+</ol>
+<hr>
+<h2 id="5-IO接口"><a href="#5-IO接口" class="headerlink" title="5.IO接口"></a>5.IO接口</h2><ol>
+<li>概述:两个系统或两步部件之间的交接部分，既可以是硬件设备之间的连接，也可以是软件之间共同的逻辑边界。IO设备可以使用设备控制器中的IO接口与主机取得联系</li>
+<li>接口的作用：</li>
+</ol>
+<ul>
+<li>1.一台机器通常配有多台IO设备，通过接口实现IO设备选择。</li>
+<li>2.通过接口实现数据缓冲，提高数据利用率。</li>
+<li>3.串行和并行转换。比如CPU一般使用并行，而IO设备困难使用串行。</li>
+<li>4.实现电平转换。</li>
+<li>5.通过接口传送控制命令。</li>
+<li>6.监视工作状态，保存状态信息。</li>
+</ul>
+<blockquote>
+<p>tips:接口和端口的不同概念：端口指接口电路中的一些寄存器，用来存放数据信息，控制信息和状态信息。相应的端口也称为数据端口，控制端口，状态端口。若干个端口加上相应的控制逻辑组成接口。CPU通过输入指令，从端口读入信息，通过输出指令，可将信息写入端口中。</p>
+</blockquote>
+<ol start="3">
+<li>接口的组成</li>
+</ol>
+<ul>
+<li>1.数据线：IO设备和主机之间的数据代码传送线。</li>
+<li>2.设备选择线：传送设备码</li>
+<li>3.命令线：用于传送CPU发向设备的命令信号。</li>
+<li>4.状态线：IO设备的状态向主机报告的信号线。</li>
+</ul>
+<ol start="4">
+<li>接口的功能</li>
+</ol>
+<ul>
+<li>1.选址功能：即CPU通过设备选择线上的设备码确定。</li>
+<li>2.传送命令功能：命令线。</li>
+<li>3.传送数据的功能：数据线。</li>
+<li>4.反映IO设备的工作状态的功能线:状态线。</li>
+</ul>
+<ol start="5">
+<li>按数据传送分类：</li>
+</ol>
+<ul>
+<li>1.并行接口</li>
+<li>2.串行接口</li>
+</ul>
+<ol start="6">
+<li>按功能类型分类：</li>
+</ol>
+<ul>
+<li>1.可编程接口</li>
+<li>2.不可编程接口</li>
+</ul>
+<ol start="7">
+<li>按通用性分类：</li>
+</ol>
+<ul>
+<li>1.通用接口</li>
+<li>2.专用接口</li>
+</ul>
+<ol start="8">
+<li>按数据传送的方式分类：</li>
+</ol>
+<ul>
+<li>1.程序型接口</li>
+<li>2.DMA接口：Direct Memory Access</li>
+</ul>
+<hr>
+<h2 id="6-程序查询方式"><a href="#6-程序查询方式" class="headerlink" title="6.程序查询方式"></a>6.程序查询方式</h2><ol>
+<li>概述：需要不断查询IO设备是否准备就绪。</li>
+<li>查询指令</li>
+</ol>
+<ul>
+<li>1.测试指令：用于查询是否就绪</li>
+<li>2.传送指令：执行传送指令</li>
+<li>3.转移指令：若IO设备未准备就绪，执行转移指令，转至测试指令。</li>
+</ul>
+<ol start="3">
+<li>过程</li>
+</ol>
+<ul>
+<li>1.先将寄存器原内容保护起来。</li>
+<li>2.设置IO设备与主机交换数据的计数值。</li>
+<li>3.设置欲传送的数据在主存缓存区的首地址。</li>
+</ul>
+<p>以上为准备工作</p>
+<ul>
+<li>4.CPU启动IO设备</li>
+<li>5.将IO接口中的设备状态标志取至CPU并测试IO设备是否准备就绪。</li>
+<li>6.CPU执行IO指令</li>
+<li>7.修改主存地址</li>
+<li>8.修改计数值</li>
+<li>9.判断计数值</li>
+<li>10.结束IO传送</li>
+</ul>
+<hr>
+<h2 id="7-程序中断方式的接口电路："><a href="#7-程序中断方式的接口电路：" class="headerlink" title="7.程序中断方式的接口电路："></a>7.程序中断方式的接口电路：</h2><ol>
+<li>中断请求触发器：用于外部设备。</li>
+<li>中断屏蔽触发器：CPU每次只能处理一个中断请求，多余的需要排队并且对CPU屏蔽。</li>
+<li>排队器：对中断请求进行排队</li>
+<li>中断向量地址形成部件(设备编码器).</li>
+</ol>
+<hr>
+<h2 id="8-中断服务程序的流程"><a href="#8-中断服务程序的流程" class="headerlink" title="8.中断服务程序的流程"></a>8.中断服务程序的流程</h2><ol>
+<li>保护现场：1.保存程序的断点，保存通用寄存器和状态寄存器。</li>
+<li>中断服务(设备服务)：对不同中断请求源，提供不同的中断服务。</li>
+<li>恢复现场：将中断时的现场恢复到原来的寄存器中。</li>
+<li>中断返回：返回原程序的断点处。<br>DMA:Direct Memory Access:直接访问储存器</li>
+<li>DMA使用的三种方式：</li>
+</ol>
+<ul>
+<li>1.停止CPU访问主存：DMA要求CPU停止访问数据，DMA传送数据至无。</li>
+<li>2.周期挪用：IO获取总线占用权几个周期。</li>
+<li>3.DMA和CPU交替访问。</li>
+</ul>
+<hr>
+<h2 id="9-DMA接口功能和组成"><a href="#9-DMA接口功能和组成" class="headerlink" title="9.DMA接口功能和组成"></a>9.DMA接口功能和组成</h2><ol>
+<li>DMA接口介绍：数据传输过程完全由DMA接口控制，故而DMA接口又称为DMA控制器。</li>
+<li>DMA接口功能：</li>
+</ol>
+<ul>
+<li>1.向CPU申请DMA传送。</li>
+<li>2.向CPU允许DMA工作时，处理总线控制权的转交。</li>
+<li>3.在DMA控制总线传送时，控制数据传送。</li>
+<li>4.修正数据传送过程的地址和数据长度。</li>
+<li>5.数据传送结束时，发送结束信号。</li>
+</ul>
+<ol start="3">
+<li>DMA接口的基本组成：</li>
+</ol>
+<ul>
+<li>1.主存地址寄存器(AR)：用于存放在主存中需要交换数据的地址。</li>
+<li>2.字计数器:记录传送数据的总字数。</li>
+<li>3.数据缓冲寄存器(BR):暂存每次传送的数据。</li>
+<li>4.DMA控制逻辑:DMA控制逻辑负责管理DMA的传送过程。</li>
+<li>5.中断机构：由中断机构向CPU提出中断请求。</li>
+<li>6.设备地址寄存器(DAR):存放IO设备的设备码和表示设备信息储存区的寻址信息。</li>
+</ul>
+<hr>
+<h2 id="10-DMA的工作过程"><a href="#10-DMA的工作过程" class="headerlink" title="10.DMA的工作过程"></a>10.DMA的工作过程</h2><ol>
+<li>DMA的传送过程：</li>
+</ol>
+<ul>
+<li>1.预处理：即执行初始化过程，1.指明数据传送方向,输入，输出。2.送入设备号，并启动设备。3.DMA主存的起始地址。</li>
+<li>2.数据传送</li>
+<li>3.后处理</li>
+</ul>
+<ol start="2">
+<li>DMA与程序中断方式的特点:</li>
+</ol>
+<ul>
+<li>1.从数据传送来看，数据中断方式依靠程序传送，DMA依靠硬件传送。</li>
+<li>2.从CPU响应时间来看，程序中断方式指一条指令执行结束时响应。而DMA方式可在指令周期内任一存取周期结束时响应。</li>
+<li>3.程序中断方式有处理异常事件的能力，DMA没有这种能力。</li>
+<li>4.程序中断方式需要中断现行程序，故需要保护现场，DMA方式不中断现行程序，无需保护现场。</li>
+<li>5.DMA中断优先级比程序中断的优先级高。</li>
+</ul>
+<hr>
+<h2 id="11-DMA接口类型"><a href="#11-DMA接口类型" class="headerlink" title="11.DMA接口类型"></a>11.DMA接口类型</h2><ol>
+<li>概述：现代集成电路技术已将DMA接口制成芯片，通常分为选择型和多路型两类。</li>
+</ol>
+<ul>
+<li>1.选择型DMA接口：在物理上可连接多个设备，逻辑上只允许连接一个设备。</li>
+<li>2.多路型DMA接口：在物理上可连接多个设备，逻辑上也允许多个设备同时工作。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/3-%E5%82%A8%E5%AD%98%E5%99%A8/" rel="prev" title="3.储存器">
+      <i class="fa fa-chevron-left"></i> 3.储存器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/5-%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8/" rel="next" title="5.中央处理器">
+      5.中央处理器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%91%E5%B1%95%E6%A6%82%E5%86%B5"><span class="nav-number">1.</span> <span class="nav-text">1.输入输出系统的发展概况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">2. 输入输出系统的组成：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-IO%E8%AE%BE%E5%A4%87%E4%B8%8E%E4%B8%BB%E6%9C%BA%E7%9A%84%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">3.IO设备与主机的联系方式：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-IO%E8%AE%BE%E5%A4%87%E4%B8%8E%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E4%BC%A0%E9%80%81%E7%9A%84%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4.IO设备与主机信息传送的控制方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-IO%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">5.IO接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%A8%8B%E5%BA%8F%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">6.程序查询方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E7%A8%8B%E5%BA%8F%E4%B8%AD%E6%96%AD%E6%96%B9%E5%BC%8F%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%94%B5%E8%B7%AF%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">7.程序中断方式的接口电路：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">8.</span> <span class="nav-text">8.中断服务程序的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-DMA%E6%8E%A5%E5%8F%A3%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%84%E6%88%90"><span class="nav-number">9.</span> <span class="nav-text">9.DMA接口功能和组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-DMA%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="nav-number">10.</span> <span class="nav-text">10.DMA的工作过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-DMA%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="nav-number">11.</span> <span class="nav-text">11.DMA接口类型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

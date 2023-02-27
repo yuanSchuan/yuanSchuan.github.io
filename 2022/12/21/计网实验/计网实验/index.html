@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。 1.比如主机与交换机用直线。  2.交换机与交换机用交叉线，路由器与路由器用交叉线。  3，交换机与路由用直线。    2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。需要注意的是，如果与路由器连接，那么网关需要填写路由器通向这个主机的端口ip，否则无法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网实验">
+<meta property="og:url" content="http://example.com/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。 1.比如主机与交换机用直线。  2.交换机与交换机用交叉线，路由器与路由器用交叉线。  3，交换机与路由用直线。    2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。需要注意的是，如果与路由器连接，那么网关需要填写路由器通向这个主机的端口ip，否则无法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-21T15:56:21.000Z">
+<meta property="article:modified_time" content="2022-12-21T15:57:57.028Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计网实验 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计网实验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-21 23:56:21 / 修改时间：23:57:57" itemprop="dateCreated datePublished" datetime="2022-12-21T23:56:21+08:00">2022-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%80%9D%E7%A7%91%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" itemprop="url" rel="index"><span itemprop="name">思科计网实验</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-连接的线：设备不同用直通线-实线-相同用交叉线-虚线-。"><a href="#1-连接的线：设备不同用直通线-实线-相同用交叉线-虚线-。" class="headerlink" title="1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。"></a>1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。</h2><ul>
+<li><p>1.比如主机与交换机用直线。</p>
+</li>
+<li><p>2.交换机与交换机用交叉线，路由器与路由器用交叉线。</p>
+</li>
+<li><p>3，交换机与路由用直线。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行-因为没有可用端口，即没有指定端口，收到的数据也会被丢弃-。"><a href="#2-所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行-因为没有可用端口，即没有指定端口，收到的数据也会被丢弃-。" class="headerlink" title="2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。"></a>2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。</h2><p>需要注意的是，如果与路由器连接，那么网关需要填写路由器通向这个主机的端口ip，否则无法通信。</p>
+<blockquote>
+<p>tips1:网关是一个局域网与外部连接的窗口，需要配置网关交换机才知道将信息发往哪个外部地址</p>
+</blockquote>
+<blockquote>
+<p>tip2:同一网段，相同的网络号，即掩码前的数字相同。比如192.56.3.1&#x2F;24和192.56.3.2&#x2F;24。因为前24位相同为同一网段。</p>
+</blockquote>
+<hr>
+<h2 id="3-端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC-物理地址-，互联网-不同局域网间-必须有IP。"><a href="#3-端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC-物理地址-，互联网-不同局域网间-必须有IP。" class="headerlink" title="3. 端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC(物理地址)，互联网(不同局域网间)必须有IP。"></a>3. 端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC(物理地址)，互联网(不同局域网间)必须有IP。</h2><ul>
+<li><p>1.进入端口：interface 端口名字</p>
+</li>
+<li><p>2.给端口配置IP地址:ip address ip地址 掩码</p>
+</li>
+<li><p>3.注意，端口配置完后不会自动开启端口功能，需要使用no shutdown开启端口功能</p>
+</li>
+</ul>
+<hr>
+<h2 id="4-局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下"><a href="#4-局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下" class="headerlink" title="4. 局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下:"></a>4. 局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下:</h2><ul>
+<li><p>1.vlan id(id可以是任意数字)</p>
+</li>
+<li><p>2.name word(word可以是任意名字)</p>
+</li>
+<li><p>3.删除vlan:no vlan id(要删除的vlanid)</p>
+</li>
+<li><p>4.进入vlan:in vlan id，注意：这也是启动vlan(将down状态转化成up)</p>
+</li>
+</ul>
+<p>注意1：vlan需要分配到具体的端口才有用，因为每个端口唯一连接一个主机，分配到具体端口相当于直接将该主机分配到某个虚拟局域网。</p>
+<ul>
+<li>5.将某个端口归类给Vlan(首先需要进入端口):1. interface 端口名 2. switchport access vlan vlanid</li>
+</ul>
+<p>注意2：要使得vlan之间相互通信，为该局域网的vlan分配ip，借助三层交换机进行路由，才能通信，过程为进入vlan,即in vlan id，后ip adress…，<br>注意是三层交换机,因为路由器是不可以进行vlan创建的，</p>
+<h2 id="特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。"><a href="#特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。" class="headerlink" title="特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。"></a>特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。</h2><ul>
+<li>6.使用trunk进行不同交换机间通信:分别在二层和三层交换机连接的两个端口配置trunk：switchport mode trunk</li>
+</ul>
+<p>当然，要将trunk转换成接口即:switchport mode access</p>
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><h2 id="1-trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）"><a href="#1-trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）" class="headerlink" title="1.trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）"></a>1.trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）</h2><h2 id="2-路由可以帮助不同vlan进行路由-本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip-。注意区分二者。"><a href="#2-路由可以帮助不同vlan进行路由-本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip-。注意区分二者。" class="headerlink" title="2.路由可以帮助不同vlan进行路由(本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip)。注意区分二者。"></a>2.路由可以帮助不同vlan进行路由(本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip)。注意区分二者。</h2><hr>
+<h2 id="5-路由不同网段-或不同局域网-通信需要路由：设置ip为-ip-address-ip地址-掩码"><a href="#5-路由不同网段-或不同局域网-通信需要路由：设置ip为-ip-address-ip地址-掩码" class="headerlink" title="5. 路由不同网段(或不同局域网)通信需要路由：设置ip为:ip address ip地址 掩码"></a>5. 路由不同网段(或不同局域网)通信需要路由：设置ip为:ip address ip地址 掩码</h2><ul>
+<li><p>1.需要为路由器和路由器之间的端口设置ip地址，这两个ip地址需要在同一网段。</p>
+</li>
+<li><p>2.路由器和交换机连接，只需要为路由器连接的端口设置ip地址即可，交换机端不需要。</p>
+</li>
+<li><p>3.路由器连接的交换机A，交换机A局域网下面的主机需要和路由器连接交换机A的端口ip处于同一网段，并且填写的网关要是这个ip地址。</p>
+</li>
+<li><p>4.路由器需要配置静态路由表，格式为(目的地址 掩码 下一条地址),目的地址只需要填网络号即可，比如192.56.3.3&#x2F;24。目的地址为192.56.3.0。<br>而下一条地址不是本路由器的端口地址，而是本路由器接下来要传递的邻接路由器的端口ip,这个IP必须写全，比如192.56.1.2。</p>
+</li>
+</ul>
+<p>配置静态路由的指令为:ip route 目的地址网络号 掩码 下一条地址</p>
+<blockquote>
+<p>tips:要删除静态路由在ip route改为no ip route即可</p>
+</blockquote>
+<ul>
+<li>5.动态路由：这边使用rip动态路由协议进行动态路由</li>
+</ul>
+<p>指令1进入rip:router rip</p>
+<p>指令2配置rip的网络号:network 网络号</p>
+<blockquote>
+<p>tips：注意，rip配置的是本路由器的网络号，需要将本路由器的哪个端口连接的网络与其他路由器互联,使用network 路由器端口网络号即可。</p>
+</blockquote>
+<p>另外可以使用version指令配置rip版本，默认为version 2</p>
+<p>关于可变长子网使用，因为version 2默认为边界汇总，要使用可变长子网的指令为<br>no auto-summary</p>
+<p>需要注意的是，存在交换机和路由一体的机器，目的是为了降低成本。因此需要接口转换，即将交换机口与路由器口互换。</p>
+<ul>
+<li><p>1.将交换机口换成路由器口：no switchport,换回则switchport.</p>
+</li>
+<li><p>2.配置ip的方法有两种：一种是将交换机端口转化成路由器端口配置成指定ip,另一种是将端口与虚拟局域网vlan绑定，然后配置vlanIP。后者可以<br>直接将虚拟局域网的整个作为传输目标，进而不用一个个配置。</p>
+<ul>
+<li><p>1.第一种直接用 1) interface 端口名  选择端口，然后 2) no switchport，转换模式，最后设置端口ip地址 3) ip address ip地址 掩码</p>
+</li>
+<li><p>2.第二种为 1) in vlan id 进入vlan，然后设置vlanip地址 2) ip address ip地址 掩码</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>最后，交换机要选择2811,因为前面的不能拓展端口</p>
+<h2 id="一定要注意！！！！！！，这种一体复用交换机一定要使用ip-routing指令开启路由功能！！！！！！，否则配置完也无法使用。"><a href="#一定要注意！！！！！！，这种一体复用交换机一定要使用ip-routing指令开启路由功能！！！！！！，否则配置完也无法使用。" class="headerlink" title="一定要注意！！！！！！，这种一体复用交换机一定要使用ip routing指令开启路由功能！！！！！！，否则配置完也无法使用。"></a>一定要注意！！！！！！，这种一体复用交换机一定要使用ip routing指令开启路由功能！！！！！！，否则配置完也无法使用。</h2><hr>
+<h1 id="以下的DHCP-DNS-HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字-参数。"><a href="#以下的DHCP-DNS-HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字-参数。" class="headerlink" title="以下的DHCP,DNS,HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字+参数。"></a>以下的DHCP,DNS,HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字+参数。</h1><h2 id="6-DHCP：用于动态的给主机分配ip-过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接"><a href="#6-DHCP：用于动态的给主机分配ip-过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接" class="headerlink" title="6.DHCP：用于动态的给主机分配ip,过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接"></a>6.DHCP：用于动态的给主机分配ip,过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接</h2><ol>
+<li><p>从主机模块拖入Genetic,与一个交换机相连,点击打开，在config下的serveice中有DHCP配置。</p>
+</li>
+<li><p>主要：分别填入默认网关(交换机连接的路由器端口，这个是给所有的从这里获取ip的地址的网关)，填写分配开始地址。如果有DNS，填入DNS地址。</p>
+</li>
+<li><p>如果在同一局域网下，无需配置，如果在不同局域网下需要使用ip helper-address DHCP服务器地址,以下介绍ip helper-address服务器地址的注意点</p>
+</li>
+</ol>
+<h2 id="注意-ip-helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip-那个就进入那个vlan使用该指令。"><a href="#注意-ip-helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip-那个就进入那个vlan使用该指令。" class="headerlink" title="注意:ip helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip,那个就进入那个vlan使用该指令。"></a>注意:ip helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip,那个就进入那个vlan使用该指令。</h2><hr>
+<h2 id="7-DNS与HTTP：DNS提供网址与ip地址的转换-输入网址转化成ip地址-，进入指定ip地址，服务HTTP会返回一个html页面-当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。"><a href="#7-DNS与HTTP：DNS提供网址与ip地址的转换-输入网址转化成ip地址-，进入指定ip地址，服务HTTP会返回一个html页面-当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。" class="headerlink" title="7. DNS与HTTP：DNS提供网址与ip地址的转换(输入网址转化成ip地址)，进入指定ip地址，服务HTTP会返回一个html页面(当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。)"></a>7. DNS与HTTP：DNS提供网址与ip地址的转换(输入网址转化成ip地址)，进入指定ip地址，服务HTTP会返回一个html页面(当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。)</h2><ul>
+<li><p>1.二者都在服务器confige的service下面</p>
+</li>
+<li><p>2.DNS配置中的name是网址(比如<a target="_blank" rel="noopener" href="http://www.xxxx.com),address是这个网址要转换的ip地址,当主机的dns配置为该dns服务器的ip地址时,会为该主机提供dns解析./">www.xxxx.com)，address是这个网址要转换的ip地址，当主机的DNS配置为该DNS服务器的ip地址时，会为该主机提供DNS解析。</a></p>
+</li>
+</ul>
+<blockquote>
+<p>注意，若使用dhcp则需要在dhcp配置dns地址</p>
+</blockquote>
+<ul>
+<li>3.http：考点为在主机的浏览器中输入网址,经过DNS解析后去往该ip的服务器地址，该服务器开启http服务，则会返回数据该请求主机的浏览器进程。</li>
+</ul>
+<blockquote>
+<p>开始http和dns的方法均在第一点，记得dhcp,dns,http要点on才会开启服务。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/16/python/python/" rel="prev" title="python基础">
+      <i class="fa fa-chevron-left"></i> python基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/27/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BF%9E%E6%8E%A5%E7%9A%84%E7%BA%BF%EF%BC%9A%E8%AE%BE%E5%A4%87%E4%B8%8D%E5%90%8C%E7%94%A8%E7%9B%B4%E9%80%9A%E7%BA%BF-%E5%AE%9E%E7%BA%BF-%E7%9B%B8%E5%90%8C%E7%94%A8%E4%BA%A4%E5%8F%89%E7%BA%BF-%E8%99%9A%E7%BA%BF-%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">1. 连接的线：设备不同用直通线(实线),相同用交叉线(虚线)。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%89%80%E6%9C%89%E7%9A%84%E4%B8%BB%E6%9C%BA%E9%83%BD%E9%9C%80%E8%A6%81%E9%85%8D%E5%A4%87ip%E5%9C%B0%E5%9D%80%E5%92%8C%E6%8E%A9%E7%A0%81%E6%89%8D%E8%83%BD%E9%80%9A%E4%BF%A1%EF%BC%8C%E4%B8%BB%E6%9C%BA%E7%9B%B4%E6%8E%A5%E7%9B%B8%E8%BF%9E%E4%B9%9F%E4%B8%8D%E8%A1%8C-%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%8F%AF%E7%94%A8%E7%AB%AF%E5%8F%A3%EF%BC%8C%E5%8D%B3%E6%B2%A1%E6%9C%89%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3%EF%BC%8C%E6%94%B6%E5%88%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B9%9F%E4%BC%9A%E8%A2%AB%E4%B8%A2%E5%BC%83-%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">2. 所有的主机都需要配备ip地址和掩码才能通信，主机直接相连也不行(因为没有可用端口，即没有指定端口，收到的数据也会被丢弃)。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%AB%AF%E5%8F%A3%EF%BC%9A%E4%BD%9C%E4%B8%BA%E4%B8%8D%E5%90%8C%E8%AE%BE%E5%A4%87%E9%97%B4%E9%80%9A%E4%BF%A1%E7%9A%84%E7%AA%97%E5%8F%A3%EF%BC%8C%E8%A6%81%E4%BD%BF%E5%BE%97%E5%A4%9A%E4%B8%AA%E4%BA%92%E8%81%94%E7%9A%84%E8%AE%BE%E5%A4%87%E8%83%BD%E5%A4%9F%E9%80%9A%E4%BF%A1%EF%BC%8C%E6%AF%94%E5%A6%82%E8%A6%81%E7%BB%99%E7%AB%AF%E5%8F%A3%E5%88%86%E9%85%8D%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E5%BF%85%E9%A1%BB%E8%A6%81%E6%9C%89MAC-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80-%EF%BC%8C%E4%BA%92%E8%81%94%E7%BD%91-%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E9%97%B4-%E5%BF%85%E9%A1%BB%E6%9C%89IP%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">3. 端口：作为不同设备间通信的窗口，要使得多个互联的设备能够通信，比如要给端口分配地址，局域网必须要有MAC(物理地址)，互联网(不同局域网间)必须有IP。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E7%9A%84%E4%B8%BB%E6%9C%BA%E9%9C%80%E8%A6%81%E5%9C%A8%E5%90%8C%E4%B8%80%E7%BD%91%E6%AE%B5%E6%89%8D%E8%83%BD%E9%80%9A%E4%BF%A1%EF%BC%8C%E4%B8%8D%E5%90%8C%E7%BD%91%E6%AE%B5%E4%B8%8D%E8%83%BD%E9%80%9A%E4%BF%A1%E3%80%82%E5%90%8C%E7%BD%91%E6%AE%B5%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E5%88%92%E5%88%86vlan%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%90%8C%E7%BD%91%E6%AE%B5%E5%88%92%E5%88%86%E7%9A%84%E6%95%88%E6%9E%9C%E3%80%82%E5%88%9B%E5%BB%BAvlan%E6%8C%87%E4%BB%A4%E5%A6%82%E4%B8%8B"><span class="nav-number">4.</span> <span class="nav-text">4. 局域网内的主机需要在同一网段才能通信，不同网段不能通信。同网段可以通过划分vlan虚拟局域网来实现同网段划分的效果。创建vlan指令如下:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%88%AB%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%8C%E7%BB%99vlan%E9%85%8D%E7%BD%AEip%E5%90%8E%EF%BC%8C%E8%AF%A5vlan%E4%B8%8B%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%BD%91%E5%85%B3%E6%98%AFvlan%E7%9A%84ip%E5%9C%B0%E5%9D%80%EF%BC%8C%E5%B9%B6%E4%B8%94%E4%B8%BB%E6%9C%BAip%E5%9C%B0%E5%9D%80%E8%A6%81%E5%92%8Cvlan%E7%9A%84ip%E5%9C%B0%E5%9D%80%E5%A4%84%E4%BA%8E%E5%90%8C%E4%B8%80%E7%BD%91%E6%AE%B5%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">特别需要注意的是，给vlan配置ip后，该vlan下主机的网关是vlan的ip地址，并且主机ip地址要和vlan的ip地址处于同一网段。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">注意：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-trunk%E6%98%AF%E5%B8%AE%E5%8A%A9%E4%B8%8D%E5%90%8C%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%8B%E7%9B%B8%E5%90%8Cvlan%E7%9A%84%E9%80%9A%E4%BF%A1%EF%BC%88%E5%9B%A0%E4%B8%BA%E4%B8%8D%E5%90%8C%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%8B%E7%9A%84%E7%9B%B8%E5%90%8Cvlan%E4%B8%8D%E9%85%8D%E7%BD%AEtrunk%E6%97%A0%E6%B3%95%E9%80%9A%E4%BF%A1%EF%BC%8C%E5%8E%9F%E5%9B%A0%E5%9C%A8%E4%BA%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E7%AB%AF%E5%8F%A3%E4%B9%9F%E5%BD%92%E5%B1%9E%E4%B8%80%E4%B8%AAvlan%EF%BC%8C%E5%BF%85%E9%A1%BB%E8%A6%81%E9%85%8D%E7%BD%AEtrunk%E6%89%8D%E8%83%BD%E4%BD%BF%E5%BE%97%E6%89%80%E6%9C%89vlan%E9%80%9A%E8%BF%87%E8%AF%A5%E6%8E%A5%E5%8F%A3%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">1.trunk是帮助不同交换机下相同vlan的通信（因为不同交换机下的相同vlan不配置trunk无法通信，原因在于交换机的端口也归属一个vlan，必须要配置trunk才能使得所有vlan通过该接口）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%B7%AF%E7%94%B1%E5%8F%AF%E4%BB%A5%E5%B8%AE%E5%8A%A9%E4%B8%8D%E5%90%8Cvlan%E8%BF%9B%E8%A1%8C%E8%B7%AF%E7%94%B1-%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E5%88%A9%E7%94%A8%E8%B7%AF%E7%94%B1%E7%9A%84ip%E5%AF%BB%E5%9D%80%E5%8A%9F%E8%83%BD%EF%BC%8C%E5%9B%A0%E6%AD%A4vlan%E9%97%B4%E8%A6%81%E9%80%9A%E4%BF%A1%E5%BF%85%E9%A1%BB%E5%88%86%E9%85%8Dip-%E3%80%82%E6%B3%A8%E6%84%8F%E5%8C%BA%E5%88%86%E4%BA%8C%E8%80%85%E3%80%82"><span class="nav-number">8.</span> <span class="nav-text">2.路由可以帮助不同vlan进行路由(本质上是利用路由的ip寻址功能，因此vlan间要通信必须分配ip)。注意区分二者。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%B7%AF%E7%94%B1%E4%B8%8D%E5%90%8C%E7%BD%91%E6%AE%B5-%E6%88%96%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91-%E9%80%9A%E4%BF%A1%E9%9C%80%E8%A6%81%E8%B7%AF%E7%94%B1%EF%BC%9A%E8%AE%BE%E7%BD%AEip%E4%B8%BA-ip-address-ip%E5%9C%B0%E5%9D%80-%E6%8E%A9%E7%A0%81"><span class="nav-number">9.</span> <span class="nav-text">5. 路由不同网段(或不同局域网)通信需要路由：设置ip为:ip address ip地址 掩码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%8C%E8%BF%99%E7%A7%8D%E4%B8%80%E4%BD%93%E5%A4%8D%E7%94%A8%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%80%E5%AE%9A%E8%A6%81%E4%BD%BF%E7%94%A8ip-routing%E6%8C%87%E4%BB%A4%E5%BC%80%E5%90%AF%E8%B7%AF%E7%94%B1%E5%8A%9F%E8%83%BD%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%81%EF%BC%8C%E5%90%A6%E5%88%99%E9%85%8D%E7%BD%AE%E5%AE%8C%E4%B9%9F%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E3%80%82"><span class="nav-number">10.</span> <span class="nav-text">一定要注意！！！！！！，这种一体复用交换机一定要使用ip routing指令开启路由功能！！！！！！，否则配置完也无法使用。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E7%9A%84DHCP-DNS-HTTP%E8%80%81%E5%B8%88%E5%B9%B6%E6%9C%AA%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E6%8C%87%E5%AE%9A%EF%BC%8C%E4%B8%8D%E8%BF%87%E5%91%BD%E4%BB%A4%E4%B8%8D%E9%9A%BE%E8%AE%B0%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%AF%B9%E5%BA%94%E7%9A%84%E5%90%8D%E5%AD%97-%E5%8F%82%E6%95%B0%E3%80%82"><span class="nav-number"></span> <span class="nav-text">以下的DHCP,DNS,HTTP老师并未使用命令指定，不过命令不难记，就是对应的名字+参数。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-DHCP%EF%BC%9A%E7%94%A8%E4%BA%8E%E5%8A%A8%E6%80%81%E7%9A%84%E7%BB%99%E4%B8%BB%E6%9C%BA%E5%88%86%E9%85%8Dip-%E8%BF%87%E6%AE%B5%E6%97%B6%E9%97%B4%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E8%AF%B7%E6%B1%82ip%EF%BC%8C%E4%BB%A5%E8%8A%82%E7%9C%81ip%E5%9C%B0%E5%9D%80%E3%80%82%E4%B8%80%E8%88%AC%E8%80%8C%E8%A8%80%EF%BC%8CDHCP%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8E%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">6.DHCP：用于动态的给主机分配ip,过段时间需要重新请求ip，以节省ip地址。一般而言，DHCP服务器与交换机连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-ip-helper-address%E5%BF%85%E9%A1%BB%E9%85%8D%E7%BD%AE%E5%9C%A8%E8%BF%9E%E6%8E%A5%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E9%82%A3%E4%B8%AA%E8%B7%AF%E7%94%B1%E7%AB%AF%E5%8F%A3%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E4%B8%89%E7%BA%A7%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84vlanip-%E9%82%A3%E4%B8%AA%E5%B0%B1%E8%BF%9B%E5%85%A5%E9%82%A3%E4%B8%AAvlan%E4%BD%BF%E7%94%A8%E8%AF%A5%E6%8C%87%E4%BB%A4%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">注意:ip helper-address必须配置在连接局域网的那个路由端口，如果是三级交换机的vlanip,那个就进入那个vlan使用该指令。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-DNS%E4%B8%8EHTTP%EF%BC%9ADNS%E6%8F%90%E4%BE%9B%E7%BD%91%E5%9D%80%E4%B8%8Eip%E5%9C%B0%E5%9D%80%E7%9A%84%E8%BD%AC%E6%8D%A2-%E8%BE%93%E5%85%A5%E7%BD%91%E5%9D%80%E8%BD%AC%E5%8C%96%E6%88%90ip%E5%9C%B0%E5%9D%80-%EF%BC%8C%E8%BF%9B%E5%85%A5%E6%8C%87%E5%AE%9Aip%E5%9C%B0%E5%9D%80%EF%BC%8C%E6%9C%8D%E5%8A%A1HTTP%E4%BC%9A%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AAhtml%E9%A1%B5%E9%9D%A2-%E5%BD%93%E7%84%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%94%E5%9B%9E%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%EF%BC%8C%E7%9C%8B%E4%BD%A0%E6%B8%B2%E6%9F%93%E8%BD%AF%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%AC%E8%B4%A8%E4%B8%8A%E9%83%BD%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">7. DNS与HTTP：DNS提供网址与ip地址的转换(输入网址转化成ip地址)，进入指定ip地址，服务HTTP会返回一个html页面(当然，可以返回其他数据，看你渲染软件是什么，本质上都是字符串。)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

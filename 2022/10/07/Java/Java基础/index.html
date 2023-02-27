@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.Java基本数据类型和引用数据类型 基础类型8种:   整形:   byte(-128~127)  short(-32768~32767)  int(-2,147,483,648（-2^31）~2,147,483,647（2^31 - 1）)  long(-9,223,372,036,854,775,808（-2^63）~9,223,372,036,854,775,807（2^63 -1）)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础">
+<meta property="og:url" content="http://example.com/2022/10/07/Java/Java%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.Java基本数据类型和引用数据类型 基础类型8种:   整形:   byte(-128~127)  short(-32768~32767)  int(-2,147,483,648（-2^31）~2,147,483,647（2^31 - 1）)  long(-9,223,372,036,854,775,808（-2^63）~9,223,372,036,854,775,807（2^63 -1）)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-07T14:40:43.000Z">
+<meta property="article:modified_time" content="2022-10-08T07:58:13.669Z">
+<meta property="article:author" content="yuanSchuan">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/07/Java/Java%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java基础 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/07/Java/Java%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-07 22:40:43" itemprop="dateCreated datePublished" datetime="2022-10-07T22:40:43+08:00">2022-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-08 15:58:13" itemprop="dateModified" datetime="2022-10-08T15:58:13+08:00">2022-10-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-Java基本数据类型和引用数据类型"><a href="#1-Java基本数据类型和引用数据类型" class="headerlink" title="1.Java基本数据类型和引用数据类型"></a>1.Java基本数据类型和引用数据类型</h2><ol>
+<li>基础类型8种:</li>
+</ol>
+<ul>
+<li>整形:</li>
+</ul>
+<ol>
+<li>byte(-128~127) </li>
+<li>short(-32768~32767) </li>
+<li>int(-2,147,483,648（-2^31）~2,147,483,647（2^31 - 1）) </li>
+<li>long(-9,223,372,036,854,775,808（-2^63）~9,223,372,036,854,775,807（2^63 -1）)</li>
+</ol>
+<ul>
+<li>浮点型:</li>
+</ul>
+<ol>
+<li><p>float</p>
+<blockquote>
+<p>tips:float赋值需要加f，默认不加f为double类型.</p>
+</blockquote>
+</li>
+<li><p>double</p>
+<blockquote>
+<p>tips:浮点型因为其构成的原因，无法表示精确的值。</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><p>boolean：只有1位，并且只有两种取值false和true。默认值为false。</p>
+</li>
+<li><p>char：16位的unicode字符。</p>
+<blockquote>
+<p>tips:Java中字符串是以字符数组储存的，并数组被视作对象。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>引用数据类型：储存在堆中。<br>具体的引用数据类型比如使用new关键字创建的对象，和被视作对象的数组。<blockquote>
+<p>tips:基础数据类型和引用数据类型的主要区别在于，基础数据类型储存在栈内存，而引用数据类型储存在堆内存。<br>tips2:基础数据类型作为实参传递给函数本质上复制一个新值给函数，因而需要return修改原值。<br>tips3:对于对象和数组作为实参传递给函数，传递的本质上是引用，函数修改该引用所指向地址的值，会修改原地址的值，并且不需要return。</p>
+</blockquote>
+</li>
+</ol>
+<p>值得注意的是:即使基础类型作为引用类型的组成部分或者作为静态变量，当传递给方法的形参时(比如参数为对象的某个属性)，都是值传递。而引用类型即使作为其他对象的组成部分（比如对象作为数组的组成部分），那么也是引用传递。</p>
+<hr>
+<h2 id="2-类和对象"><a href="#2-类和对象" class="headerlink" title="2.类和对象"></a>2.类和对象</h2><ol>
+<li><p>概念：可以将类理解为一个模板，然后依照此模板创建一个个拥有具体值的实体(对象)。</p>
+</li>
+<li><p>成员变量，局部变量和静态变量。</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>成员变量会随着相应对象创建在堆区而创建，因此成员变量的储存在堆区，并且生命周期跟随绑定的对象结束而释放。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>局部变量随着相应方法创建而创建，并且进入相应方法的栈中，随着方法结束退出栈而释放空间。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>静态变量储存在方法区，生命周期为整个程序。</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>关于堆区，栈区和方法区</li>
+</ol>
+<ul>
+<li><ol>
+<li>堆区，c语言中向系统申请的空间，Java中用于存放对象。如果不主动或者自动（垃圾回收机制）的释放空间，这个空间内的空间会一直保留。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>栈区，每次方法执行便会进入一个栈，随着方法结束而释放栈的空间。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>方法区，又称为非堆区。因为这个区域除了存放的数据与堆区不同，包括释放机制内的特性一致。这个区域存放的数据为运行时需要的信息，比如方法信息，对象信息等和静态变量。</li>
+</ol>
+</li>
+</ul>
+<ol start="4">
+<li>关于构造方法，以及this和super</li>
+</ol>
+<ul>
+<li><ol>
+<li>对于成员变量，如果在类中直接定义了成员变量值，比如class{ int a&#x3D;10};那么即使构造方法中没有填写，创建新的对象时，这个对象定义了的成员变量也有初值。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>this用于指向当前调用这个方法的对象。比如构造方法中的this.a&#x3D;a，就是同名释意。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>super用于指向当前对象的父类。super()，用于引用父类的构造方法。super.父类方法用于引用父类方法（对于所有父类的父类也可以，以此类推所有父类均可以）。<br>值得注意的是，对于多个父类中都有同名的方法，调用越近的父类的同名方法。因为最近父类的方法覆盖了之前父类的方法。<blockquote>
+<p>tips:基于this和super的这种特性，因此静态方法中是无法填写this和super的，因为静态方法属于类。<br>tips2:静态方法和变量会在类初始化时就初始化。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="5">
+<li><p>关于匿名对象<br>匿名对象指创建对象后没有引用指向该对象，即没有赋值给引用。<br>因此只有创建后调用，后续无法通过引用（只有引用能调用）继续调用。</p>
+</li>
+<li><p>内部类:即创建在类的中类，拥有包围内部类的其他属性和方法。<br>class 名字{}</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>创建在方法外的内部类，可以被其他方法实例化。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>创建在方法内的内部类，不可以被方法之外的方法访问。<blockquote>
+<p>tips:{}即限定了范围。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="3-抽象类和接口。"><a href="#3-抽象类和接口。" class="headerlink" title="3.抽象类和接口。"></a>3.抽象类和接口。</h2><ol>
+<li>所有抽象方法只能写在抽象类或者接口中，并且没有方法体。</li>
+<li>抽象类和接口均没有构造方法，但接口可以设置非抽象的变量和方法。</li>
+<li>可以多实现接口（implements）,但不可以多继承抽象类。</li>
+</ol>
+<hr>
+<h2 id="4-关于多态"><a href="#4-关于多态" class="headerlink" title="4.关于多态"></a>4.关于多态</h2><p>个人理解：这是可以说是基于继承的延伸。我们以下将父类称为x,该父类的子类为z.</p>
+<ol>
+<li>子类可以强制转化为父类。比如(z)x</li>
+<li>父类也可以强制转化为子类。(x)z也就是说可以使用其中的属性，方法。<br>值得注意的是，如果父类x还被子类y继承，那么y和x之间是无法强制转换的。</li>
+</ol>
+<hr>
+<h2 id="5-final-不可被继承，修改。"><a href="#5-final-不可被继承，修改。" class="headerlink" title="5.final:不可被继承，修改。"></a>5.final:不可被继承，修改。</h2><p>值得注意的是：成员变量如果被fianl修饰必须赋初值，即在创建对象之前就会先给该成员变量赋值</p>
+<hr>
+<h2 id="6-代码块分类"><a href="#6-代码块分类" class="headerlink" title="6.代码块分类"></a>6.代码块分类</h2><ol>
+<li>局部代码块，即{}内</li>
+<li>构造代码块：{}，无名，也就是一个花括号。构造代码块会在构造方法执行之前触发，能够执行一些初始化操作。值得注意的是：构造代码块会在构造方法之前触发意味着构造代码块会在该类的实例创建时触发。</li>
+<li>静态代码块：static修饰，只会执行一次，无论创建多少个对象都只有一个。<br>值得注意的是，对于本类的静态变量，使用直接使用名字即可。对于其他类的静态变量（如果符合范围），那么使用类名.静态变量名调用。当然也可以使用类所创建的实例调用即对象.静态变量名调用。</li>
+</ol>
+<h2 id="7-反射"><a href="#7-反射" class="headerlink" title="7.反射"></a>7.反射</h2><ol>
+<li>类的加载：</li>
+</ol>
+<ul>
+<li><ol>
+<li>步骤：1.加载：即将类的class文件读入内存，并创建Java.lang.Class的过程。<blockquote>
+<p>tips:程序使用任何类的时候，都会为该对象创建一个java.lang.Class对象。类装载器用来把类装载进JVM</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>连接：负责把类的二进制数据合并到JRE中-&gt;(1).类内部是否有正确的结构（2）准备为类的类变量分配内存并且设置默认值。（3）将类中的间接引用替换为直接引用。<br>(3).初始化：对类变量进程初始化。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>反射：允许动态（指运行时）绑定类，方法和字段。</li>
+</ol>
+<ul>
+<li><ol>
+<li>获取Class类以及Class对象，方法有三</li>
+</ol>
+<ul>
+<li>1.class name&#x3D;obj(任意类的实例).getClass();</li>
+<li><ol start="2">
+<li>class name&#x3D;obj.class</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>class name&#x3D;Class.forName(“包名.类名”)<blockquote>
+<p>tips:建议使用Class类的静态方法获取，因为不需要预先创建实例对象，可以较好的进行拓展。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ol start="2">
+<li>Class对象获取对象，对象属性，调用对象方法。</li>
+</ol>
+<ul>
+<li><ol>
+<li>创建对象：使用以上获取的Class对象获取对应类的构造方法，在使用该方法的实例化创建实例。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>获取构造方法：Constructor cs&#x3D;class(为(1)以上获取的class).getConstructor();</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>通过构造方法创建实例：obj(构造方法的类) name &#x3D;(obj)cs.newInstance()；后面的obj为类型的强制转换。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ol start="3">
+<li>获取对象属性：class同上</li>
+</ol>
+<ul>
+<li><ol>
+<li>获取public的所有变量Field  []f&#x3D;class.getFileds().<br>获取指定变量Field f&#x3D;class.getField(“name”).<br>获取获取所有范围的变量：Field [] f&#x3D;class.getDeclaredFields().<br>获取所有范围的指定变量Field f&#x3D;class.getDeclaredFied(“name”);<blockquote>
+<p>注意，获取的类型为Field。该类提供了set(objct,value)修改某个实例的属性。get(object)获取指定实例的变量。<br>值得注意的是，我们已经知道了name,所以要获取具体的实例。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><ol start="4">
+<li>获取方法</li>
+</ol>
+<ul>
+<li><ol>
+<li>获取public的所有方法method [] m&#x3D;class.getMethods().<br>获取指定变量Method m&#x3D;class.getMethod(“name”).<br>获取所有范围的方法：Method[] m&#x3D;class.getDeclaredMethods().<br>获取所有范围的指定变量Method m&#x3D;class.getDeclaredMethod(“name”);</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>要执行某个方法.invoke(obj)  其中obj为实例。如果有参数，则在invoke(obj,reference,reference…)</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="8-异常"><a href="#8-异常" class="headerlink" title="8.异常"></a>8.异常</h2><ol>
+<li>处理异常用try{}catch执行。</li>
+<li>throw和throws抛出异常。主要用于自定义异常，设定完异常条件后抛出。throws能够抛出多个异常。</li>
+<li>自定义异常需要继承RunTimeException或者Exception，利用父类的构造方法输出信息。</li>
+</ol>
+<hr>
+<h2 id="9-java常用类之包装类和一些方法"><a href="#9-java常用类之包装类和一些方法" class="headerlink" title="9.java常用类之包装类和一些方法"></a>9.java常用类之包装类和一些方法</h2><ol>
+<li><p>每个基础数据类型都有对应的包装类，并且包装类和基础类型之间可以自动转换，这种转换称为装箱拆箱。<br>其中将Integer转化成int为拆箱，int转化成Integer转化成拆箱。<br>每个类型的包装类都有一些对应的专属方法。<br>比如parseInt（）能够将数据类型转化成Integer类型，进而赋值给int（java提供Integer与int之间的自动转换）</p>
+</li>
+<li><p>equals方法()注意，该方法比较的如果是引用类型，则是比较Hashcode,也就是比较地址。<br>如果要使用equals比较引用类型需要重写。重写规则如下：</p>
+</li>
+</ol>
+<ul>
+<li>1.首先判断类型是否相等,使用instanceof关键字比较。该关键字如果类型相等会返回true，否则false。</li>
+<li>2.接下来一一对比所有的数据是否相等。<blockquote>
+<p>tips：重写equals时，参数为Object类型，注意转换。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li>关于HashCode<blockquote>
+<p>tips1:HashCode只能对对象或者基础类型的包装类使用，无法直接对基础类型使用。<br>对对象使用会根据的对象的物理地址进行hash运算（即散列函数运算）获取hash值，对包装类使用，会根据包装类的值返回相对固定的整数。<br>比如int类型不变，char返回转化成int类型的值，boolean则value?1231:1237，对于<br>float和long类型都有一些特殊运算。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:根据上面1可知，如果是包装类，那么同样的数据返回的hashcode是一样的。如果是引用对象，则即使数据相同，返回的hashcode也必然不同。</p>
+</blockquote>
+<hr>
+<h2 id="10-集合Collection和Map"><a href="#10-集合Collection和Map" class="headerlink" title="10.集合Collection和Map"></a>10.集合Collection和Map</h2><p>简介：Collection和Map下属的许多方法具有高度相似，但最大的不同为Colletion存的是单列集合，Map是双列。也就是说，Colletion存的是值集合，而Map存的是键值对的双列集合。</p>
+<ol>
+<li>Collection:Colletion下属分为List和Set接口。</li>
+</ol>
+<p>List有两种实现：</p>
+<ul>
+<li><ol>
+<li>ArrayList,储存的类型为Object,底层为数组。每次超出界限会将数组扩大1.5倍。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>LinkedList:储存类型同样为Object,底层为链表。<blockquote>
+<p>tips1:ArrayList查询快，修改快，但增删慢。LinkedList增删快，查询和修改慢。看情况使用。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<p>Set实现为HashSet和HashTree</p>
+<ul>
+<li><ol>
+<li>HashSet底层也是采用数组实现，特别的地方在于，存入数组的地址是根据存入对象的hashcode值来进行计算，进而得出地址。<blockquote>
+<p>tips:因为hashcode的特性，如果存入的是非包装类型，那么即使这两个对象数据结构和数据完全相同，也不会判定同一元素，如果是基础类型，那么就会转化成包装类获取hashcode进行计算。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>hashTree,底层实现为链表，算法为平衡二叉树。第一个存入的数据为根节点。小于根节点放入左子树，大于根节点放入右子树，依次判定。值得注意的是，因为这种特性，所以一般存入为数值类型。而不存对象。<blockquote>
+<p>tips:Set实现的两个类都不会按照存入顺序进行输出。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>Map集合分为HashMap和TreeMap</li>
+</ol>
+<ul>
+<li><ol>
+<li>HashMap底层也是数组，存入的数组地址是根据存入对象的键和值的哈希值经过计算得出。值得注意的是，如果值相同的元素，键不同的元素存入，那么不会被视为同一元素，会被存入。如果键相同，值不同会被视为同一元素，并覆盖之前的元素。因为key（键）一般用int类型做标识。对于基础类型的包装类的hashcode值一样。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>TreeMap和HashTree一样，是使用平衡二叉树进行储存。不同在于TreeMap存入的是键值对，并且键无法重复。</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>迭代器：<br>对于Map和Collection内部自带iterator方法<br>可以获取迭代器为Iterator it&#x3D;arrayList(实例).iterator();<br>it.hashNext()会判断下一个元素是否为空，如果有则True,否则为false;<br>it.hasNext()会返回当前迭代元素。</li>
+</ol>
+<hr>
+<h2 id="11-泛型"><a href="#11-泛型" class="headerlink" title="11.泛型"></a>11.泛型</h2><p>简介:集合虽然能够存放不同数据类型，但是存入多种数据后，所有数据类型都会变成Object。为了存入的数据不会变成Obeject失去原本的类型，Java使用标记使得存入时数据类型被限定，虽然定义时为泛型，但使用时则必须赋类型。在运行时会将泛型擦除。</p>
+<ul>
+<li><ol>
+<li><T>用来代指任意类型。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><?>同样代指任意类型，但可以对父类或者子类做出限定。
+<? extends person>只允许放入person及其子类。
+<? super person>只允许放入person及其父类。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="12-JavaIO"><a href="#12-JavaIO" class="headerlink" title="12.JavaIO"></a>12.JavaIO</h2><p>流的概念：比如文件读取时，数据从硬盘文件流向内存，这就叫做输入流。输出流反过来即可。  </p>
+<ol>
+<li>File类:用于读取或者往文件中写入数据。能够执行包括但不限于的以下行为：1.以路径为参数构造文件。2.判断文件，目录是否存在并且创建。3.判断文件权限。</li>
+<li>字节流：向目标文件写入或者读出字节。</li>
+</ol>
+<ul>
+<li><ol>
+<li>FileInputStream&#x2F;FileOutputStream:这个类的构造函数参数为一个文件路径，<br>创建一个文件输入&#x2F;输出流对象,这个对象提供了写入&#x2F;写出字节的方法。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>write&#x2F;read方法:write重载3种(多了一个写入一个int的方法)，read2种。分别为(1)byte[]写入，读出一个字节数组。(2)byte[]b,int off,int len。写入，读出一个字节数组，并指定偏移量(从哪里开始),长度(读几个)</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>其他:write和read都有close方法，关闭当前的输入输出流，并且write还有一个flush用于将缓冲区的数据立即写入并清空。<blockquote>
+<p>tips:对于系统来说，输入输出一种高消耗行为，不使用应当关闭。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>字节缓冲流：BufferedInputStream&#x2F;BufferedOutputStream，分别有两个构造方法，第一个构造方法为相应的字节流。第二个构造为响应的字节流+int size.<br>第一个构造方法默认使用一个8192的字节的缓冲数组，第二个指定一个长度的字节数组。<blockquote>
+<p>tips:这里的缓冲为预先的数据存入字节数组中，再一次性存入一个文件中。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>字符流： 以unicode编码字符。继承自顶级父类Reader和Writer。</li>
+</ol>
+<ul>
+<li><ol>
+<li>子类FileWriter对文件进行操作<blockquote>
+<p>tips：字符流低层还是字节流，区别在于字节流一次读取一个字节，字符流一次读取一个字符。因此在此不再赘述。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="4">
+<li>对象输入输出流:</li>
+</ol>
+<ul>
+<li><ol>
+<li>字节输入流提供了相应的对象输入&#x2F;输出方法:readObject(Object o),writeObject(Object o)。<blockquote>
+<p>tips:最重要的是，作为参数的对象必须被序列化，即实现序列化接口，格式为<br>class name implements Serializable{}</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="5">
+<li>字符编码:</li>
+</ol>
+<ul>
+<li><ol>
+<li>可以使用String类型自带的getBytes(“编码类型”)将字符串以相应的编码转化成字符数组。不填参数则采用默认编码。<blockquote>
+<p>tips：值得注意的是，java默认采用的是unicode编码。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>对于字节流，可以InputStreamReader和OutputStreamWriter对字节流进行编码转换。参数1为字节流，参数2为String “编码类型”.若输入流，以指定编码读取流。输出流：以指定编码写流。</li>
+</ol>
+</li>
+</ul>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/07/uderstandingCoputer/2-%E4%BF%A1%E6%81%AF%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E8%A1%A8%E7%A4%BA/" rel="prev" title="2-信息的处理和表示">
+      <i class="fa fa-chevron-left"></i> 2-信息的处理和表示
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/13/mysql/mysql/" rel="next" title="mysql">
+      mysql <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1.Java基本数据类型和引用数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">2.类和对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">3.抽象类和接口。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%85%B3%E4%BA%8E%E5%A4%9A%E6%80%81"><span class="nav-number">4.</span> <span class="nav-text">4.关于多态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-final-%E4%B8%8D%E5%8F%AF%E8%A2%AB%E7%BB%A7%E6%89%BF%EF%BC%8C%E4%BF%AE%E6%94%B9%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">5.final:不可被继承，修改。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BB%A3%E7%A0%81%E5%9D%97%E5%88%86%E7%B1%BB"><span class="nav-number">6.</span> <span class="nav-text">6.代码块分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%8F%8D%E5%B0%84"><span class="nav-number">7.</span> <span class="nav-text">7.反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%BC%82%E5%B8%B8"><span class="nav-number">8.</span> <span class="nav-text">8.异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-java%E5%B8%B8%E7%94%A8%E7%B1%BB%E4%B9%8B%E5%8C%85%E8%A3%85%E7%B1%BB%E5%92%8C%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">9.java常用类之包装类和一些方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E9%9B%86%E5%90%88Collection%E5%92%8CMap"><span class="nav-number">10.</span> <span class="nav-text">10.集合Collection和Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E6%B3%9B%E5%9E%8B"><span class="nav-number">11.</span> <span class="nav-text">11.泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-JavaIO"><span class="nav-number">12.</span> <span class="nav-text">12.JavaIO</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

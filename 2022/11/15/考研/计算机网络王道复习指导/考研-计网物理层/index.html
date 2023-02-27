@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.基础概念 物理层的作用：物理层不是材料，可以理解为第0层，主要用于屏蔽材料带来的影响进而透明的传输比特流。  模拟信号和数字信号    1.模拟信号：连续变化的数据或者信号。 2.数字信号：取值仅允许为有限的几个离散数值的数据。   码元：固定时常的信号波形(数字脉冲)表示一位k进制的数字，用于代表不同离散数值的基本波形，是数字通信中的计量单位。  tips:1.码元用于数字信号，代表k进制数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="考研-计网物理层">
+<meta property="og:url" content="http://example.com/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%89%A9%E7%90%86%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.基础概念 物理层的作用：物理层不是材料，可以理解为第0层，主要用于屏蔽材料带来的影响进而透明的传输比特流。  模拟信号和数字信号    1.模拟信号：连续变化的数据或者信号。 2.数字信号：取值仅允许为有限的几个离散数值的数据。   码元：固定时常的信号波形(数字脉冲)表示一位k进制的数字，用于代表不同离散数值的基本波形，是数字通信中的计量单位。  tips:1.码元用于数字信号，代表k进制数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-15T06:49:24.000Z">
+<meta property="article:modified_time" content="2022-11-15T06:51:14.834Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%89%A9%E7%90%86%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>考研-计网物理层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%89%A9%E7%90%86%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          考研-计网物理层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-15 14:49:24 / 修改时间：14:51:14" itemprop="dateCreated datePublished" datetime="2022-11-15T14:49:24+08:00">2022-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">计算机网络考研复习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-基础概念"><a href="#1-基础概念" class="headerlink" title="1.基础概念"></a>1.基础概念</h2><ol>
+<li><p>物理层的作用：物理层不是材料，可以理解为第0层，主要用于屏蔽材料带来的影响进而透明的传输比特流。</p>
+</li>
+<li><p>模拟信号和数字信号</p>
+</li>
+</ol>
+<ul>
+<li>1.模拟信号：连续变化的数据或者信号。</li>
+<li>2.数字信号：取值仅允许为有限的几个离散数值的数据。</li>
+</ul>
+<ol start="3">
+<li><p>码元：固定时常的信号波形(数字脉冲)表示一位k进制的数字，用于代表不同离散数值的基本波形，是数字通信中的计量单位。</p>
+<blockquote>
+<p>tips:1.码元用于数字信号，代表k进制数.</p>
+</blockquote>
+</li>
+<li><p>数据通信系统的主要三个划分:信源，信道和信宿。</p>
+</li>
+</ol>
+<ul>
+<li>1.信源:发送端。</li>
+<li>2.信道；传输信号(信源的信号需要经过转换在信道上传输)。</li>
+<li>3.信宿:接收端</li>
+</ul>
+<blockquote>
+<p>tips:数据通信指数字计算机和其他数字计算机终端之间的通信。</p>
+</blockquote>
+<blockquote>
+<p>tips2:信道与电路并不等同，信道是信号的传输媒介，可以视为一条线路上的逻辑部件，一般用来表示某个方向传送信息的介质。而一条通信线路(电路)往往包涵一条发送信道和接收信道。</p>
+</blockquote>
+<ol start="5">
+<li><p>按照传输介质可以划分为:1.无线信道和2.有线信道</p>
+</li>
+<li><p>信道上传送的信号有基带信号和宽带信号之分。</p>
+</li>
+</ol>
+<ul>
+<li>1.基带信号:2进制的数字信号，码元为1和0.在数字信道上传输，称为基带传输。</li>
+<li>2.宽带信号:将基带信号进行调制后形成频分复用模拟信号，然后在模拟信道上传输。<blockquote>
+<p>tips1:基带信号为数字信号，宽带信号为模拟信号。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>tips2:基带信号为二进制的数字信号，宽带信号的模拟信号没有规定。</p>
+</blockquote>
+<ol start="7">
+<li>通信双方的交互方式分为三种方式：</li>
+</ol>
+<ul>
+<li>1.单向通信：A只能发送，B只能接收。</li>
+<li>2.半双工通信:A,B均能发送和接收，但当A发送时，B只能接收。</li>
+<li>3.全双工通信:A,B可以同时发送和接收信息，也就是需要两条通道。<blockquote>
+<p>tips:信息的极限容量是指信道的最高码元传输速率或信道的极限信息传输速率。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="8">
+<li>速率，波特和带宽：</li>
+</ol>
+<ul>
+<li>1.速率:即数据率，也称数据传输速率，表示单位时间内传输的数据量。可以用码元传输速率和信息传输速率表示。</li>
+<li>2.码元传输速率：即波特率，表示单位时间内数字通信系统所传输的码元个数(也可称为脉冲个数或者信号变化的次数)。单位是波特，1波特表示数字通信系统每秒传输一个码元。<br>值得注意的是，码元速率与进制数无关。</li>
+<li>3.信息传输速率:又称信息速率，比特率等。表达表示单位时间内数字通信系统传输的二进制码元个数(即比特数),可以理解为传输一个1或者0,即bit&#x2F;s</li>
+</ul>
+<blockquote>
+<p>tips:码元传输速率也称调制速率，波形速率和符号速率，若一个码元携带n比特的信息量，则码元M*码元传输速率&#x3D;信息传输速率</p>
+</blockquote>
+<ul>
+<li>4.带宽原指信号的频带宽度，单位为Hz,但在计算机网络中表示最高数据率时表示最大数据通信率，单位为b&#x2F;s</li>
+</ul>
+<hr>
+<h2 id="2-奈奎斯特定理与香农定理"><a href="#2-奈奎斯特定理与香农定理" class="headerlink" title="2.奈奎斯特定理与香农定理"></a>2.奈奎斯特定理与香农定理</h2><ol>
+<li><p>奈奎斯特定理:定义了没有噪声，带宽有限情况下，为避免码间串扰的极限传输速率。<br>公式为:极限传输速率&#x3D;2W*log2(V),W为带宽，V为码元的离散电平数(即这种码元的最大组合个数)。</p>
+<blockquote>
+<p>tips：奈式定理告诉我们，如果需要提高信息传输率，应该提高比特的信息量。</p>
+</blockquote>
+</li>
+<li><p>香农定理:给出了带宽有限且受到噪声干扰的极限数据传输速率.<br>公式为:信道极限传输速率&#x3D;Wlog2(1+S&#x2F;N),W为带宽，S为信号平均功率，N为信道内部的高斯噪声功率。</p>
+</li>
+</ol>
+<p>特别值得注意的是,S&#x2F;N是没有单位的，想要要带入香农定理需要经过转化，信噪比(带单位sB)&#x3D;10log10(S&#x2F;N)，比如S&#x2F;N&#x3D;1000,转化&#x3D;10*log10(S&#x2F;N)&#x3D;30db。</p>
+<blockquote>
+<p>tips:奈式讲的是无干扰环境下，码元与带宽的传输速率。香浓指的是受到干扰的情况下，带宽极限传输速率。</p>
+</blockquote>
+<hr>
+<h2 id="3-编码与调制"><a href="#3-编码与调制" class="headerlink" title="3.编码与调制"></a>3.编码与调制</h2><ol>
+<li>调制:数据变换成模拟信号。</li>
+<li>编码:数据变换成数字信号。<blockquote>
+<p>tips:相应的信号可以转化成别的信号传输，也可以通过放大调制器进行输出。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:数字信号编码用于基带传输</p>
+</blockquote>
+<ol start="3">
+<li>编码方式：值得注意的是，以下编码方式的1，0表示方式可以互相转换，比如原本表示0的电平表示1.</li>
+</ol>
+<ul>
+<li>1.归零编码(RZ):高电平代表1，低电平代表0，每个时钟周期中必然跳到0，所以1，0根据每个时钟周期开始的电平判断。同时自带同步时钟信号(因为双方传输需要)。</li>
+<li>2.非归零编码(NRZ):即每个时钟周期中间不会归零，难以同步，若想高速同步数据需要自带时钟线。</li>
+<li>3.反向非归零编码(NRZI):信号变化为0，不变化为1.</li>
+<li>4.曼切斯特编码:将一个码元分成两个相等的间隔，前半高，后半第为1。前半低，后半高为0.<br>值得注意的是，曼切斯特编码的间隔可以作为时钟信号同步，而它所占的频带宽度是原始基带宽度的两倍，并且以太网使用的编码方式为曼切斯特编码。</li>
+<li>5.差分曼切斯特编码:前半分与上一个周期的电平相等为1，不同为0.<br>值得注意的是：局域网使用差分曼切斯特编码传输，并且可以使用自同步。</li>
+<li>6.4B&#x2F;5B编码，每4位作为一组，按照4B&#x2F;5B编码规则转化位5位码。</li>
+</ul>
+<ol start="4">
+<li>数字数据调制为模拟信号</li>
+</ol>
+<ul>
+<li>1.幅移键控(ASK)，频移键控(FSK)，相移键控(PSK)。</li>
+<li>2.主要要点为为正交振幅调制(QAM)：即在频率相同的前提下，将ASK和PSK结合起来。形成叠加信号。设波特率为B，采用m个相位，每个相位n个振幅，则QAM技术的传输速率R&#x3D;Blog2(mn)。<blockquote>
+<p>tips:主要考点为给出QAM传输速率，给出相位和振幅，可以得出波特率。<br>而波特率(码元传输速率)，如果知道码元代表的离散值可以求出传输速率。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="5">
+<li><p>模拟信号转化成数字信号：包括采样，量化，编码。<br>语言数字化技术为QAM</p>
+<blockquote>
+<p>值得注意的是，采样频率必须大于最大频率的两倍，才能保证采样后的数字信息完整保留原始模拟信号的信息。</p>
+</blockquote>
+</li>
+<li><p>模拟数据调制为模拟信号：可以使用频分复用技术。</p>
+</li>
+</ol>
+<hr>
+<h2 id="4-电路交换，报文交换，分组交换。"><a href="#4-电路交换，报文交换，分组交换。" class="headerlink" title="4.电路交换，报文交换，分组交换。"></a>4.电路交换，报文交换，分组交换。</h2><ol>
+<li>电路交换：需要建立一条专用并且双方独占的物理通信路径。</li>
+</ol>
+<ul>
+<li>1.电路交换的三个阶段：1.连接建立。2.数据传输。3.连接释放。</li>
+<li>2.主要优点：1.时延小。2.有序传输。</li>
+<li>3.主要缺点:1.建立连接时间长。2.效率低。</li>
+</ul>
+<ol start="2">
+<li>报文交换:交换单位是报文。</li>
+</ol>
+<ul>
+<li>1.主要优点:1.无需建立连接。2.动态分配线路。3.提高利用率。</li>
+<li>2.主要缺点:1.对报文没有限制，报文过大导致，排队转发时延可能过大。3.失序</li>
+</ul>
+<ol start="3">
+<li>分组交换：与报文交换相比设置了数据块上限，有效提高了数据传输速率(比如重传而消耗的时间，比如排队时延，转发时延。)</li>
+</ol>
+<blockquote>
+<p>tips:分组交换和报文交换都是储存转发。</p>
+</blockquote>
+<ol start="4">
+<li>分组交换之数据报与虚电路。</li>
+<li>数据报和虚电路是分组交换的两种传输方法。</li>
+</ol>
+<ul>
+<li>1.数据报:高层会将报文拆成若干个带有序号的数据单元，加上控制信息形成数据报分组(即网络层的PDU).</li>
+<li>2.将数据报与电路交换方式结合起来。分组发送前需要经历:1.虚电路建立。2.数据传输。3.虚电路释放。每个分组多了虚电路号，而虚电路上的每个结点也有维护一张虚电路表。</li>
+</ul>
+<hr>
+<h2 id="5-错题"><a href="#5-错题" class="headerlink" title="5.错题"></a>5.错题</h2><ol>
+<li>一个信道每1&#x2F;8秒采样一次，传输信号16种变化状态，最大数据传输率为:<br>8s*log2(16)&#x3D;64。采样为得到带宽8hz，不需要除以2。</li>
+</ol>
+<hr>
+<h2 id="6-传输介质"><a href="#6-传输介质" class="headerlink" title="6.传输介质"></a>6.传输介质</h2><ol>
+<li><p>传输介质也称传输媒体，在数据传输系统中发送设备和接收设备之间的物理通路。<br>传输介质分为：1.导向型传输介质(沿着固体媒介传播，比如光纤)。2.非导向型传输介质(可以是空气，真空，海水等。)。</p>
+</li>
+<li><p>光纤</p>
+</li>
+</ol>
+<ul>
+<li>1.多模光纤：不同角度入射的多条光纤，只适合短距离传输。</li>
+<li>2.单模光纤:直线传播，适合远距离传输。</li>
+</ul>
+<ol start="3">
+<li>物理层的接口特定:</li>
+</ol>
+<ul>
+<li>1.机械特性:指明接口所用接线器的形状，尺寸，引脚数目和排列，固定和锁定装置。</li>
+<li>2.电气特性:指明在接口电缆的各条线上的电压范围。</li>
+<li>3.功能特性:指明某条线上某一电平的电压表示何种意义。</li>
+<li>4.过程特性:或许规程特性，用于指明可能事件的顺序。</li>
+</ul>
+<hr>
+<h2 id="7-物理层设备"><a href="#7-物理层设备" class="headerlink" title="7.物理层设备"></a>7.物理层设备</h2><ol>
+<li>中继器:两个端口(出入)，用于将数字信号放大(整形再生)。<blockquote>
+<p>tips1:中继器连接的是网段，而非子网，因此多个中继器连接的几个网段属于同一个局域网。因此两端必须使用同一个协议。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:放大器用于模拟信号，中继器放大数字信号。</p>
+</blockquote>
+<ol start="2">
+<li>集线器：本质上是一个多端口的中继器，并且处理数据处于半双工状态，因此网络得到吞吐率也会受到限制。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/" rel="prev" title="考研-计算机网络体系">
+      <i class="fa fa-chevron-left"></i> 考研-计算机网络体系
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" rel="next" title="考研-计网数据链路层">
+      考研-计网数据链路层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">1.基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A5%88%E5%A5%8E%E6%96%AF%E7%89%B9%E5%AE%9A%E7%90%86%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2.奈奎斯特定理与香农定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BC%96%E7%A0%81%E4%B8%8E%E8%B0%83%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">3.编码与调制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%EF%BC%8C%E6%8A%A5%E6%96%87%E4%BA%A4%E6%8D%A2%EF%BC%8C%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E3%80%82"><span class="nav-number">4.</span> <span class="nav-text">4.电路交换，报文交换，分组交换。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%94%99%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">5.错题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="nav-number">6.</span> <span class="nav-text">6.传输介质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="nav-number">7.</span> <span class="nav-text">7.物理层设备</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.一些基础python特点 命名的和其他语言一样，第一个字符必须是字母或者_  ‘’,””都表示字符串，python没有char类型，只有字符串类型。并且使用(哪怕在其他方面)都不区分  字符串之间可以+运算连接，**表示重复2遍。  print(,end&#x3D;’’)表示不换行  特殊运算：    1.乘方：2**5,2的5次方 2.除法,&#x2F;得到浮点数。&#x2F;&#x2F;得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础">
+<meta property="og:url" content="http://example.com/2022/12/16/python/python/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.一些基础python特点 命名的和其他语言一样，第一个字符必须是字母或者_  ‘’,””都表示字符串，python没有char类型，只有字符串类型。并且使用(哪怕在其他方面)都不区分  字符串之间可以+运算连接，**表示重复2遍。  print(,end&#x3D;’’)表示不换行  特殊运算：    1.乘方：2**5,2的5次方 2.除法,&#x2F;得到浮点数。&#x2F;&#x2F;得">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-16T13:51:19.000Z">
+<meta property="article:modified_time" content="2023-02-16T04:10:19.102Z">
+<meta property="article:author" content="yuanSchuan">
+<meta property="article:tag" content="编程语言">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/16/python/python/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>python基础 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/16/python/python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-16 21:51:19" itemprop="dateCreated datePublished" datetime="2022-12-16T21:51:19+08:00">2022-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-16 12:10:19" itemprop="dateModified" datetime="2023-02-16T12:10:19+08:00">2023-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-一些基础python特点"><a href="#1-一些基础python特点" class="headerlink" title="1.一些基础python特点"></a>1.一些基础python特点</h2><ol>
+<li><p>命名的和其他语言一样，第一个字符必须是字母或者_</p>
+</li>
+<li><p>‘’,””都表示字符串，python没有char类型，只有字符串类型。并且使用(哪怕在其他方面)都不区分</p>
+</li>
+<li><p>字符串之间可以+运算连接，**表示重复2遍。</p>
+</li>
+<li><p>print(,end&#x3D;’’)表示不换行</p>
+</li>
+<li><p>特殊运算：</p>
+</li>
+</ol>
+<ul>
+<li>1.乘方：2**5,2的5次方</li>
+<li>2.除法,&#x2F;得到浮点数。&#x2F;&#x2F;得到整数</li>
+</ul>
+<ol start="6">
+<li><p>注释为#，单行和’’’多行’’’</p>
+</li>
+<li><p>python是动态语言不支持静态变量，可以将变量定义在外部模拟静态变量,不过python既可以面向过程，也可以面向对象。</p>
+</li>
+<li><p>多元赋值a&#x3D;b&#x3D;1,&#x3D;&#x3D; a&#x3D;1，b&#x3D;1.，在编译过程中，前者会将俩个1压入栈，而后者只有一个会</p>
+<blockquote>
+<p>tips:值得注意的是:a,b&#x3D;字符串，这个字符串只能两字符，a,b各得一个字符，否则会报错。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips:a&#x3D;b&#x3D;1不等于a,b&#x3D;1。这会报错，必须两个参数赋值，a,b&#x3D;1,1才对</p>
+</blockquote>
+<ol start="9">
+<li><p>true1 or true2 ,true1 and true2。前者返回true1,后者返回true2.因为or只需要判断一次，这个true可以是任何非0和False值。</p>
+</li>
+<li><p>关键字in str in str2，如果str2包涵str1，那么返回true,反之false</p>
+</li>
+<li><p>python空值为None,而不是NULL。Null等。</p>
+</li>
+<li><p>pyhton可以表达式间直接省略and ,比如4&lt;5&gt;3&#x3D;true&#x3D;4&lt;5 and 5&gt;3</p>
+</li>
+</ol>
+<hr>
+<h2 id="2-python基础类型"><a href="#2-python基础类型" class="headerlink" title="2.python基础类型"></a>2.python基础类型</h2><ol>
+<li>数字类型</li>
+</ol>
+<ul>
+<li><ol>
+<li>int(整形)：注意，没有长整型，long,只有int。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>bool(布尔)：比如True</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>float(浮点型)：比如1.23</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>complex(复数)：比如1+2j</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>标准数据类型</li>
+</ol>
+<ul>
+<li><ol>
+<li>Numbers（数字）</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>String（字符串）</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>List（列表）</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>Tuple（元组）</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Dictionary（字典）</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:除开数字以外4种基础类型都基于数组实现。</p>
+</blockquote>
+<blockquote>
+<p>tips2:不可变数据类型：number,String,tuple.可变数据,list,dictionary,set</p>
+</blockquote>
+<ol start="3">
+<li>字符串string</li>
+</ol>
+<p>tips:注意string虽然是数组，但不可以修改</p>
+<p>设str&#x3D;’123456’</p>
+<ul>
+<li>1.字符串使用：str[se,se]<ul>
+<li>1.\str[]一个参数，[0]，[2]分别表示输出第一个和第三个字符</li>
+<li>2.[1:3] ,输出第二个到第四个字符</li>
+<li>3.[0:-1]输出第一个到最后一个,[0:-2]输出第一个到倒数第二个</li>
+<li>4.[1:4:2]以步长为2增长，每隔一个输出一个，比如234，步长2输出为24</li>
+<li>5.str<em>2,str**都表示输出2次，*3输出三次，而</em>&#x3D;则是赋值，但字符串不可变，因此列表可用。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:str[::-1]表示逆序输出，注意。</p>
+</blockquote>
+<ul>
+<li><p>2.字符串的一些方法</p>
+<ul>
+<li>1.split(),以参数切开。比如’,’，则每遇到一个，切开。’’则切成一个个字母，注意，<br>使用split返回的是一个列表list</li>
+<li>2.str.join() 将str加入到join的参数的那个字符串里面。<br>比如str&#x3D;’12’加入join(‘iab’)，返回为i12a12b。如果不是是列表则列表的每个<br>索引切一个。</li>
+<li>3.str.repalce(要被的替换字符，替换的字符)</li>
+<li>4.decode(‘’)和encode(‘’),参数为编码，decode为以指定编码解码，encode为以指定编码编码</li>
+</ul>
+</li>
+<li><p>3.字符串格式化：</p>
+<ul>
+<li>1.str.format():print(‘a&#x3D;{},b&#x3D;{}’.format(‘1’, 2))</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li>List列表用[],与字符串不同的是列表可以改变，列表的值都可以<br>重新赋值。</li>
+</ol>
+<p>List方法</p>
+<ul>
+<li>1.append(在末尾添加对象)</li>
+<li>2.pop移除最后一个元素</li>
+</ul>
+<ol start="5">
+<li>Tupel元组()。与列表类似，不过不能修改，不过与字符串一样可以被切片，索引</li>
+</ol>
+<blockquote>
+<p>tips:元组只有一个元素的时候要加逗号比如(x,),不然就是就是原leix,比如(4)类型为int</p>
+</blockquote>
+<ol start="6">
+<li>#4.集合{} 或者 set()</li>
+</ol>
+<blockquote>
+<p>tips注意：创建一个空集合必须用 set() 而不是 { }，因为 { } 是用来创建一个空字。</p>
+</blockquote>
+<blockquote>
+<p>tips2:列表不可以是集合的元素，列表的元素必须是不可变的。比如int和元组</p>
+</blockquote>
+<p>典。</p>
+<ul>
+<li>特点为无序，不重复。并且不同集合之间可以使用+-等进行集合运算</li>
+</ul>
+<ol start="7">
+<li>字典 字典是一种映射类型，字典用 { } 标识，它是一个无序的 键(key) : 值(value) 的集合。键(key)必须使用不可变类型。比如{key1:value1,key2:value2}</li>
+</ol>
+<blockquote>
+<p>tips:值得注意的是在同一个字典中，键(key)必须是唯一的，并且key不能是列表</p>
+</blockquote>
+<blockquote>
+<p>tips:字典的添加为[key]&#x3D;value,字典的遍历for (key,value) in 字典名.items()</p>
+</blockquote>
+<p>注意：字典和集合都是{},{}，get()方法能够通过可以通过key,下标获取value,但不可获取key。get(key,value)则是给key赋此value为默认输出，比如为None则会输出这个默认值，如果不为None则会输出原值。</p>
+<p>总结：字符串使用’’,””赋值，列表[]可变,元组()不可变,集合{}可变，值唯一,字典{}可变，键唯一。</p>
+<blockquote>
+<p>tips:集合和字典在赋值时的值不一样，集合元素为基础类型。字典为key:value</p>
+</blockquote>
+<blockquote>
+<p>tips2:相应转换的内置函数直接为类型(),比如str()</p>
+</blockquote>
+<blockquote>
+<p>tiips:len()用于测量索引长度，type()用于输出类型</p>
+</blockquote>
+<hr>
+<h2 id="3-流程语句"><a href="#3-流程语句" class="headerlink" title="3.流程语句"></a>3.流程语句</h2><ol>
+<li><p>if：关键字if,elif,else</p>
+</li>
+<li><p>循环</p>
+</li>
+</ol>
+<ul>
+<li>1.while</li>
+<li>2.for 自己命名(variable) in 要循环的序列(sequence)。<blockquote>
+<p>tips:in后面的序列可以使用range()函数，生存一个数列。比如range(5)生成一个1~5的数列。<br>range之间用,隔开。上述的标准类型用:隔开，注意区别。同样有开始，结束，步长三种重载。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>tips2:循环后可以根else，结束循环后会执行，但使用break跳出循环后不会执行else.</p>
+</blockquote>
+<p>注意 数字 for var in se,那么var全部都会变成这个数字，当然你要是放元组也会变成元组。而se中的数也会替换成这个前置值</p>
+<ul>
+<li><ol start="3">
+<li>break结束本次循环，continue,跳出本次循环并且执行下次循环。Python pass是空语句，是为了保持程序结构的完整性。pass 不做任何事情，一般用做占位语句，</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li><p>迭代器：iter()创建迭代对象，next()输出迭代器的下一个元素。比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list=[1,2,3,4]</span><br><span class="line">it = iter(list)    # 创建迭代器对象</span><br><span class="line">print (next(it))   # 输出迭代器的下一个元素</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>推导式：for define in 元素集合 if 条件<br>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name.upper()for name in names if len(name)&gt;3</span><br><span class="line">比如将过滤出(长度大于3)的元素变成大写</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="4-函数"><a href="#4-函数" class="headerlink" title="4.函数"></a>4.函数</h2><ol>
+<li><p>定义：def 名字():</p>
+<blockquote>
+<p>tips:定义不会执行，需要直接使用名字()才会执行</p>
+</blockquote>
+</li>
+<li><p>抽象类和抽象函数，抽象函数定义在抽象对象中，抽象函数@abstractmethod<br>，抽象类需要继承ABC.一般需要from abc import ABC,abstractmethod</p>
+</li>
+<li><p>函数参数，除开写入的固定参数，还可以给参数赋默认值，比如a(z&#x3D;10),<br>除此此之外，还可以使用变长参数，一个*以元组形式传入。比如a(*z),两个<br>**以字典形式传入。如果单独出现星号 *，则星号 * 后的参数必须用关键字传</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def f(a,b,*,c):</span><br><span class="line">   return a+b+c </span><br><span class="line">f(1,2,3)   # 报错</span><br><span class="line">f(1,2,c=3) # 正常</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tips:关键字就是参数名字&#x3D;参数值的形式传递</p>
+</blockquote>
+</li>
+<li><p>匿名函数：lambada,格式为lambada 参数:表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = lambda a : a + 10</span><br><span class="line">print(x(5))</span><br></pre></td></tr></table></figure>
+<p>输出值为15</p>
+</li>
+<li><p>关于静态函数,@staticmethod用于定义静态方法，但静态变量只能采用定义在外面的方法曲线救国。在静态函数中定义没意义，因为如果在里面初始化，那么每次执行该静态变量都会初始化，与类的对象方法无异。</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:关于试题：python函数可以分为内置函数和自定义函数</p>
+</blockquote>
+<hr>
+<h2 id="5-模块，包与引入"><a href="#5-模块，包与引入" class="headerlink" title="5.模块，包与引入"></a>5.模块，包与引入</h2><ol>
+<li>包即文件夹，必须至少拥有一个.py文件，否则就只是文件夹，而不是包。</li>
+<li>模块，即py文件</li>
+<li>引入：注意：import引入后会直接执行该模块</li>
+</ol>
+<ul>
+<li>1.import 模块名</li>
+<li>2.from 模块名 import 部分：从某个模块引入一部分，如果从某个包的模块引入为from包.模块名</li>
+<li>3._<em>name</em>_：每个模块都具有的属性，在本模块运行结果&#x3D;&#x3D;__mian__,被其他模<br>块引入后在其他模块输出为本模块的名字</li>
+</ul>
+<blockquote>
+<p>tips:dir()函数能够返回模块内定义的所有名称。以一个字符串列表的形式返回，注意，可以<br>给参数</p>
+</blockquote>
+<hr>
+<h2 id="6-输入输出"><a href="#6-输入输出" class="headerlink" title="6.输入输出"></a>6.输入输出</h2><ol>
+<li>输入input(),返回一个值,参数是提示给输入者的值</li>
+<li>文件内容输入：open(filename, mode)</li>
+</ol>
+<p>filename(文件路径)<br>mode：决定了打开文件的模式：只读，写入，追加等。这个参数是非强制的，默认文件访问模式为只读(r)。</p>
+<ol start="3">
+<li><p>根据2获取的文件，可以用read()读一个，readline()读一行(\n结束)。readlines()读全部，设置参数可以指定读取的长度。比如open(‘xx’).readline()</p>
+</li>
+<li><p>写为write(),关闭输入流为close()</p>
+</li>
+<li><p>移动到某个位置进行读写seek(offset,size)意思是从哪里开始读取多少字节。-1是最后一个。-2为倒二。</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:tell()函数返回当前的文件指针指向第几个字节。</p>
+</blockquote>
+<ol start="6">
+<li>序列化：将对象以字符串的形式保存到文件中，再从文件中读取字符串后恢复为对象。</li>
+</ol>
+<ul>
+<li>1.python提供的是pickle,有dump和load方法用来序列化和反序列化(恢复)</li>
+<li>2.dump(要序列化的对象,保存地址(open()开打的文件),控制（可不填）)</li>
+<li>3.load(flie):从 file(open打开) 中读取一个字符串，并将它重构为原来的python对象。</li>
+</ul>
+<hr>
+<h2 id="7-异常处理"><a href="#7-异常处理" class="headerlink" title="7.异常处理"></a>7.异常处理</h2><ol>
+<li><p>关键字为try:..except 错误类型:..</p>
+<blockquote>
+<p>tips：如果不填错误类型直接except:则无论什么错误都捕获</p>
+</blockquote>
+</li>
+<li><p>可以加else:表示未出错代码，try:..except 错误类型:..else:…</p>
+</li>
+<li><p>finally：里面的代码一定会执行</p>
+</li>
+<li><p>raise:用于抛出异常，格式 :raise 错误类型(‘参数’)</p>
+</li>
+<li><p>自定义异常，自定义异常的类继承(Exception)即可创建异常类，然后可被raise抛出，except接住。</p>
+</li>
+</ol>
+<hr>
+<h2 id="8-类"><a href="#8-类" class="headerlink" title="8.类"></a>8.类</h2><ol>
+<li><p>定义 class 名字:</p>
+</li>
+<li><p>引用内部的属性或者方法为名字.引用的名字</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:类内部定义的方法都必然有一个参数指向类本身(即第一个)，一般为self,当然叫其他的，只要是第一个参数即可</p>
+</blockquote>
+<ol start="3">
+<li><p>__init_<em>构造方法：__init_</em>(self):,这个方法会在创建类的时候自动调用。</p>
+</li>
+<li><p>继承，格式为class 名字(要继承的类的名字):</p>
+<blockquote>
+<p>tips:注意，python支持多继承，可以写多个类的名字</p>
+</blockquote>
+</li>
+<li><p>私有属性与方法：两个下划线声明为私有,比如__a。<br>这边的私有和Java等类似，比如声明私有的属性后，只有使用没有加__的方法返回该值，即只能对象内部调用。</p>
+</li>
+</ol>
+<hr>
+<h2 id="9-装饰"><a href="#9-装饰" class="headerlink" title="9.装饰"></a>9.装饰</h2><p>python能够在函数中定义函数，以函数为参数执行函数。<br>而装饰@可以理解为一个函数，用于执行或者在不改变函数本身的情况下修改函数的功能。</p>
+<ol>
+<li>自己创建一个函数装饰器：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def 自定义函数1(x):</span><br><span class="line">    x()</span><br><span class="line">    def 内部函数:</span><br><span class="line">       print(&#x27;在执行内部函数&#x27;)</span><br><span class="line">    return 内部函数</span><br><span class="line"></span><br><span class="line">@自定义函数1</span><br><span class="line">def 自定义函数2()</span><br><span class="line">    print(&#x27;在执行2&#x27;)</span><br><span class="line"></span><br><span class="line">print(自定义函数2)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>以上代码的执行结果为:在执行2，在执行内部函数</p>
+<p>在以上代码中，@创建该函数装饰器，被作为装饰器的函数(函数1)必须要返回一个函数（内部函数），在调用自定义函数2时，会自动执行自定义函数1，并且会执行返回的函数(内部函数)。</p>
+<p>并且值得注意的是，自定义函数的一个参数指向被装饰的函数的地址，所以执行这个参数()，等于<br>执行那个函数</p>
+<ol start="2">
+<li>将类作为装饰器:需要在类内部定义__call__函数，使得类能够像函数一样被调用。</li>
+</ol>
+<hr>
+<h2 id="10-一些特殊的函数和包"><a href="#10-一些特殊的函数和包" class="headerlink" title="10.一些特殊的函数和包"></a>10.一些特殊的函数和包</h2><ol>
+<li>random:用于生成随机数(仅介绍一些常用的)</li>
+</ol>
+<ul>
+<li>1.random.ranint(x,y)&#x2F;float(x,y):从x~y之间随机一个整数&#x2F;浮点数，包涵x不包含y。</li>
+<li>2.random.random(),随机生成0~1之间的数字。</li>
+<li>3.random.choice(sequence,)参数可以为多个序列(比如字典元组等)，从这些参数中随机选取一个返回</li>
+<li>4.random.randrange()返回一个随机数集，参数指定范围</li>
+</ul>
+<ol start="2">
+<li>datetime</li>
+</ol>
+<ul>
+<li>1.获取当前的时间datatime.datatime.now._<em>format</em>_(“这里面指定输出格式”)，年月日时分秒为:%Y%m%d%H%M%S,还可以用.today()来获取今天的日期</li>
+<li>2.年历月历用calendar.calendar(year)，如果月历则加month</li>
+<li>3.是哑巴时间差为datetime包的两个时间相减().days,相差年月改成years,months即可。</li>
+</ul>
+<ol start="3">
+<li>字符测试：</li>
+</ol>
+<ul>
+<li>1.isdigit():检测是否由数字组成</li>
+<li>2.isalpha():检测是否由字母和文字组成</li>
+<li>3.isalnum():检测是否与由字母数字汉字组成</li>
+<li>4.isspace():检测是否只由空白字符组成(注意，包括制表符等，不仅仅是空格)</li>
+</ul>
+<ol start="4">
+<li>正则表达式：</li>
+</ol>
+<pre><code>import re
+re.match(&#39;正则表达式&#39;,要筛选的字符串)，返回值即筛选后的字符
+```
+
+
+
+
+
+
+
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/" rel="prev" title="考研-计网应用层">
+      <i class="fa fa-chevron-left"></i> 考研-计网应用层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/21/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C/" rel="next" title="计网实验">
+      计网实验 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80python%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1.一些基础python特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-python%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">2.python基础类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B5%81%E7%A8%8B%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.</span> <span class="nav-text">3.流程语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4.函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%8C%85%E4%B8%8E%E5%BC%95%E5%85%A5"><span class="nav-number">5.</span> <span class="nav-text">5.模块，包与引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">6.</span> <span class="nav-text">6.输入输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">7.异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%B1%BB"><span class="nav-number">8.</span> <span class="nav-text">8.类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%A3%85%E9%A5%B0"><span class="nav-number">9.</span> <span class="nav-text">9.装饰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E5%87%BD%E6%95%B0%E5%92%8C%E5%8C%85"><span class="nav-number">10.</span> <span class="nav-text">10.一些特殊的函数和包</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

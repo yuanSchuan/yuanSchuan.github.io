@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="注意：这部分为习题该书习题的总结，包涵部分补充。 1.计算机网络概念 计算机网络是将一些互联，自治的计算机系统组成的集合，进而实现资源共享。 tips:数据通信是网络最基础和最重要的功能，包括资源共享只不过是这个功能的衍生。   根据计算机的发展阶段，而发展中从广义观点-&gt;资源共享观点-&gt;用户透明性观点而对计算机的定义。   1.广义观点为：能够实现远程信息处理和资源共享的系统均是计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="考研-计算机网络体系">
+<meta property="og:url" content="http://example.com/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="注意：这部分为习题该书习题的总结，包涵部分补充。 1.计算机网络概念 计算机网络是将一些互联，自治的计算机系统组成的集合，进而实现资源共享。 tips:数据通信是网络最基础和最重要的功能，包括资源共享只不过是这个功能的衍生。   根据计算机的发展阶段，而发展中从广义观点-&gt;资源共享观点-&gt;用户透明性观点而对计算机的定义。   1.广义观点为：能够实现远程信息处理和资源共享的系统均是计算">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-05T06:14:07.000Z">
+<meta property="article:modified_time" content="2022-11-05T06:16:41.112Z">
+<meta property="article:author" content="yuanSchuan">
+<meta property="article:tag" content="王道考研">
+<meta property="article:tag" content="王道计算机习题">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>考研-计算机网络体系 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/05/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          考研-计算机网络体系
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-05 14:14:07 / 修改时间：14:16:41" itemprop="dateCreated datePublished" datetime="2022-11-05T14:14:07+08:00">2022-11-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%80%83%E7%A0%94%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">计算机网络考研复习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="注意：这部分为习题该书习题的总结，包涵部分补充。"><a href="#注意：这部分为习题该书习题的总结，包涵部分补充。" class="headerlink" title="注意：这部分为习题该书习题的总结，包涵部分补充。"></a>注意：这部分为习题该书习题的总结，包涵部分补充。</h2><hr>
+<h2 id="1-计算机网络概念"><a href="#1-计算机网络概念" class="headerlink" title="1.计算机网络概念"></a>1.计算机网络概念</h2><ol>
+<li>计算机网络是将一些互联，自治的计算机系统组成的集合，进而实现资源共享。<blockquote>
+<p>tips:数据通信是网络最基础和最重要的功能，包括资源共享只不过是这个功能的衍生。</p>
+</blockquote>
+</li>
+<li>根据计算机的发展阶段，而发展中从广义观点-&gt;资源共享观点-&gt;用户透明性观点而对计算机的定义。</li>
+</ol>
+<ul>
+<li>1.广义观点为：能够实现远程信息处理和资源共享的系统均是计算机网络。</li>
+<li>2.资源共享观点：包涵目的，组成单元和网络协议。</li>
+<li>3.用户透明性：即整个计算机网络中的资源对于连接该网络的计算机是透明的。</li>
+</ul>
+<hr>
+<h2 id="2-计算机网络的组成"><a href="#2-计算机网络的组成" class="headerlink" title="2.计算机网络的组成"></a>2.计算机网络的组成</h2><ol>
+<li>从组成部分看分为：硬件,软件,协议。</li>
+</ol>
+<ul>
+<li>1.硬件部分包括主机(端系统),通信链路，交换设备(比如路由器),通信处理机(网卡)。</li>
+<li>2.软件大多在应用层</li>
+<li>3.协议：值得注意的是，协议是组成部分计算机网络的核心。</li>
+</ul>
+<ol start="2">
+<li>从工作方式看：边缘部分和核心部分.</li>
+</ol>
+<ul>
+<li>1.边缘部分为互联网中的主机组成，主要作用为进行通信和资源共享。</li>
+<li>2.核心部分为大量网络和路由器组成。</li>
+</ul>
+<ol start="3">
+<li>从功能组成看:通信子网和资源子网。</li>
+</ol>
+<ul>
+<li>1.通信子网主要就是通讯部分组成，比如传输介质，通信设备，协议等。</li>
+<li>2.资源子网主要为实现资源共享功能的设备及其软件的集合。</li>
+</ul>
+<blockquote>
+<p>tips:计算机网络的功能主要包括:1.数据通信。2.资源共享。3.分布式处理。4.提高可靠性(即互联网中的计算机可互为替代机)。5.负载均衡。值得注意的是，数据通信是计算机网络的最基础和最重要功能，后面的那么功能均可以视为数据通信的衍生。</p>
+</blockquote>
+<hr>
+<h2 id="3-计算机网络的分类"><a href="#3-计算机网络的分类" class="headerlink" title="3.计算机网络的分类"></a>3.计算机网络的分类</h2><ol>
+<li>按分布范围分类：1.广域网(远程网)-&gt;2.城域网-&gt;3.局域网-&gt;4.个人区域网。<blockquote>
+<p>tips1:广域网使用的是点对点技术，局域网使用的是广播技术。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:城域网大多数采用以太网技术，因此大多数也将城域网放入局域网讨论。</p>
+</blockquote>
+<blockquote>
+<p>tips3:如果中央处理器的距离非常近，比如小于1m，那么一般称为多处理器系统，而不称为计算机网络。</p>
+</blockquote>
+<ol start="2">
+<li><p>按照传输技术分类：点对点和广播.</p>
+<blockquote>
+<p>tips1:点对点不一定要主机相连，是指通过中间节点进行接收，储存转发。</p>
+</blockquote>
+</li>
+<li><p>按照拓扑结构分类</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>网状拓扑结构指网络节点和通信线路之间的几何关系。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>分类分为1.总线形。2.星形。3.环形。4.网状。<blockquote>
+<p>tips1:网状一般用于广域网。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips2:总线形和环形本质上都是一条线连接多个主机，星形则是一个中央设备连接多个主机。网状结构是一个节点可以连接多个其他节点形成。</p>
+</blockquote>
+<blockquote>
+<p>tips3:以上基本的4种网络拓扑结构能够形成更复杂的网络。</p>
+</blockquote>
+<ol start="4">
+<li>按照交换技术分类</li>
+</ol>
+<ul>
+<li>1.电路交换网络：一条电路连接两个短缺，特点是比特流直达，但信道利用率低。</li>
+<li>2.报文交换网络。</li>
+<li>3.分组交换网络：形成多个小的分组进行储存转发。而报文交换则是将收到整个报文后才进行储存转发。</li>
+</ul>
+<ol start="5">
+<li>按照传输介质分类：1.有线。2.无线。</li>
+</ol>
+<blockquote>
+<p>tips：计算机网络标准的4个阶段：1.互联网草案。2.建议标准。3.草案建议标准。4.因特网标准。</p>
+</blockquote>
+<hr>
+<h2 id="4-计算机网络性能指标。"><a href="#4-计算机网络性能指标。" class="headerlink" title="4.计算机网络性能指标。"></a>4.计算机网络性能指标。</h2><ol>
+<li>速率，带宽，吞吐率的区别：</li>
+</ol>
+<ul>
+<li>1.速率单位为bit&#x2F;s，为当前传输的比特速度。</li>
+<li>2.带宽为最大的速率。</li>
+<li>3.吞吐率指某个单位时间的实际数据率，包括受时延的影响的数据率影响，并且单位之间不一定是1s。</li>
+</ul>
+<hr>
+<h2 id="5-错题"><a href="#5-错题" class="headerlink" title="5.错题"></a>5.错题</h2><ol>
+<li>计算机网络种没有:1.客户机2.服务器。3.操作系统。4.数据库管理系统。</li>
+</ol>
+<ul>
+<li>没有4.数据库管理系统。</li>
+</ul>
+<ol start="2">
+<li>计算机的网络的拓扑结构主要取决于它的<br>1.资源子网。2.路由器。3.通信资源。4.交换机。</li>
+</ol>
+<ul>
+<li>3.通信子网。原因参照通信子网的定义。</li>
+</ul>
+<ol start="3">
+<li>广播式网络错误的是：1.共享广播信道。2.不存在路由选择问题。3.可以不要网络层。4.不需要网络服务点：</li>
+</ol>
+<ul>
+<li>选择4.值得注意的是，因为广播式网络一般用于局域网，因此不存在需要路由和网络层的问题。</li>
+</ul>
+<hr>
+<h2 id="6-计算机网络体系结构与参考模型"><a href="#6-计算机网络体系结构与参考模型" class="headerlink" title="6.计算机网络体系结构与参考模型"></a>6.计算机网络体系结构与参考模型</h2><ol>
+<li>在计算机的分层结构中，最低层称为1层，依次累加。在第n层的活动元素通常称为第n层实体。<blockquote>
+<p>tips:实体指任何可发送或者接收信息的硬件或软件进程，通常是一个特定的软件模块。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:不同机器上的同一层称为对等层。同一层的实体称为对等实体。</p>
+</blockquote>
+<ol start="2">
+<li><p>在计算机的所有分层中，其中传递报文都分为两部分SDU(服务数据单元,即数据)和PCI(协议控制单元,即控制部分，一般为首部)。合起来称为PDU(协议数据单元)。</p>
+<blockquote>
+<p>tips:PDU在每一层的称呼不同，比如物理层为比特，数据链路层为帧，网络层为分组，传输层为报文段。</p>
+</blockquote>
+</li>
+<li><p>网络协议，接口和服务的概念。</p>
+</li>
+</ol>
+<ul>
+<li>1.协议：规则的集合，由语法，语义，同步三部分组成。在同一层的同一实体间运行。</li>
+<li>2.接口：同一个结点内相邻两层交换信息的连接点。</li>
+<li>3.服务:可以理解为特殊的接口，下层为上层的提供的功能调用。<blockquote>
+<p>tips:协议是水平的，服务是垂直的。<br>tips:并非在一层的所有功能都是服务，只有高层实体’看见’的的功能才称为服务。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li><p>面向连接和无连接服务：是否需要预先建立连接，面向连接需要(比如TCP)。无连接不需要(比如UDP,IP)</p>
+</li>
+<li><p>可靠服务和不可靠服务:可靠服务即提供纠错，检错，应答机制。不可靠服务即尽量尽量正确的</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:1.TCP就是面向连接+可靠服务协议。2.UDP就是无连接服务+不可靠服务。</p>
+</blockquote>
+<ol start="6">
+<li>有应答服务和无应答服务：有应答服务是指接收方在收到数据后向发送方给出相应的应答。无应答则不会对接收的数据进行回应。</li>
+</ol>
+<hr>
+<h2 id="7-ISO-x2F-OSI参考模型和TCP-x2F-IP协议。"><a href="#7-ISO-x2F-OSI参考模型和TCP-x2F-IP协议。" class="headerlink" title="7.ISO&#x2F;OSI参考模型和TCP&#x2F;IP协议。"></a>7.ISO&#x2F;OSI参考模型和TCP&#x2F;IP协议。</h2><ol>
+<li>ISO&#x2F;OSI：开放系统互联参考模型，第三层为通信子网，其余高层为资源子网。</li>
+</ol>
+<ul>
+<li>1.层次为:1.物理层-&gt;2.数据链路层-&gt;3.网络层-&gt;4.传输层-&gt;5.会话层-&gt;6.表示层<br>-&gt;7.应用层</li>
+<li>物理层：屏蔽材料的各种差距，实现比特流的透明传输。<br>值得注意的是，物理层也是有协议的，该协议主要包涵通信链路与通信结点，通信链路上传输的信号和电气特征。</li>
+<li>数据链路层:传输单位为帧,主要任务是将网络层传来的IP数据报组成帧，主要功能为:成帧，差错控制，流量控制，和传输管理。<br>值得注意的是，广播式网络包涵控制对共享信道的访问。数据链路层为此有一个特殊的字层，介质访问层。</li>
+<li>网络层:传输单位为数据报，它关心通信子网的运行控制，主要任务为把网络层的协议数据单元(分组)从源端传递到目的端。主要功能为进行路由选择，并实现流量控制，拥塞控制，差错控制，网际互联等操作。</li>
+<li>传输层:也称为运输层，传输单位是报文段(TCP)或者用户数据报(UDP),主要负责主机间进程的通信，功能为端到端连接提供可靠的传输服务，为端到端连接提供流量控制，差错储存，服务质量，数据传输管理。</li>
+<li>会话层:会话层允许不同主机上的各个进程之间进行对话。</li>
+<li>表示层:主要处理两个通信系统中交换信息的表示方式。比如不同机器采用的编码，数据结构，相互交换。</li>
+<li>应用层:是用户与网络的界面，因此使用的协议也最多。</li>
+</ul>
+<blockquote>
+<p>tips:数据链路层的差错控制为:传输过程中原始的比特流可能发生错误，如果发生错误，那么数据链路层的协议会发现并直接丢弃。而网络层的差错控制为:两个结点约定的差错控制，如果能够纠错就纠错，不能纠错就丢弃。传输层的差错控制为会使用协议对差错进行校验，丢弃和重传等操作。<br>区别在于数据链路层针对原始比特流，网络层针对网络分组的头部，传输层(如果使用TCP协议)针对收到的报文段</p>
+</blockquote>
+<blockquote>
+<p>tips2:数据链路层的流量控制是控制发送速率，使得接收方不会来不及接收发送方发送的数据。网络层的拥塞控制为控制传输的流量，防止随着流量的增加而降低信道传输效率，最后直接堵塞。<br>传输层的控制为专有协议控制信息的接收，防止缓冲溢出。</p>
+</blockquote>
+<ol start="2">
+<li>TCP&#x2F;IP模型为：1.网络接口层-&gt;2.网际层-&gt;3.传输层-&gt;4.应用层。</li>
+</ol>
+<ul>
+<li>1.TCP网络接口层对应ISO&#x2F;OSI的物理层和数据链路层。</li>
+<li>2.网际层对应网络层</li>
+<li>3.应用层对ISO应用层+表示层+会话层</li>
+</ul>
+<blockquote>
+<p>tips：OSI模型在网络层支持面向连接和无连接通信，但在传输层仅只有面向连接通信。而TCP模型认为可靠性是端到端的问题，因此它在网际层只有一种无连接的通信模式，面向连接由传输层支持。</p>
+</blockquote>
+<blockquote>
+<p>tips2:数据链路层提供点到点通信(主机之间的通信，点指一个硬件地址或IP地址)，而传输层提供端到端服务(进程之间的通信)。</p>
+</blockquote>
+<blockquote>
+<p>tips3:TCP&#x2F;IP模型为事实上的国际标准</p>
+</blockquote>
+<hr>
+<h2 id="8-错题"><a href="#8-错题" class="headerlink" title="8.错题"></a>8.错题</h2><ol>
+<li>不是网络分层的目标为：2.因为具体的功能为分层具体实现，不作标准化，因而也不是分层的主要目标。</li>
+</ol>
+<ul>
+<li>1.提供标准语言</li>
+<li>2.定义功能执行的方法</li>
+<li>3.定义标准界面</li>
+<li>4.增加功能之间的独立性</li>
+</ul>
+<ol start="2">
+<li>OSI模型的数据链路层功能为：4 即保证源比特流的完整</li>
+</ol>
+<ul>
+<li>1.提供用户和网络的接口</li>
+<li>2.处理信号通过介质的传输</li>
+<li>3.控制报文通过网络的路由选择</li>
+<li>4.保证数据正确的顺序和完整性</li>
+</ul>
+<ol start="3">
+<li>TCP&#x2F;IP模型的网络层提供的是</li>
+</ol>
+<ul>
+<li>1.无连接不可靠的数据报服务</li>
+<li>2.无连接可靠的数据报服务</li>
+<li>3.无连接不可靠的虚电路服务</li>
+<li>4.有连接可靠的虚电路服务<blockquote>
+<p>tips:连接为两个结点是否会预先通信一遍</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>tips2:可靠为:是否会进行纠错，重传等服务</p>
+</blockquote>
+<blockquote>
+<p>tips3:虚电路是指逻辑上的数据电路(具有需要建立连接，一直占用通信资源效率低，但时延低的特性。)，而分组转发的网络层使用的是数据报服务。</p>
+</blockquote>
+<ol start="4">
+<li><p>路由器在网络层，交换机在链路层，集线器在物理层。</p>
+</li>
+<li><p>TCP协议的要素的连接过程要点一般只有时序，没有语义和语法。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%8E%8B%E9%81%93%E8%80%83%E7%A0%94/" rel="tag"># 王道考研</a>
+              <a href="/tags/%E7%8E%8B%E9%81%93%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B9%A0%E9%A2%98/" rel="tag"># 王道计算机习题</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/7-CPU%E7%9A%84%E7%BB%93%E6%9E%84%E5%92%8C%E5%8A%9F%E8%83%BD/" rel="prev" title="7.CPU的结构和功能">
+      <i class="fa fa-chevron-left"></i> 7.CPU的结构和功能
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%89%A9%E7%90%86%E5%B1%82/" rel="next" title="考研-计网物理层">
+      考研-计网物理层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A%E8%BF%99%E9%83%A8%E5%88%86%E4%B8%BA%E4%B9%A0%E9%A2%98%E8%AF%A5%E4%B9%A6%E4%B9%A0%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93%EF%BC%8C%E5%8C%85%E6%B6%B5%E9%83%A8%E5%88%86%E8%A1%A5%E5%85%85%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">注意：这部分为习题该书习题的总结，包涵部分补充。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">1.计算机网络概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">2.计算机网络的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">3.计算机网络的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">4.计算机网络性能指标。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E9%94%99%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">5.错题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">6.计算机网络体系结构与参考模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-ISO-x2F-OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%92%8CTCP-x2F-IP%E5%8D%8F%E8%AE%AE%E3%80%82"><span class="nav-number">8.</span> <span class="nav-text">7.ISO&#x2F;OSI参考模型和TCP&#x2F;IP协议。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E9%94%99%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text">8.错题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

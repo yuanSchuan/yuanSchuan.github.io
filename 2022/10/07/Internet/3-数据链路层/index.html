@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前置内容 数据链路层是计算机网络的低层，并且主要1.点对点通信。2.广播信道。着重讲点对点通信和广播信道的特点，以及两种信道使用的协议（PPP,CSMA和CD）的特点。 数据链路层的三个基本问题：封装成帧，透明传输，和差错检测。 以太网MAC层的硬件地址。 适配器，转发器，集线器，网桥，以太交换机的特点和应用场景。  以下展示数据流动层次应用层               应用层运输层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.数据链路层">
+<meta property="og:url" content="http://example.com/2022/10/07/Internet/3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="前置内容 数据链路层是计算机网络的低层，并且主要1.点对点通信。2.广播信道。着重讲点对点通信和广播信道的特点，以及两种信道使用的协议（PPP,CSMA和CD）的特点。 数据链路层的三个基本问题：封装成帧，透明传输，和差错检测。 以太网MAC层的硬件地址。 适配器，转发器，集线器，网桥，以太交换机的特点和应用场景。  以下展示数据流动层次应用层               应用层运输层">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-07T13:49:11.000Z">
+<meta property="article:modified_time" content="2022-10-07T13:49:58.738Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/07/Internet/3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>3.数据链路层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/07/Internet/3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.数据链路层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-07 21:49:11 / 修改时间：21:49:58" itemprop="dateCreated datePublished" datetime="2022-10-07T21:49:11+08:00">2022-10-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前置内容"><a href="#前置内容" class="headerlink" title="前置内容"></a>前置内容</h2><ol>
+<li>数据链路层是计算机网络的低层，并且主要1.点对点通信。2.广播信道。着重讲点对点通信和广播信道的特点，以及两种信道使用的协议（PPP,CSMA和CD）的特点。</li>
+<li>数据链路层的三个基本问题：封装成帧，透明传输，和差错检测。</li>
+<li>以太网MAC层的硬件地址。</li>
+<li>适配器，转发器，集线器，网桥，以太交换机的特点和应用场景。</li>
+</ol>
+<p>以下展示数据流动层次<br>应用层               应用层<br>运输层               运输层<br>网络层     网络层     网络层<br>链路层     链路层     链路层<br>物理层—–物理层—–物理层</p>
+<hr>
+<h2 id="1-数据的链路和帧"><a href="#1-数据的链路和帧" class="headerlink" title="1.数据的链路和帧"></a>1.数据的链路和帧</h2><ol>
+<li>链路和数据链路的区别：</li>
+</ol>
+<ul>
+<li><ol>
+<li>链路：从一个节点到相邻节点的一段物理路线（有线或者无限），中间没有任何交换节点。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips1:链路只是通信路线的一部分。</p>
+</blockquote>
+<ul>
+<li><ol start="2">
+<li>数据链路：除开物理线路外，还必须要有一些必要的通信协议来控制数据的传输。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:将实现协议的硬件和软件加到链路上，才构成数据链路。<br>tips2:网络适配器：用于实现这些协议，其中既有硬件，也有软件。</p>
+</blockquote>
+<p>链路层：因此可以分为物理链路和逻辑链路。</p>
+<blockquote>
+<p>tips:规程：早期的数据通信协议叫做规程，因此在数据链路层，规程和协议是同义语。</p>
+</blockquote>
+<ol start="2">
+<li>帧：数据链路层的协议数据单元<br>数据链路层将网络层交递的数据构成帧发送到链路上，以及将收到的帧取出交给网络层。</li>
+</ol>
+<blockquote>
+<p>tips1:网络层协议数据单元就是IP数据报（或者简称数据报，分组或者包）。</p>
+</blockquote>
+<ol start="3">
+<li>点对点信道的数据链路通信的主要步骤</li>
+</ol>
+<ul>
+<li><ol>
+<li>节点A的数据链路层把网络层递交的IP数据报添加首部和尾部分装成帧。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>节点A把分装好的帧发送给节点B的数据链路层。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>若节点B的数据链路层收到的帧无差错，则从收到的帧中提取出IP数据报递交给网络层，否则丢弃帧。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:数据链路层不必考虑物理层是如何实现比特传输细节的。</p>
+</blockquote>
+<hr>
+<h2 id="2-链路层的三个基本问题：1-封装成帧。2-透明传输。3-差错检测。"><a href="#2-链路层的三个基本问题：1-封装成帧。2-透明传输。3-差错检测。" class="headerlink" title="2.链路层的三个基本问题：1.封装成帧。2.透明传输。3.差错检测。"></a>2.链路层的三个基本问题：1.封装成帧。2.透明传输。3.差错检测。</h2><ol>
+<li>封装成帧，帧：一段数据（IP数据报）前后分别加上首部和尾部。<br>帧的作用：</li>
+</ol>
+<ul>
+<li>区分界限，即帧定界。</li>
+<li>包涵许多必要控制信息。</li>
+</ul>
+<blockquote>
+<p>tips1：值得注意的是，各个数据链路层协议都对帧首部与帧尾部的格式有规定。<br>tips2:为了帧的传输效率，应该使得帧的数据部分尽可能的大于首部和尾部的长度，但每一种链路层协议都规定了所能传送的帧的数据部分长度上限，即最大传送单元MTU(max transfer unit)<br>tips3:如果数据是ASCII组成的文本文件时，帧定界可以使用特殊的帧定界符。比如ASCII的控制文本，值得注意的是，所有的帧都有开始和结束的标记使用专门指明控制字符。<br>tips4:帧定界符同时也可以对帧完整性进行检测，比如连续检测到两个帧定界头，那么第一帧一定是不完整的，直接丢弃即可。</p>
+</blockquote>
+<ol start="2">
+<li>透明传输：指帧定界符不会和任意数据内容重合，帧控制符看起来透明一样，不会导致帧定界符模糊。</li>
+</ol>
+<ul>
+<li>对于ASCII可以使用无法从键盘输入的符号作为帧定界符进而避免产生数据与控制符重合。</li>
+<li>对于非ASCII采用字节填充或者字符填充，即发送端在数据与帧控制符模糊的地方加入转义字符，用于区分数据内容和帧控制符。</li>
+</ul>
+<blockquote>
+<p>tips:如果转义字符在数据内容中，则在转义字符前加转义字符。</p>
+</blockquote>
+<ol start="3">
+<li>差错检测</li>
+</ol>
+<ul>
+<li><ol>
+<li>简介：在现实传输中，0可能变1，1可能变1。因此以减少传输效率换取纠错能力。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>纠错方法：</li>
+</ol>
+<ul>
+<li><ol>
+<li>帧检验序列FCS(Frame Check Sequence):为了检错而添加冗余码。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:生成冗余码和检错方法是不同的体系，比如使用FCS进行添加冗余码，但可以使用CRC作为检测方法也可以不用。<br>tips2:以上的纠错能力由硬件完成，因此不会损耗太多时间。<br>tips3:以上纠错能力并不是一定可以保证数据不错，只能近似的看作不错，因此认为FCS一定不错。</p>
+</blockquote>
+<p>传输差错可分为两类：</p>
+<ul>
+<li><ol>
+<li>上述的比特差错。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>比特没有差错，但帧丢失，重复，或失序。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:无比特传输差错和无传输差错是不同的。</p>
+</blockquote>
+<ol start="4">
+<li>关于数据链路的协议使用与否</li>
+</ol>
+<ul>
+<li><ol>
+<li>良好传输链路:传输差错由上层协议（比如运输层的TCP协议）完成。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>质量差的传输链路:使用帧编号，确认，重传机制向上层提供可靠的传输服务。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="3-点对点协议PPP-point-to-point-protocol"><a href="#3-点对点协议PPP-point-to-point-protocol" class="headerlink" title="3.点对点协议PPP(point to point protocol)"></a>3.点对点协议PPP(point to point protocol)</h2><ol>
+<li><p>冷知识：在通信质量较差的年代，使用高级数据链路控制HDLC(high-level data link control)作为链路层的传输协议，现在最流行的链路层通信协议为PPP。</p>
+</li>
+<li><p>ppp的特点</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>简单:不需要纠错，序号，流量控制。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>分装成帧</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>透明性</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>支持多种网络层协议</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>支持多种类型链路</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>差错检测:对于不完成的帧，错误帧直接进行简单的丢弃。</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>检测连接状态</li>
+</ol>
+</li>
+<li><ol start="8">
+<li>帧最大传输单元限制</li>
+</ol>
+</li>
+<li><ol start="9">
+<li>网络层地址协商:使得两个网络层能够知道彼此的地址</li>
+</ol>
+</li>
+<li><ol start="10">
+<li>数据压缩协商:传输过程对数据进行压缩</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:ppp只支持点对点链路通信，不支持多点线路（即一个主站轮流和链路上的多个从站进行通信）。<br>tips2:ppp协议只支持全双工链路。</p>
+</blockquote>
+<ol start="3">
+<li>ppp协议的组成</li>
+</ol>
+<ul>
+<li><ol>
+<li>一个方法:将IP数据报封装到串行链路的方法。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>链路控制协议(LCP link control protocol)：用于建立，配置，测试数据链路连接。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>网络控制协议(NCP network control protocol):用于支持不同的网络层协议。</li>
+</ol>
+</li>
+</ul>
+<p>具体构成成为<br>首字段(F(7F) A C 协议)+信息部分+(FCS F)<br>分别为1，1，2，可变，2，1字节。</p>
+<ul>
+<li>前后两个F为帧控制符，用于帧定界</li>
+<li>A,C目前无意义，留待以后拓展。</li>
+<li>协议部分：若&#x3D;0x0021,信息部分为IP数据报，若&#x3D;0xC021,信息部分为LCP,0x8021为网络层的控制数据。</li>
+<li>信息字段可变长度，最多为1500字节。</li>
+<li>FCS:冗余码，用于比特查错，</li>
+</ul>
+<ol start="4">
+<li>填充：</li>
+</ol>
+<ul>
+<li><ol>
+<li>字节填充(用于异步):转义为7D,5E</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>0比特填充(用于同步)，因为7F&#x3D;1111111,发送端：首部连续5个1，加一个0.接收端将每五个1去除一个0.</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="4-ppp协议的工作状态"><a href="#4-ppp协议的工作状态" class="headerlink" title="4.ppp协议的工作状态"></a>4.ppp协议的工作状态</h2><ol>
+<li>在建立物理连接后(链路静止状态)，个人用户发送载波信号，ppp就进入了”链路建立”（link establish）状态</li>
+<li>lcp会开始协商一些配置（包括请求帧），另一端会响应以下几种：</li>
+</ol>
+<ul>
+<li><ol>
+<li>配置确认帧:配置都接受.</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>配置否认帧：都理解但接受。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>配置拒绝帧：无法识别或不能接受，需要协商。</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>协商结束后双方建立了LCP链路，进入”鉴别”状态:只允许传送LCP协议的分组，鉴别协议分组，以及检测链路质量的分组。</li>
+</ol>
+<blockquote>
+<p>tips:一些鉴别协议需要通信的一方发送身份标识符和口令，如果失败则链路终止。比如口令鉴别协议PAP,握手鉴别协议CHAP</p>
+</blockquote>
+<ol start="4">
+<li>鉴别成功或者无需鉴别则进入进入”网络层协议”，对数据进行控制分组。</li>
+<li>网络层配置完毕后链路进入数据通信的”链路打开”(link open)状态,至此，链路两端可以发送相互发送分组，也可以发送回送请求LCP和会送回答以检查链路状态。</li>
+<li>数据传输结束后，可以由一方发送请求终止连接，或者链路故障也会从”链路打开状态”变成”链路终止状态”，当调制调节器的载波停止后，则会回到”链路静止”状态.</li>
+</ol>
+<hr>
+<h2 id="5-使用广播信道的数据链路层-广播信道能够进行一对多的通信"><a href="#5-使用广播信道的数据链路层-广播信道能够进行一对多的通信" class="headerlink" title="5.使用广播信道的数据链路层:广播信道能够进行一对多的通信"></a>5.使用广播信道的数据链路层:广播信道能够进行一对多的通信</h2><ol>
+<li>局域网的数据链路：</li>
+</ol>
+<ul>
+<li>主要特点：网络为一个单位所拥有，且地理范围和站点数目均有限。<br>局域网优点：</li>
+<li><ol>
+<li>具有广播功能，从一个站点可很方便地访问全网，局域网上的主机可共享连接在局域网上的各种硬件资源和软件资源。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>便于系统的拓展和逐渐地演变，各设备的位置可以灵活调整和改变。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>提高了系统的可靠性，可用性，生存性。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>按照网络拓扑进行分类：1.星型网。2.环形网。3.总线网。</li>
+<li>按技术分类:1.静态划分信道。2.动态媒体接入控制（1.随机接入。2.受控接入）。</li>
+</ol>
+<blockquote>
+<p>tips:值得注意的是，局域网的链路层分为1.逻辑链路控制层LLC(logical link contorl)。2.媒体接入控制MAC(madium access control)。而后来的厂商只有MAC，因为LLC已经不需要了。</p>
+</blockquote>
+<ol start="4">
+<li>适配器：计算机与外界局域网连接通过适配器。早前计算机中又称为网络接口卡NIC(network interface card),简称网卡。不过现代计算机已经在主板上嵌入的适配器，不在单独使用网卡。</li>
+</ol>
+<ul>
+<li>结构：处理器+储存器。</li>
+</ul>
+<blockquote>
+<p>tips:适配器通过IO总线和CPU相连，处理器会通过中断通知cpu，并且负责串行和并行输出的转换.储存器(包括RAM个ROM)：主要因为计算机和网络中的传输速度不一样。<br>tips2:适配器的设备驱动程序必须安装在操作系统中，哪里的多长的数据发送到局域网中，那一块内存用于储存局域网传送过来的数据。</p>
+</blockquote>
+<hr>
+<h2 id="6-CSMA-x2F-CD协议"><a href="#6-CSMA-x2F-CD协议" class="headerlink" title="6.CSMA&#x2F;CD协议"></a>6.CSMA&#x2F;CD协议</h2><p>前置:局域网中的计算机称为主机，工作站，站点，站。都是同义词。</p>
+<ol>
+<li><p>总线传输的特点：所有的计算机连接到一根总线上，对应的适配器根据地址是否一致来判断是否进行丢弃或者接收。</p>
+</li>
+<li><p>以太网的两种工作方式:</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>无连接工作：即不必建立连接直接通讯，适配器不对帧进行编号，也不要求对方发回确认。这种方式提供的服务尽最大努力交付，即不可靠交付。会直接对差错帧进行丢弃。如果上层使用TCP协议，那么TCP会把这些数据重新传递，以太网将这些当作新帧处理。</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>CSMA&#x2F;CD(Carrier Sense Multiple Access with Collision Detection),即载波监听多点接入&#x2F;碰撞检测。主要用于总线型以太网通讯。</li>
+</ol>
+<blockquote>
+<p>tips:以太网使用曼切斯特编码进行通讯。</p>
+</blockquote>
+<p>特点为:</p>
+<ul>
+<li><ol>
+<li>载波监听：边发送边监听，即在发送数据之前，每个站必须不停的检测信道，为了避免信道冲突，如果检测到别的站在发送信息，则立即中断发送。这就是碰撞检测。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips:碰撞检测，即通过检测信道中电压的变化。<br>tips2:CSMA&#x2F;CD无法进行全双工通信，只能进行半双工通信。</p>
+</blockquote>
+<hr>
+<h2 id="7-使用集线器的星形拓扑"><a href="#7-使用集线器的星形拓扑" class="headerlink" title="7.使用集线器的星形拓扑"></a>7.使用集线器的星形拓扑</h2><p>概念：也就是使用集线器连接多个电脑。</p>
+<ol>
+<li>集线器特点</li>
+</ol>
+<ul>
+<li><ol>
+<li>集线器为使用电子期间模拟传统电缆的工作，因此依旧使用CSMA&#x2F;CD协议进行通信。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>多端口</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>集线器的狗工作在物理层，端口仅仅简单的转发比特。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>集线器采用了专门的芯片用于抵消串音回波，使得弱信号不至于被强信号干扰，</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="8-以太网的MAC层"><a href="#8-以太网的MAC层" class="headerlink" title="8.以太网的MAC层"></a>8.以太网的MAC层</h2><p>概念：局域网中，硬件地址和物理地址或MAC地址(因为这种地址在MAC帧中)。</p>
+<blockquote>
+<p>tips:名字指出我们所要寻找的资源，地址指出那个资源在何处，路由告诉我们应该如何到达该处。</p>
+</blockquote>
+<ol>
+<li>IEEE02的全球地址：局域网的地址在每一台计算机中固化在适配器的ROM地址中。</li>
+</ol>
+<blockquote>
+<p>tips1:更换适配器会导致全球地址发生变化。<br>tips2:不更换适配器，只更换局域网不会导致全球地址发生变化。</p>
+</blockquote>
+<ol start="2">
+<li>以太网MAC帧的格式<br>目的地址+源地址+类型(标记上一层的协议)+数据(IP数据报)+FCS</li>
+</ol>
+<blockquote>
+<p>tips:因为以太网在传送帧时，必须有一定间隔，因此不需要帧界定。</p>
+</blockquote>
+<p>无效MAC帧的情况</p>
+<ul>
+<li><ol>
+<li>帧的长度不是整数个字节。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>收到的帧FCS检测有差错</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>收到帧不在46~1500字节之间。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="9-以太网拓展"><a href="#9-以太网拓展" class="headerlink" title="9.以太网拓展"></a>9.以太网拓展</h2><p>概念：使用多个集线器相连，期间可能需要连接转换器。<br>缺点：</p>
+<ol>
+<li>更大的碰撞域：即更容易碰撞。</li>
+<li>如果每个线路不同的速率，那么将按照最小的速率进行通讯。</li>
+</ol>
+<hr>
+<h2 id="10-以太交换机"><a href="#10-以太交换机" class="headerlink" title="10.以太交换机"></a>10.以太交换机</h2><p>前置：网桥(bridge)，对收到的帧根据MAC帧的目的地址进行转发和过滤。网桥内部有一个转发表，按照该转发表的地址决定通过转发到哪个端口或者丢弃。</p>
+<ol>
+<li>以太交换机：又称为交换式集线器，第二层交换机，用于强调工作在第二层。以太网交换机本质上是一个多端口网桥，一般为工作全双工方式。并且拥有并行性，即能同时连通多个端口，使多个主机能够同时通信（网桥一次只能转发一次分析和一个帧）。相互通信主机独占传输媒体，无碰撞的传输数据。<br>以太网的交换表是一个内容可寻址储存器CAM(content addressable memory)，内部的帧交换表(又称地址表)通过自学习算法自动地逐渐建立起来。</li>
+</ol>
+<ul>
+<li>交换机最大优点在于用户在通信时独占而不是与其他网络用户共享传输设备。</li>
+<li>有些以太网交换机会对收到的帧进行储存转发，但也有一些采用直通的交换方式，直通不必将整个数据帧先缓存后处理，而接收数据帧的同时立即按照数据帧的目的MAC地址决定转发。缺点在于不会进行纠错检查。</li>
+</ul>
+<blockquote>
+<p>tips:随着接入量增多,总线型效率下降。因此由总线转到星型以太网。即上述以太交换机的接口接入的多个计算机。<br>tips:以太交换机不使用共享总线，不会碰撞因此也不使用CSMA&#x2F;CS，以全双工方式工作，依然叫做以太网的原因在于以太网的帧结构未改变。</p>
+</blockquote>
+<p>2.虚拟局域网</p>
+<ul>
+<li><ol>
+<li>概念：将一个局域网划分为一段与与物理位置无关的逻辑组，事实上，虚拟局域网只是局域网提供给用户的一种服务，不是新型技术。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>原因：因为以太网是广域网，为了减少广播帧（即向多个端口发送数据），建立更小的虚拟局域网。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips: 高速以太网有快速以太网,吉比特以太网，10吉比特以太网。</p>
+</blockquote>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/06/Internet/2-%E7%89%A9%E7%90%86%E5%B1%82/" rel="prev" title="2.物理层">
+      <i class="fa fa-chevron-left"></i> 2.物理层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/07/uderstandingCoputer/2-%E4%BF%A1%E6%81%AF%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E8%A1%A8%E7%A4%BA/" rel="next" title="2-信息的处理和表示">
+      2-信息的处理和表示 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E5%86%85%E5%AE%B9"><span class="nav-number">1.</span> <span class="nav-text">前置内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E7%9A%84%E9%93%BE%E8%B7%AF%E5%92%8C%E5%B8%A7"><span class="nav-number">2.</span> <span class="nav-text">1.数据的链路和帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98%EF%BC%9A1-%E5%B0%81%E8%A3%85%E6%88%90%E5%B8%A7%E3%80%822-%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93%E3%80%823-%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">2.链路层的三个基本问题：1.封装成帧。2.透明传输。3.差错检测。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AEPPP-point-to-point-protocol"><span class="nav-number">4.</span> <span class="nav-text">3.点对点协议PPP(point to point protocol)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ppp%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8A%B6%E6%80%81"><span class="nav-number">5.</span> <span class="nav-text">4.ppp协议的工作状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82-%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E8%83%BD%E5%A4%9F%E8%BF%9B%E8%A1%8C%E4%B8%80%E5%AF%B9%E5%A4%9A%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-number">6.</span> <span class="nav-text">5.使用广播信道的数据链路层:广播信道能够进行一对多的通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-CSMA-x2F-CD%E5%8D%8F%E8%AE%AE"><span class="nav-number">7.</span> <span class="nav-text">6.CSMA&#x2F;CD协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E4%BD%BF%E7%94%A8%E9%9B%86%E7%BA%BF%E5%99%A8%E7%9A%84%E6%98%9F%E5%BD%A2%E6%8B%93%E6%89%91"><span class="nav-number">8.</span> <span class="nav-text">7.使用集线器的星形拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%9A%84MAC%E5%B1%82"><span class="nav-number">9.</span> <span class="nav-text">8.以太网的MAC层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%BB%A5%E5%A4%AA%E7%BD%91%E6%8B%93%E5%B1%95"><span class="nav-number">10.</span> <span class="nav-text">9.以太网拓展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E4%BB%A5%E5%A4%AA%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-number">11.</span> <span class="nav-text">10.以太交换机</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

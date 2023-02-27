@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.Vue的安装和卸载前置条件:  1.npm为node.js自带的包安装工具，如果命令行显示npm不是命令，请安装node.js 2.npm如果不挂vpn建议使用cnpm 3.遇到的坑:使用npm安装依赖时，及时使用管理员权限运行依旧显示权限不足，改用cnpm则可行。原理目前不知。   使用cmd命令行:    安装:npm install -g vue    卸载:npm uninstall">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue框架使用说明">
+<meta property="og:url" content="http://example.com/2022/11/21/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80/Vue%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.Vue的安装和卸载前置条件:  1.npm为node.js自带的包安装工具，如果命令行显示npm不是命令，请安装node.js 2.npm如果不挂vpn建议使用cnpm 3.遇到的坑:使用npm安装依赖时，及时使用管理员权限运行依旧显示权限不足，改用cnpm则可行。原理目前不知。   使用cmd命令行:    安装:npm install -g vue    卸载:npm uninstall">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-21T09:07:18.000Z">
+<meta property="article:modified_time" content="2023-02-17T17:24:46.605Z">
+<meta property="article:author" content="yuanSchuan">
+<meta property="article:tag" content="-js -前端框架使用">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/21/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80/Vue%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue框架使用说明 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/21/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80/Vue%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue框架使用说明
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-21 17:07:18" itemprop="dateCreated datePublished" datetime="2022-11-21T17:07:18+08:00">2022-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-18 01:24:46" itemprop="dateModified" datetime="2023-02-18T01:24:46+08:00">2023-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">-Vue</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-Vue的安装和卸载"><a href="#1-Vue的安装和卸载" class="headerlink" title="1.Vue的安装和卸载"></a>1.Vue的安装和卸载</h2><p>前置条件:</p>
+<ul>
+<li>1.npm为node.js自带的包安装工具，如果命令行显示npm不是命令，请安装node.js</li>
+<li>2.npm如果不挂vpn建议使用cnpm</li>
+<li>3.遇到的坑:使用npm安装依赖时，及时使用管理员权限运行依旧显示权限不足，改用cnpm则可行。原理目前不知。</li>
+</ul>
+<ol>
+<li>使用cmd命令行:</li>
+</ol>
+<ul>
+<li><ol>
+<li>安装:npm install -g vue</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>卸载:npm uninstall -g vue</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h1 id="一些常见的注意点："><a href="#一些常见的注意点：" class="headerlink" title="一些常见的注意点："></a>一些常见的注意点：</h1><ul>
+<li><p>1.关于bind这类参数的传递:</p>
+<ul>
+<li>1.如果没有特殊要求，直接填相应名字即可。</li>
+<li>2.如果要求对某个属性进行多种赋值或者修改(比如赋予css样式，或者css样式切换)，直接使用数组即可。</li>
+<li>3.如果绑定的属性下列还有多个子属性，那么一般使用 { }传递对象，进而能够指定相应的属性修改。</li>
+</ul>
+</li>
+<li><p>2.关于缩写,输入如果直接写routes,会解释成routes:routes; </p>
+</li>
+<li><p>3.关于依赖的引用可以使用script或者npm安装。</p>
+</li>
+<li><p>4.v-model等双向绑定是指js的值输出也html页面，而html页面改变这个值后也会改变js界面<br>的这个值。</p>
+</li>
+<li><p>5.v-model是v-bind:value+v-on，也就是说v-bind:控件的属性&#x3D;””,而v-model不需要<br>写控件的属性，因为默认的是value,并且即使改成控件的其他属性也无效。</p>
+</li>
+<li><p>6.闭包函数，简单的来讲就是把值和创建时的环境绑定。一般用于js循环绑定事件，因为js循环绑定事件时和事件触发时的i值不同。<br>触发时读取的i值已经变成了最终i值。解决方式就是在外面使用函数包围，将函数的参数作为触发时事件的i值，将循环的i值作为参数。<br>这样，事件触发的值就是当时的绑定的值而不是最终值。</p>
+</li>
+</ul>
+<h2 id="2-目录结构-仅介绍常用目录"><a href="#2-目录结构-仅介绍常用目录" class="headerlink" title="2.目录结构(仅介绍常用目录)"></a>2.目录结构(仅介绍常用目录)</h2><ol>
+<li><p>build：该目录下为webpack后生成的代码文件，webpack可以理解为将使用vue生成的效果转化成传统html等文件。</p>
+</li>
+<li><p>config:配置目录，包括端口号等。</p>
+</li>
+<li><p>node_modules：npm加载(npm run serve)的模块依赖，即运行时需要的一些下载模块。</p>
+</li>
+<li><p>src：我们当前开发的目录，可以理解为页面文件和资源文件的存放。还有一些子目录。</p>
+</li>
+</ol>
+<ul>
+<li>1.asset：放置图片等资源</li>
+<li>2.componts:存放组件(官方建议，可以不用)</li>
+<li>3.App.vue：默认的项目入口Vue文件，可以在main.js中修改。</li>
+<li>4.main.js：项目的核心文件,用于配置各种文件。</li>
+</ul>
+<ol start="5">
+<li><p>static:静态资源目录</p>
+</li>
+<li><p>package.json:项目配置文件</p>
+</li>
+<li><p>README.md:项目说明文档。</p>
+</li>
+</ol>
+<hr>
+<h2 id="3-Vue使用概述"><a href="#3-Vue使用概述" class="headerlink" title="3.Vue使用概述"></a>3.Vue使用概述</h2><ol>
+<li>vue本质上是将script创建声明数据，然后将数据绑定到html中的元素中，因此衍生出以下两种绑定元素的方法。</li>
+</ol>
+<ul>
+<li><p>1.new Vue( { }),创建一个vue实例的方法，参数中的实例 { }中el属性可以将这个实例绑定给某个元素，当然，也可以使用[]绑定给多个元素。<br>比如new Vue( {el:’#app’ }):绑定给id&#x3D;app的元素</p>
+</li>
+<li><p>2.创建一个js对象，使用Vue.createApp(对象)创建实例Vue实例，然后用mount()绑定给某个元素。比如Vue.createApp( {data() {return {a:1 }  } }).mount(‘#app’)</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，一般将创建的对象赋值给const 变量名,const和var的区别在于，const类型的数据无法再次赋值，强制赋值会报错。</p>
+</blockquote>
+<p>值得注意的是:每个对象或者vue实例中有些固定的名称属性有特殊只能，此处介绍data,其他后续介绍。data一般用于是用于存放该对象的数据.</p>
+<ol start="2">
+<li>将一个js对象绑定给某个元素，可以通过v-model,v-bind,以及 {  {  }  }使用绑定给该元素的对象的数据。</li>
+</ol>
+<ul>
+<li>1.v-model和v-bind：<br>这两个区别在于v-model的数据是双向的，即v-model绑定的数据，如果js中改变，那么页面渲染也会改变。如果页面渲染改变，js中的数据也会改变。<br>v-bind的数据是单向的，只有js中数据改变，页面数据渲染才会改变，如果页面数据改变，那么js中数据不会改变。</li>
+</ul>
+<p>需要注意的是，v-model，v-bind与  {  {  }  }的主要区别是，前者主要用于元素控件上的属性值赋值，而  {  {  }  }主要用于直接在页面数据输出</p>
+<ul>
+<li><ol start="2">
+<li>{  {  }  }可以直接数据绑定到元素中对象的数据。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips1:  {  {  }  }和v-model一起配合button使用，可以直接改变js中数据。v-model:value&#x3D;”message”, { {message  }  },那么input中输出的值会直接修改 { {  }  }中message输出的值，进而修改页面。</p>
+</blockquote>
+<blockquote>
+<p>tips2:v-bind可以简写为:,因为v-bind主要绑定属性，所有简写为:属性&#x3D;”值”</p>
+</blockquote>
+<blockquote>
+<p>tips3:非常重要的一点就是,无论是v-bind,model还是 { {  }  }，甚至包括后面介绍的v-if等绑定数据都可以使用表达式，比如三元表达式，使用v-bind:class&#x3D; {条件:正确执行?错误执行 }来进行元素样式的切换，也可以使用 {样式1:boolean值，样式2:boolean值 }来决定样式。其中的boolean值一般使用触发事件绑定的函数来改变值。</p>
+</blockquote>
+<ol start="3">
+<li>v-if&#x3D;&#x3D;”Boolean值”,v-else-if,v-else和v-show<br>概述：主要用于决定是否显示该元素。</li>
+</ol>
+<ul>
+<li>1.前者true会直接渲染，false则不会渲染。</li>
+<li>2.v-show无论true或者flase都会渲染，只是简单的进行css切换。</li>
+</ul>
+<ol start="4">
+<li>循环语句v-for</li>
+</ol>
+<ul>
+<li>格式1.v-for&#x3D;”元素名字 in 需要迭代的数组名字”</li>
+<li>格式2.v-for&#x3D;”(value,key,index) in 数组名字”。<br>前面的value等名字是固定的，因为数组中的元素可以通过名字:”值”来进行赋值，因此key一般为元素的名字。</li>
+<li>格式3.v-for “迭代名字 in 数字”:进行数字次数迭代。</li>
+</ul>
+<hr>
+<h2 id="4-强制分割，因为上面顺序写，内容与上面标题关联不大，因此强制分割。"><a href="#4-强制分割，因为上面顺序写，内容与上面标题关联不大，因此强制分割。" class="headerlink" title="4.强制分割，因为上面顺序写，内容与上面标题关联不大，因此强制分割。"></a>4.强制分割，因为上面顺序写，内容与上面标题关联不大，因此强制分割。</h2><ol>
+<li><p>methods,Vue实例的特殊属性(实际为实例中的实例):主要用于声明方法。<br>比如new Vue( {<br>  methods: {<br> 方法名:function() { }<br>}<br> })</p>
+</li>
+<li><p>computed计算属性：与methods主要区别在于computed有缓存，可以使得计算的速度加快。</p>
+</li>
+<li><p>监听属性：两种方法，一种是在Vue实例外调用Vue的方法进行监听，一种是在Vue实例中的watch属性中赋值。监听的作用为当监听的属性改变时，会调用对应的方法。</p>
+</li>
+</ol>
+<ul>
+<li>1.方法:Vue实例.$watch(‘监听的值属性值名’,function(newValue,oldValue) { })。</li>
+</ul>
+<blockquote>
+<p>tips:需要注意的是，属性名为Vue实例里面的属性，function函数的参数也是一些特殊值，比如上面的参数为新值和旧值。</p>
+</blockquote>
+<ul>
+<li>2.属性:在watch中使用，格式为   名字:function() { }。</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，名字是需要监听的属性的名字。</p>
+</blockquote>
+<ol start="4">
+<li>事件处理绑定，v-on：将绑定在该元素中的Vue实例中的指定方法绑定在指定元素。<br>格式为v-on:事件名&#x3D;”方法名”。事件名为触发事件的方式，比如click为点击该元素会触发某个方法。可以简写为@:事件名&#x3D;”方法名”</li>
+</ol>
+<hr>
+<h2 id="5-组件：主要作用为使用模板，对模板进行复用。"><a href="#5-组件：主要作用为使用模板，对模板进行复用。" class="headerlink" title="5.组件：主要作用为使用模板，对模板进行复用。"></a>5.组件：主要作用为使用模板，对模板进行复用。</h2><ol>
+<li>创建组件的方法同样有两种。</li>
+</ol>
+<ul>
+<li><p>1.Vue实例中的components属性:格式为components {<br>  名字: {template:’<p>组件<p>‘ }<br> }</p>
+</li>
+<li><p>2.实例中注册组件Vue.components(“名字”, {template:’<p>组件<p>‘ })</p>
+</li>
+</ul>
+<ol start="2">
+<li><p>对子组件传值，可以看见template&#x3D;’’为字符串，要将父组件(上面Vue实例)的值传递子组件(template)中的值，需要使用props专门声明需要传递哪些值给组件。<br>格式为(以1创建方法为例):components {<br> props:[‘ a(设a为对象)’]<br> 名字: {template:’<p> {a.text }<p>‘ }<br> }</p>
+</li>
+<li><p>props还可以对数值进行验证，比如props: {propA:[ String,Number] }验证是否为字符串或者数字。<br>值得注意的是，NULL和undefine可以通过任何形式的验证。</p>
+</li>
+</ol>
+<hr>
+<h2 id="6-有一些特殊的钩子函数，比如update-会在被绑定绑定元素更新时调用，此处就不多追述，可在将来依照需求去找。许多功能，比如渲染时间的确定，次数等。"><a href="#6-有一些特殊的钩子函数，比如update-会在被绑定绑定元素更新时调用，此处就不多追述，可在将来依照需求去找。许多功能，比如渲染时间的确定，次数等。" class="headerlink" title="6.有一些特殊的钩子函数，比如update:会在被绑定绑定元素更新时调用，此处就不多追述，可在将来依照需求去找。许多功能，比如渲染时间的确定，次数等。"></a>6.有一些特殊的钩子函数，比如update:会在被绑定绑定元素更新时调用，此处就不多追述，可在将来依照需求去找。许多功能，比如渲染时间的确定，次数等。</h2><hr>
+<h2 id="7-路由"><a href="#7-路由" class="headerlink" title="7.路由"></a>7.路由</h2><ol>
+<li><p>概述：同样，可以在Vue实例中创建一个routes对象用于该对象绑定元素的路由。<br>路由主要用于渲染局部页面，而不是像传统的A标签直接整个页面渲染。</p>
+</li>
+<li><p>路由注册：创建对象const routes&#x3D;[ { path:’路径，一般相较于当前层次的相对路径’,component:组件名称  }, {第二个路由对象 }]。下面直接在元素中注册即可。</p>
+</li>
+<li><p>路由使用，在将拥有路由的Vue实例挂在相应元素中后，才可以使用。</p>
+</li>
+</ol>
+<ul>
+<li>1.触发格式&lt; router-link to&#x3D;’这个路径选自上面在Vue实例中注册的路径’&gt;&lt;&#x2F; router-link&gt;</li>
+</ul>
+<blockquote>
+<p>值得注意的是，router-link可以简单的视为&lt; p&gt;这样的标签元素，可以设置样式，中间的元素直接显示等。</p>
+</blockquote>
+<ul>
+<li>2.触发后显示的组件:&lt; router-view&gt;&lt;&#x2F; router-view&gt;</li>
+</ul>
+<p>解释：router-link是触发点(跳转点)，router-view用于显示触发后的内容。</p>
+<blockquote>
+<p>tips:有意思的是,bind:to可以使得跳转的地址更改，即bind和路由的配合。</p>
+</blockquote>
+<hr>
+<h2 id="8-Vue具有自带过渡动画，比如-lt-transition-name-x3D-’fade’-gt-标签包裹的元素消失出现会淡入淡出，具体过渡效果按需求找，这里不多做赘述。"><a href="#8-Vue具有自带过渡动画，比如-lt-transition-name-x3D-’fade’-gt-标签包裹的元素消失出现会淡入淡出，具体过渡效果按需求找，这里不多做赘述。" class="headerlink" title="8.Vue具有自带过渡动画，比如&lt; transition name&#x3D;’fade’&gt;标签包裹的元素消失出现会淡入淡出，具体过渡效果按需求找，这里不多做赘述。"></a>8.Vue具有自带过渡动画，比如&lt; transition name&#x3D;’fade’&gt;标签包裹的元素消失出现会淡入淡出，具体过渡效果按需求找，这里不多做赘述。</h2><hr>
+<h2 id="9-Vue与ajks请求"><a href="#9-Vue与ajks请求" class="headerlink" title="9.Vue与ajks请求"></a>9.Vue与ajks请求</h2><ol>
+<li><p>前述：ajks,封装有前端与后端交互的方法。<br>不过ajks方法过于繁杂，因此使用axios(基于akjs封装有前后端的访问方法。)，注意，使用这个需要npm安装axios.</p>
+</li>
+<li><p>get传递和读取数据<br>axios<br>   .get(‘请求的目标路径’)<br>   .then(response &#x3D;&gt; (this.info &#x3D; response))<br>   .catch(function (error)  { &#x2F;&#x2F; 请求失败处理<br> console.log(error);<br>});</p>
+</li>
+</ol>
+<blockquote>
+<p>tips1:.then中的为箭头函数，格式为参数&#x3D;&gt;(),(中的值自动返回)，而上面的response是上面请求返回的数据</p>
+</blockquote>
+<ul>
+<li><p>1.注意，要获取json数据，为response.data</p>
+</li>
+<li><p>2.get传递数据为在目标路径后?key&#x3D;value&amp;&amp;key2&#x3D;value2…</p>
+</li>
+<li><p>3.若不需要传递参数则直接请求即可。</p>
+</li>
+</ul>
+<p>总结：传递数据在路径后加?,获取数据直接请求地址即可。</p>
+<ol start="3">
+<li>post传递和获取数据<br>axios.post(‘&#x2F;user’,  {<br> firstName: ‘Fred’,        &#x2F;&#x2F; 参数 firstName<br> lastName: ‘Flintstone’    &#x2F;&#x2F; 参数 lastName<br>})<br>  .then(function (response)  {<br> console.log(response);<br>})<br>  .catch(function (error)  {<br> console.log(error);<br>});</li>
+</ol>
+<p>  注意。post与get区别在于get参数直接在请求头，而post则会隐藏参数。</p>
+<ol start="4">
+<li><p>axios执行多个并发请求：<br> axios.all([getUserAccount(), getUserPermissions()])<br>  .then(axios.spread(function (acct, perms)  {<br>&#x2F;&#x2F; 两个请求现在都执行完成<br>   }));</p>
+</li>
+<li><p>可以通过创建axios实例来复用，比如以下get获取图片流<br>  &#x2F;&#x2F;  GET 请求远程图片<br>axios( {<br>  method:’get’,<br>  url:’目标地址’,<br>  responseType:’stream’<br> })<br>  .then(function(response)  {<br>  response.data.pipe(fs.createWriteStream(‘ada_lovelace.jpg’))<br> });</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/js-%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8/" rel="tag"># -js -前端框架使用</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/15/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" rel="prev" title="考研-计网数据链路层">
+      <i class="fa fa-chevron-left"></i> 考研-计网数据链路层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/29/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%8B%E9%81%93%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%AF%BC/%E8%80%83%E7%A0%94-%E8%AE%A1%E7%BD%91%E7%BD%91%E7%BB%9C%E5%B1%82%E5%A4%8D%E4%B9%A0/" rel="next" title="考研-计网网络层复习">
+      考研-计网网络层复习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Vue%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">1.Vue的安装和卸载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9%EF%BC%9A"><span class="nav-number"></span> <span class="nav-text">一些常见的注意点：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84-%E4%BB%85%E4%BB%8B%E7%BB%8D%E5%B8%B8%E7%94%A8%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">2.目录结构(仅介绍常用目录)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Vue%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">3.Vue使用概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%BC%BA%E5%88%B6%E5%88%86%E5%89%B2%EF%BC%8C%E5%9B%A0%E4%B8%BA%E4%B8%8A%E9%9D%A2%E9%A1%BA%E5%BA%8F%E5%86%99%EF%BC%8C%E5%86%85%E5%AE%B9%E4%B8%8E%E4%B8%8A%E9%9D%A2%E6%A0%87%E9%A2%98%E5%85%B3%E8%81%94%E4%B8%8D%E5%A4%A7%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%BC%BA%E5%88%B6%E5%88%86%E5%89%B2%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">4.强制分割，因为上面顺序写，内容与上面标题关联不大，因此强制分割。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%84%E4%BB%B6%EF%BC%9A%E4%B8%BB%E8%A6%81%E4%BD%9C%E7%94%A8%E4%B8%BA%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF%EF%BC%8C%E5%AF%B9%E6%A8%A1%E6%9D%BF%E8%BF%9B%E8%A1%8C%E5%A4%8D%E7%94%A8%E3%80%82"><span class="nav-number">4.</span> <span class="nav-text">5.组件：主要作用为使用模板，对模板进行复用。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%9C%89%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%EF%BC%8C%E6%AF%94%E5%A6%82update-%E4%BC%9A%E5%9C%A8%E8%A2%AB%E7%BB%91%E5%AE%9A%E7%BB%91%E5%AE%9A%E5%85%83%E7%B4%A0%E6%9B%B4%E6%96%B0%E6%97%B6%E8%B0%83%E7%94%A8%EF%BC%8C%E6%AD%A4%E5%A4%84%E5%B0%B1%E4%B8%8D%E5%A4%9A%E8%BF%BD%E8%BF%B0%EF%BC%8C%E5%8F%AF%E5%9C%A8%E5%B0%86%E6%9D%A5%E4%BE%9D%E7%85%A7%E9%9C%80%E6%B1%82%E5%8E%BB%E6%89%BE%E3%80%82%E8%AE%B8%E5%A4%9A%E5%8A%9F%E8%83%BD%EF%BC%8C%E6%AF%94%E5%A6%82%E6%B8%B2%E6%9F%93%E6%97%B6%E9%97%B4%E7%9A%84%E7%A1%AE%E5%AE%9A%EF%BC%8C%E6%AC%A1%E6%95%B0%E7%AD%89%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">6.有一些特殊的钩子函数，比如update:会在被绑定绑定元素更新时调用，此处就不多追述，可在将来依照需求去找。许多功能，比如渲染时间的确定，次数等。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%B7%AF%E7%94%B1"><span class="nav-number">6.</span> <span class="nav-text">7.路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Vue%E5%85%B7%E6%9C%89%E8%87%AA%E5%B8%A6%E8%BF%87%E6%B8%A1%E5%8A%A8%E7%94%BB%EF%BC%8C%E6%AF%94%E5%A6%82-lt-transition-name-x3D-%E2%80%99fade%E2%80%99-gt-%E6%A0%87%E7%AD%BE%E5%8C%85%E8%A3%B9%E7%9A%84%E5%85%83%E7%B4%A0%E6%B6%88%E5%A4%B1%E5%87%BA%E7%8E%B0%E4%BC%9A%E6%B7%A1%E5%85%A5%E6%B7%A1%E5%87%BA%EF%BC%8C%E5%85%B7%E4%BD%93%E8%BF%87%E6%B8%A1%E6%95%88%E6%9E%9C%E6%8C%89%E9%9C%80%E6%B1%82%E6%89%BE%EF%BC%8C%E8%BF%99%E9%87%8C%E4%B8%8D%E5%A4%9A%E5%81%9A%E8%B5%98%E8%BF%B0%E3%80%82"><span class="nav-number">7.</span> <span class="nav-text">8.Vue具有自带过渡动画，比如&lt; transition name&#x3D;’fade’&gt;标签包裹的元素消失出现会淡入淡出，具体过渡效果按需求找，这里不多做赘述。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Vue%E4%B8%8Eajks%E8%AF%B7%E6%B1%82"><span class="nav-number">8.</span> <span class="nav-text">9.Vue与ajks请求</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.计算机网络的概念：由若干个节点和链路组成。 tips1:节点的组成可以是计算机，集线器，交换机，路由器等。   tips2:互联网被称为网络中的网络，因为较小的网络可以通过节点变成更大的网络。   tips3:在网络中，计算机被称为主机。   2.互联网的多级发展层次 第一阶段:将任意几个计算机连接起来。 第二阶段:美国政府将互联网设置为三级别计算机网络：1.主干网。2.地区网。3.校园网（或">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络概论">
+<meta property="og:url" content="http://example.com/2022/10/05/Internet/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%AE%BA/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.计算机网络的概念：由若干个节点和链路组成。 tips1:节点的组成可以是计算机，集线器，交换机，路由器等。   tips2:互联网被称为网络中的网络，因为较小的网络可以通过节点变成更大的网络。   tips3:在网络中，计算机被称为主机。   2.互联网的多级发展层次 第一阶段:将任意几个计算机连接起来。 第二阶段:美国政府将互联网设置为三级别计算机网络：1.主干网。2.地区网。3.校园网（或">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-05T07:06:35.000Z">
+<meta property="article:modified_time" content="2022-10-05T12:18:07.334Z">
+<meta property="article:author" content="yuanSchuan">
+<meta property="article:tag" content="概念">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/05/Internet/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计算机网络概论 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/05/Internet/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机网络概论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-05 15:06:35 / 修改时间：20:18:07" itemprop="dateCreated datePublished" datetime="2022-10-05T15:06:35+08:00">2022-10-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-计算机网络的概念：由若干个节点和链路组成。"><a href="#1-计算机网络的概念：由若干个节点和链路组成。" class="headerlink" title="1.计算机网络的概念：由若干个节点和链路组成。"></a>1.计算机网络的概念：由若干个节点和链路组成。</h2><blockquote>
+<p>tips1:节点的组成可以是计算机，集线器，交换机，路由器等。</p>
+</blockquote>
+<blockquote>
+<p>tips2:互联网被称为网络中的网络，因为较小的网络可以通过节点变成更大的网络。</p>
+</blockquote>
+<blockquote>
+<p>tips3:在网络中，计算机被称为主机。</p>
+</blockquote>
+<hr>
+<h2 id="2-互联网的多级发展层次"><a href="#2-互联网的多级发展层次" class="headerlink" title="2.互联网的多级发展层次"></a>2.互联网的多级发展层次</h2><ul>
+<li>第一阶段:将任意几个计算机连接起来。</li>
+<li>第二阶段:美国政府将互联网设置为三级别计算机网络：1.主干网。2.地区网。3.校园网（或者企业网）。<br>*第三阶段:全球范围内的多级别ISP结构的互联网。比如：主干ISP-&gt;地区ISP-&gt;本地ISP-&gt;校园网</li>
+</ul>
+<blockquote>
+<p>tips1:ISP即Internet service provider，也就是互联网服务提供商。</p>
+</blockquote>
+<blockquote>
+<p>tips2:IXP即internet eXchange point,也就是互联网交换点。将相邻地区网络直接并进行分组交换，不必前往主干ISP交换进而提升效率。</p>
+</blockquote>
+<blockquote>
+<p>tips3:IAB:internet architecture society即互联网体系委员会，负责互联网有关协议的开发。</p>
+</blockquote>
+<blockquote>
+<p>tips4:互联网正式标准经历的阶段分为：1.互联网草案(internet draft).2.建议标准(internet draft).3.互联网标准(internet standard).</p>
+</blockquote>
+<hr>
+<h2 id="3-互联网的组成：边缘部分-核心部分"><a href="#3-互联网的组成：边缘部分-核心部分" class="headerlink" title="3.互联网的组成：边缘部分+核心部分"></a>3.互联网的组成：边缘部分+核心部分</h2><p>边缘部分：由互联网主机构成组成端系统（端，即末端），这部分是用户直接用来信息通信和资源共享的。  </p>
+<p>核心部分：大量的网络+路由器组成，主要目的是为边缘部分提供服务（即连通性和交换）。</p>
+<blockquote>
+<p>tips1：计算机之间的通信：主机A的一个进程和主机B的一个进程进行通信。</p>
+</blockquote>
+<blockquote>
+<p>tips2:互联起核心部分起特殊作用的是路由器，它是一种专门的计算机（不是主机），路由器是实现分组交换的核心，主要任务是转发收到的分组。</p>
+</blockquote>
+<blockquote>
+<p>tips3:值得注意的是，转发收到的分组是互联网核心最重要的部分。</p>
+</blockquote>
+<p>互联网端系统之间的通信方式可以被划分为：1.客户-服务器方式。2.对等方式</p>
+<ul>
+<li>客户端-服务器方式：服务器代替客户端进行信息检索（包括静态和动态资源），一般为一个服务器服务多个客户端。</li>
+<li>对等方式：连接双方互为对方的服务器和客户端。</li>
+</ul>
+<hr>
+<h2 id="4-关于交换的概念："><a href="#4-关于交换的概念：" class="headerlink" title="4.关于交换的概念："></a>4.关于交换的概念：</h2><ul>
+<li>从资源的角度来看：交换就是按照某种方式动态的分配传输路线资源。</li>
+</ul>
+<hr>
+<h2 id="5-电路交换：由多个电路一对一相连，数量的增加会增加天量的电话线路，将一个区域内的电话统一连接到交换机中，再由交换机进行路线分配。"><a href="#5-电路交换：由多个电路一对一相连，数量的增加会增加天量的电话线路，将一个区域内的电话统一连接到交换机中，再由交换机进行路线分配。" class="headerlink" title="5.电路交换：由多个电路一对一相连，数量的增加会增加天量的电话线路，将一个区域内的电话统一连接到交换机中，再由交换机进行路线分配。"></a>5.电路交换：由多个电路一对一相连，数量的增加会增加天量的电话线路，将一个区域内的电话统一连接到交换机中，再由交换机进行路线分配。</h2><ul>
+<li>电路交换过程：1.建立连接（占用通信资源）。2.通话（一直占用通信资源）。3.释放连接（归还通信资源）。</li>
+</ul>
+<blockquote>
+<p>tips:电路交换的一个重要特点就是通话的全部时间内，通话的两个用户始终占用端到端的通信资源。因此电话交换的线路传输效率很低，并且不保证数据的完整性。</p>
+</blockquote>
+<hr>
+<h2 id="6-分组交换：分组交换采用储存转发技术。"><a href="#6-分组交换：分组交换采用储存转发技术。" class="headerlink" title="6.分组交换：分组交换采用储存转发技术。"></a>6.分组交换：分组交换采用储存转发技术。</h2><ul>
+<li>报文：我们将需要发送的整块数据称为报文。</li>
+</ul>
+<blockquote>
+<p>为了更方便传输，我们将报文划分称成一个个更小的 <strong>数据段</strong> 以方便传输。</p>
+</blockquote>
+<ul>
+<li>分组：又称为包。构成为上面所说的数据段+一些必要的控制信息（头部）。我们将这些头部信息称为包头。</li>
+</ul>
+<blockquote>
+<p>tips:这些报文段由路由器进行转发，路由器和主机区别巨大，主机主要用于为用户信息进行处理，而路由器主要转发分组，即分组交换。</p>
+</blockquote>
+<ul>
+<li>储存转发技术：路由器收到一个分组，先暂时储存一点时间，检查收到的分组首部查找转发表，按照首部中的地址找到合适的接口转发出去，将分组交付给最终目的的主机。</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，各个路由器之间必须掌握彼此的路由信息，以便动态的创建和维护转发表，使得转发表能够再整个网络拓扑发送变化时及时更新，</p>
+</blockquote>
+<p>储存转发技术的一些特点:  </p>
+<ol>
+<li>路由器会短暂的将短的数据段储存在储存器（即内存，主存）中，而不是磁盘，这样能够保证一个较高的交换速率。</li>
+<li>路由器会依据链路的空闲程度决定转发(取决于传输控制协议)。</li>
+<li>一个分组某一段(比如a~c)进行传输时，不会占用其他段。</li>
+<li>不需要预先建立连接。</li>
+</ol>
+<hr>
+<h2 id="7-各种交换的特点"><a href="#7-各种交换的特点" class="headerlink" title="7.各种交换的特点"></a>7.各种交换的特点</h2><ul>
+<li>1.电路交换:比特流直达。</li>
+<li>2.报文交换:储存转发，全部储存在某个节点再转发，并且是人工。</li>
+<li>3.分组交换：储存转发，单个分组传送到相邻节点，储存后转发到下一个节点，非人工。</li>
+</ul>
+<blockquote>
+<p>tips:分组交换的优点：1.高效：即动态分配传输过程高效利用带宽。2.灵活：每块分组独立转发（因此不保证传输到达时的先后顺序）。3.迅速：不需要建立连接。4.可靠，由网络协议保证数据的完整性。</p>
+</blockquote>
+<hr>
+<h2 id="8-按照不同的作用分类网络"><a href="#8-按照不同的作用分类网络" class="headerlink" title="8.按照不同的作用分类网络"></a>8.按照不同的作用分类网络</h2><pre><code>1. 按照网络的作用范围：
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A(广域网,远程网) --&gt;B(城域网)</span><br><span class="line">    B --&gt; C(局域网)</span><br><span class="line">    C--&gt;D(个人区域网)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>按照使用者:</li>
+</ol>
+<ul>
+<li>公用网：指电信公司出资建立的大型网络，按照电信公司规定缴费者都可以使用该网络。</li>
+<li>专用网：指某个部门为满足本单位特殊业务建造的网络，不向外人提供服务。</li>
+</ul>
+<hr>
+<h2 id="9-计算机性能指标"><a href="#9-计算机性能指标" class="headerlink" title="9.计算机性能指标"></a>9.计算机性能指标</h2><ol>
+<li>速率：单位为bit&#x2F;s。意思时每秒的比特数。</li>
+</ol>
+<blockquote>
+<p>tips:对于网络技术中速率指数据传输速率，即数据率，也称为比特率。对于网络的传输速率，一般指的是额定的速率即理想情况下的速率，而不是实际速率。</p>
+</blockquote>
+<ol start="2">
+<li>带宽：有两种意思</li>
+</ol>
+<ul>
+<li>信号具有的频带宽度，即该信道允许通过的信号频带范围（频域称谓）。</li>
+<li>在计算机网络中，表示的是网络中某通道传送数据的能力，也就是某通道所能通过的最高数据率（时域称谓）。</li>
+</ul>
+<ol start="3">
+<li>吞吐量：单位时间内通过某网络的实际数据量，极限为额定速率。</li>
+</ol>
+<p>4.时延（delay）:指数据（可以是一个报文，分组，甚至是比特）从网络的一端到另一端所需时间，也可以称为迟延或者延迟。<br>时延有以下4种：</p>
+<ul>
+<li>1.发送时延：又称为传输时延（注意与传播时延的区别）。意思是指主机或者路由器发送数据帧的时间。<br>具体的计算为某个数据的第一个比特的时间到最后一个比特的时间</li>
+</ul>
+<blockquote>
+<p>发送时延：数据帧长(bit)&#x2F;发送速率(bit&#x2F;s)</p>
+</blockquote>
+<ul>
+<li>2.传播时延：电磁波在此信道上传播所花费的时间，可以理解为信道长度&#x2F;一个比特从信道开始到结尾所花费的时间。</li>
+</ul>
+<p>传播时延公式为：信道长度(m)&#x2F;电磁波在信道上的传播速率(m&#x2F;s)</p>
+<ul>
+<li><p>3.处理时延：对于主机或者路由器，收到数据后需要对数据进行处理所花费的时间称为处理时延。</p>
+</li>
+<li><p>4.排队时延：在路由器转发过程中，对于数据需要在等待数据处理的队列中排列，并且处理完后，可以需要在输出队列中排队等待输出。这个等待过程就是排队时延。</p>
+</li>
+</ul>
+<p>总时延&#x3D;发送时延+传播时延+处理时延+排队时延</p>
+<blockquote>
+<p>tips1:在某些情况下，低速率，小时延的网络可能大于高速率，但大时延的网络。</p>
+</blockquote>
+<blockquote>
+<p>tips2:在高带宽的网络上，数据会传输的更快些，是不对的。因为高带宽网络提高的发送时延，即将数据传输到网络的速度，但基于电磁波的网络速度是不会因此加快的，</p>
+</blockquote>
+<ul>
+<li><p>5.时延带宽积：以时延作为长度，宽作为高。求得的相当于一个长方形，也就是这个通道内所能容纳的最大比特数。因此时延带宽积又称以比特为单位的链路长度。<br>时延带宽积&#x3D;传播时延*带宽</p>
+</li>
+<li><p>6.往返时间(PTT Round-Trip Time)，在一些计算机文献中又称往返时延，强调需要多少时间发送方才能<br>知道接收方收到了信息。主要作用对于传输协议，或者传输，不仅仅是单向的，还是双向的。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:发送时间&#x3D;数据长度&#x2F;发送速率</p>
+</blockquote>
+<blockquote>
+<p>tips2:有效数据率&#x3D;数据长度&#x2F;(发送时间+RTT)，1.这个有效数据率为双向传输所的公式，单向去掉RTT即可。</p>
+</blockquote>
+<blockquote>
+<p>tips3:有效数据率为单位时间内发送的数据量。</p>
+</blockquote>
+<hr>
+<h2 id="10-利用率："><a href="#10-利用率：" class="headerlink" title="10.利用率："></a>10.利用率：</h2><p>利用率分为信道利用率和网络利用率：</p>
+<ol>
+<li>信道利用率为某信道百分之几的时间内被利用。</li>
+<li>网络利用率为：权网络的信道利用率加权平均值。</li>
+</ol>
+<blockquote>
+<p>tips：信道利用率并非越高越高，因为经过某一阈值后，时延会迅速提高导致数据率降低，一般50%的信道利用率即需要考虑扩容。</p>
+</blockquote>
+<p>空闲时延D0和网络当前时延D的关系，U为利用率。<br>D&#x3D;D0&#x2F;(1-U)</p>
+<blockquote>
+<p>tips2:当U接近1时，当前时延会接近无限大。</p>
+</blockquote>
+<hr>
+<h2 id="11-计算机的非性能特征"><a href="#11-计算机的非性能特征" class="headerlink" title="11.计算机的非性能特征"></a>11.计算机的非性能特征</h2><p>（1）费用<br>（2）质量<br>（3）标准化<br>（4）可靠性<br>（5）可拓展性和可升级性<br>（6）易于管理和维护</p>
+<blockquote>
+<p>tips:值得注意的是：计算机网络的基本概念中，分层次的体系结构（或者架构是基本的）。</p>
+</blockquote>
+<hr>
+<h2 id="12-补充"><a href="#12-补充" class="headerlink" title="12.补充"></a>12.补充</h2><ol>
+<li>脉冲：周期性的信号，比如一个脉冲为一周期。周期用作判定信号。</li>
+<li>信号量：一个信号可以携带多个信息，这种的实现是通过巨大的电压差实现，因而识别也更加困难。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A6%82%E5%BF%B5/" rel="tag"># 概念</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/04/BlogsBuiding/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="prev" title="博客搭建">
+      <i class="fa fa-chevron-left"></i> 博客搭建
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/05/BlogsBuiding/blogmatters/" rel="next" title="blogmatters">
+      blogmatters <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%9A%E7%94%B1%E8%8B%A5%E5%B9%B2%E4%B8%AA%E8%8A%82%E7%82%B9%E5%92%8C%E9%93%BE%E8%B7%AF%E7%BB%84%E6%88%90%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">1.计算机网络的概念：由若干个节点和链路组成。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E5%A4%9A%E7%BA%A7%E5%8F%91%E5%B1%95%E5%B1%82%E6%AC%A1"><span class="nav-number">2.</span> <span class="nav-text">2.互联网的多级发展层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E7%BB%84%E6%88%90%EF%BC%9A%E8%BE%B9%E7%BC%98%E9%83%A8%E5%88%86-%E6%A0%B8%E5%BF%83%E9%83%A8%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">3.互联网的组成：边缘部分+核心部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%85%B3%E4%BA%8E%E4%BA%A4%E6%8D%A2%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">4.关于交换的概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%EF%BC%9A%E7%94%B1%E5%A4%9A%E4%B8%AA%E7%94%B5%E8%B7%AF%E4%B8%80%E5%AF%B9%E4%B8%80%E7%9B%B8%E8%BF%9E%EF%BC%8C%E6%95%B0%E9%87%8F%E7%9A%84%E5%A2%9E%E5%8A%A0%E4%BC%9A%E5%A2%9E%E5%8A%A0%E5%A4%A9%E9%87%8F%E7%9A%84%E7%94%B5%E8%AF%9D%E7%BA%BF%E8%B7%AF%EF%BC%8C%E5%B0%86%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%9F%9F%E5%86%85%E7%9A%84%E7%94%B5%E8%AF%9D%E7%BB%9F%E4%B8%80%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%BA%A4%E6%8D%A2%E6%9C%BA%E4%B8%AD%EF%BC%8C%E5%86%8D%E7%94%B1%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%BF%9B%E8%A1%8C%E8%B7%AF%E7%BA%BF%E5%88%86%E9%85%8D%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">5.电路交换：由多个电路一对一相连，数量的增加会增加天量的电话线路，将一个区域内的电话统一连接到交换机中，再由交换机进行路线分配。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%EF%BC%9A%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E9%87%87%E7%94%A8%E5%82%A8%E5%AD%98%E8%BD%AC%E5%8F%91%E6%8A%80%E6%9C%AF%E3%80%82"><span class="nav-number">6.</span> <span class="nav-text">6.分组交换：分组交换采用储存转发技术。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%90%84%E7%A7%8D%E4%BA%A4%E6%8D%A2%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">7.</span> <span class="nav-text">7.各种交换的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%8C%89%E7%85%A7%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BD%9C%E7%94%A8%E5%88%86%E7%B1%BB%E7%BD%91%E7%BB%9C"><span class="nav-number">8.</span> <span class="nav-text">8.按照不同的作用分类网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">9.</span> <span class="nav-text">9.计算机性能指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%88%A9%E7%94%A8%E7%8E%87%EF%BC%9A"><span class="nav-number">10.</span> <span class="nav-text">10.利用率：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E9%9D%9E%E6%80%A7%E8%83%BD%E7%89%B9%E5%BE%81"><span class="nav-number">11.</span> <span class="nav-text">11.计算机的非性能特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E8%A1%A5%E5%85%85"><span class="nav-number">12.</span> <span class="nav-text">12.补充</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

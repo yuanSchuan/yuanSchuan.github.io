@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.网络层提供的两种服务 分为虚电路服务(面向连接)和数据报服务(无连接)。 虚电路和数据报服务对比    虚电路认为可靠通信应当由网络保证，数据报认为可靠通信由用户主机保证。    虚电路必须建立连接，而数据报服务不需要建立连接。    对于终点地址虚电路仅在建立阶段使用，每个分组使用短的虚电信号。数据报每个分组都有完整的地址，即IP地址。    虚电路对所有分组按照同一线路进行转发，数据报每个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.网络层">
+<meta property="og:url" content="http://example.com/2022/10/21/Internet/4-%E7%BD%91%E7%BB%9C%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.网络层提供的两种服务 分为虚电路服务(面向连接)和数据报服务(无连接)。 虚电路和数据报服务对比    虚电路认为可靠通信应当由网络保证，数据报认为可靠通信由用户主机保证。    虚电路必须建立连接，而数据报服务不需要建立连接。    对于终点地址虚电路仅在建立阶段使用，每个分组使用短的虚电信号。数据报每个分组都有完整的地址，即IP地址。    虚电路对所有分组按照同一线路进行转发，数据报每个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-21T03:34:29.000Z">
+<meta property="article:modified_time" content="2022-10-24T01:36:21.208Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/21/Internet/4-%E7%BD%91%E7%BB%9C%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>4.网络层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/21/Internet/4-%E7%BD%91%E7%BB%9C%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          4.网络层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-21 11:34:29" itemprop="dateCreated datePublished" datetime="2022-10-21T11:34:29+08:00">2022-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-24 09:36:21" itemprop="dateModified" datetime="2022-10-24T09:36:21+08:00">2022-10-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-网络层提供的两种服务"><a href="#1-网络层提供的两种服务" class="headerlink" title="1.网络层提供的两种服务"></a>1.网络层提供的两种服务</h2><ol>
+<li>分为虚电路服务(面向连接)和数据报服务(无连接)。</li>
+<li>虚电路和数据报服务对比</li>
+</ol>
+<ul>
+<li><ol>
+<li>虚电路认为可靠通信应当由网络保证，数据报认为可靠通信由用户主机保证。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>虚电路必须建立连接，而数据报服务不需要建立连接。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>对于终点地址虚电路仅在建立阶段使用，每个分组使用短的虚电信号。数据报每个分组都有完整的地址，即IP地址。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>虚电路对所有分组按照同一线路进行转发，数据报每个分组独立查找转发表进行转发。</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>当一个节点出现故障时，所有通过该节点的虚电路均不能工作。而对于数据报服务，出现故障的节点可能丢失分组，一些路由可能发生变化。</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>虚电路的分组按照顺序到达终点。数据报的分组到达的顺序不一定按照发送顺序。</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>端到端的差错处理和流量控制，虚电路服务可以由网络负责，也可以由用户主机负责。数据报服务则由用户主机负责。<blockquote>
+<p>tips：网络层的设计要尽量的简单，向上层提供简单灵活的，无连接的，尽最大努力的交付数据报服务。可以看出，网络层并不提供服务质量承诺。<br>tips2:虚电路只是仿电路交换的逻辑连接，按照储存转发方式发送，并不是真正的物理连接。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="2-网络层的两个层面"><a href="#2-网络层的两个层面" class="headerlink" title="2.网络层的两个层面"></a>2.网络层的两个层面</h2><ol>
+<li>层面分为数据层面(转发层面)和控制层面。</li>
+</ol>
+<ul>
+<li><ol>
+<li>数据层面为转发表转发数据。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>控制层面为路由器使用的路由算法创建转发表。</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>路由器之间传输的数据分类2类:</li>
+</ol>
+<ul>
+<li><ol>
+<li>目的主机与源主机之间所传送的数据。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>传送路由信息。<blockquote>
+<p>tips1:路由器无法单独创建转发表，必须依靠彼此协同动作。<br>tips2:在控制层方面出现了逻辑上集中的远程控制器，掌控整个网络，可以直接在路由器上直接生成转发表。而路由器只需要接收，查表，转发。不过这种技术只用于超大型数据的转发而已，广泛的普及目前来看并没有优势和可能。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="3-网际协议IP-Internet-Protocol-简介。"><a href="#3-网际协议IP-Internet-Protocol-简介。" class="headerlink" title="3.网际协议IP(Internet Protocol)简介。"></a>3.网际协议IP(Internet Protocol)简介。</h2><ol>
+<li>与IP配套使用的三个协议</li>
+</ol>
+<ul>
+<li>1.地址解析协议ARP(Adress Resolution Protocol)<br>:主要用于将IP地址与MAC地址转换。</li>
+<li>2.网际控制报文协议ICMP(Internet Control Message Protocol)</li>
+<li>3.网际组管理协议IGMP(Internet Group Management Protocol)<blockquote>
+<p>tips:逆地址解析协议RAPP(Reverse Adress Resolution Protocol)ICMP已经包涵1的功能</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>中间设备的介绍：</li>
+</ol>
+<ul>
+<li>1.物理层的中间设备:转发器</li>
+<li>2.数据链路层的中间设备：网桥，桥接器，交换机。</li>
+<li>3.网络层的中间设备:路由器</li>
+<li>4.网络层以上的中间设备:网关<blockquote>
+<p>tips:物理层或者链路层的中间设备仅仅只是把一个网络扩大了而已，并不能称为网络互联。<br>tips2:网络，包括局域网，城域网，广域网等。<br>tips3:历史原因，有许多文件将网络层的路由器称为网关，实际上二者是不同的，注意。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li>虚拟互联网络:逻辑互联网络，将物理性各异的结构互联起来，使得他们在网络层好像一个统一的网络。<br>两种交付方式：</li>
+</ol>
+<ul>
+<li>1.间接交付:目的地是路由器，包括源主机到第一个路由器的交付。</li>
+<li>2.直接交付:目的地是目的主机。</li>
+</ul>
+<h2 id="值得注意的是，每一次转发都称为跳-hop-常常使用下一跳-next-hop-gt-tips-互联网可以由多种异构网络互联而成。"><a href="#值得注意的是，每一次转发都称为跳-hop-常常使用下一跳-next-hop-gt-tips-互联网可以由多种异构网络互联而成。" class="headerlink" title="值得注意的是，每一次转发都称为跳(hop)常常使用下一跳(next hop)&gt;tips:互联网可以由多种异构网络互联而成。"></a>值得注意的是，每一次转发都称为跳(hop)常常使用下一跳(next hop)<br>&gt;tips:互联网可以由多种异构网络互联而成。</h2><h2 id="4-IP地址及其表示方法"><a href="#4-IP地址及其表示方法" class="headerlink" title="4.IP地址及其表示方法"></a>4.IP地址及其表示方法</h2><ol>
+<li>IP地址由互联网名字和数据分配机构ICANN(Internet Corporation for Assigned Names and Numbers)分配。</li>
+<li>IP地址类似给与每一台主机的一个接口，分配一个在世界范围内32位的唯一标识符。</li>
+<li>点分十进制计法(dotted decimal notation),比如128.11.3.31转化过程为</li>
+</ol>
+<ul>
+<li><ol>
+<li>机器中存放的连续的二进制代码表示IP</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>每8位视为一个处理单位，并以空格隔开。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>将8位一个二进制转化成十进制</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>将空格转化为.</li>
+</ol>
+</li>
+</ul>
+<ol start="4">
+<li><p>IP地址组成为:网络号+主机号<br>网络号用来表示该IP地址连接的网络，主机号为该网络下的某台主机。</p>
+<blockquote>
+<p>tips：关于多类地址，比如A类地址，通过网络号和主机号的比例分配不同确定。其中D类地址为多播地址，其余为单播地址，即点对点通信。</p>
+</blockquote>
+</li>
+<li><p>特殊的IP地址。</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>网络全0+主机号全0：表示本网络的本主机。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>网络全0+主机号x；表示本网络上主机号为X的主机。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>网络127(即01111111,主机号非全1和全0的任何数):用于本地软件的回环测试。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>网络全1+主机全1：仅在本网络进行广播</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>Y+主机全1:对网络号为Y的主机进行广播</li>
+</ol>
+</li>
+</ul>
+<ol start="6">
+<li>无分类编址方法CIDR(Classless Inter-Domain Routing)</li>
+</ol>
+<ul>
+<li><ol>
+<li>术语:</li>
+</ol>
+<ul>
+<li><ol>
+<li>网络前缀:即网络号，不向IP地址的X类分类那么固定。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>斜记线法&#x2F;,IP地址&#x2F;x，表示前X位为IP地址。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>地址块：网路前缀一样的连续IP被划分到同一个地址块。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>地址掩码：又称子网掩码：用于快速计算出IP地址。使用按位and算法，比如IP地址为11001,掩码为11100，那么网络地址就是11000。<blockquote>
+<p>tips:掩码与IP地址同位，每有一位网络位填1，没有后全部填0.</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="7">
+<li><p>路由聚合：只用一个项目就可以表示原来传统分址的许多地址，因而大大压缩了转发表占用空间，减少查找转发表时间。</p>
+<blockquote>
+<p>tips:区分的原因在于可能有机构会得到多个网络地址，会优先寻找较长的地址，如果找不到就在聚合地址里面。</p>
+</blockquote>
+</li>
+<li><p>IP地址的特点</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>网络前缀+主机号组成：分等级的结构地址。利用路由聚合减少查找转发表的时间。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>IP地址标识一台主机(或路由器)和一条链路的接口。如果一台主机同时连接两个网络，就要有两个IP地址，对于多个IP地址的主机称之为多归属主机。<blockquote>
+<p>tips：路由器至少需要两个路由器。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>一个网络或者子网的定义为相同网络前缀的主机集合，因此，用转发器和交换机连接起来的若干个局域网仍然是一个网络，因为局域网拥有同样的网络前缀。不同网络前缀必须用路由器相连。</li>
+</ol>
+</li>
+</ul>
+<p>由此：</p>
+<ul>
+<li><ol>
+<li>局域网的主机或者路由器在IP地址中的网络前缀必须是同样的，即拥有同样的网络号。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>路由器总是具有两个或两个以上的IP地址，即每个IP地址都不同。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>无编号网络：又称匿名网络:32位中31位网络地址，只有1位主机位，标识两个主机，构成点对点的特殊网络。</li>
+</ol>
+</li>
+</ul>
+<ol start="9">
+<li>IP地址和MAC地址</li>
+</ol>
+<ul>
+<li><ol>
+<li>简介:因为MAC已经固化到网卡的ROM中，因此MAC地址又称为硬件地址或物理地址。物理地址的反面就是虚拟地址，软件地址，逻辑地址(称IP地址为逻辑地址是因为IP地址是用软件实现的)。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>tips1:IP层抽象的互联网只能看到IP数据报，并且IP数据报的源地址和目的地不会因为多次路由而改变。<br>tips2:路由只会根据目的站的IP地址进行转发。<br>tips3:局域网的链路层只能看见MAC帧，IP数据报被封装到MAC帧中。<br>tips4:尽管互联在一起的网络MAC地址体系不同，但IP层抽象的互联网却屏蔽了下层这些很复杂的细节。</p>
+</blockquote>
+<ol start="10">
+<li>地址解析协议ARP</li>
+</ol>
+<ul>
+<li><ol>
+<li>作用:在主机的ARP高速缓存中存放一个IP地址到MAC地址的映射表，并经常更新该映射表。用于将IP地址通过高速缓存映射转发表转化成MAC地址，并且配置该映射表。<blockquote>
+<p>tips:目前每台主机都设有APR高速缓存，用于存放映射表。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>地址解析的4中过程</li>
+</ol>
+<ul>
+<li><ol>
+<li>发送方为主机，要把IP数据报发送给同一网络的另一台主机，发送方在该局域网中广播，找到目的主机的MAC地址。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>发送方为主机，要把IP数据报发送给另一网络的另一台主机，在局域网广播，找到一个路由器的MAC地址，剩下工作由该路由器完成。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>发送方为路由器，要把IP数据报发送给同一网络的另一台主机，在该局域网内广播，得到目的主机的MAC地址。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>发送方为路由器，要把IP数据报发送给不同一网络的另一台主机，在该局域网内广播，得到目的路由器的MAC地址。<blockquote>
+<p>tips:请求MAC的数据会发送自身的IP地址，MAC地址，并请求目标的IP地址和MAC地址。<br>tips2:为了减少通信量，主机A会在向目的通信的时候在ARP高速缓存MAS与IP映射，被接收的主机B在返回的时候也会将A的映射放入B的映射表中<br>tips3:ARC对映射表中的地址映射设置有生存时间。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="11">
+<li>IP数据报首部的固定字段：</li>
+</ol>
+<ul>
+<li><p>(1) 版本：占4位，指明IP的版本。</p>
+</li>
+<li><p>(2) 首部长度：用来表示首部长度。</p>
+<blockquote>
+<p>tips:因为IP首部固定部分为20字节，因此首部长度单位最小为5字节，当表示1111即15，表示为15个32位字长(字长与操作系统有关，32位一个字长为4字节。)</p>
+</blockquote>
+</li>
+<li><p>(3) 区分服务:用来获取更好的服务，占8位。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:实际上没有被使用过。</p>
+</blockquote>
+<ul>
+<li>(4) 总长度:指首部和数据之和的长度，表示的单位为字节，本身占16位。</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，因为所有链路层协议都规定了MTU最大传输单元，因此对于长度过大的数据会被切片传送，而数据报中的总长度&#x3D;每块切片的首部长度+数据长度</p>
+</blockquote>
+<ul>
+<li><p>(5) 标识(identification):用于分片后的数据进行重组。:占16位</p>
+<blockquote>
+<p>tips:IP软件在储存器中有一个计时器，每产生一个数据报，计数器+1</p>
+</blockquote>
+</li>
+<li><p>(6) 标志(flags)：占3位。最低为1表示还有分片，0表示没有分片了。次低1表示不能分片，0表示可以分片。</p>
+</li>
+<li><p>(7) 片偏移：占13位，用来指明某数据被分片后，分片部分相对于开头的偏移量。</p>
+</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，分片后除开最后一个切片外，所有切片的长度一定是一个8字节的整数倍。</p>
+</blockquote>
+<ul>
+<li><p>(8) 生存时间：占8位，用来防止数据在网络中无限制的兜圈，最初设计为按时间计数(比如时间到0则丢弃),现代为按次数减少。</p>
+</li>
+<li><p>(9) 协议:占8位，用来指明IP层应该上交给什么协议进行处理。</p>
+</li>
+<li><p>(10) 首部检验和：16位，用来检测首部是否发送变化，并使用反码检验，计算后为0，则没有发生变化。</p>
+</li>
+<li><p>(11) 源地址，占32位，发送IP数据报的主机IP地址。</p>
+</li>
+<li><p>(12) 目的地址，占32位。接收IP数据报的主机IP地址。</p>
+</li>
+</ul>
+<p>IP数据报首部还有可变部分，从1字节到40字节不等，目的为增加IP数据的功能。</p>
+<blockquote>
+<p>值得注意的是，这些是IPv4的部分，例如IPv6有进行删改。</p>
+</blockquote>
+<hr>
+<h2 id="5-IP层转发分组的过程"><a href="#5-IP层转发分组的过程" class="headerlink" title="5.IP层转发分组的过程"></a>5.IP层转发分组的过程</h2><p>简介：分组在互联网中传送和转发基于分组首部的目的地址，因此这种转发表被称为基于终点转发。</p>
+<ol>
+<li>大体过程：</li>
+</ol>
+<ul>
+<li>1.目的主机首先会确认是否在本网络上，如果在则直接交付，如果不再，则传递给路由器间接交付。</li>
+<li>2.路由器收到数据后会将链路层的数据上交给网络层软件，网络层会根据IP地址利用转发表生成mac地址(使用ARP协议)，然后递交给链路层的帧首部MAC,由次跳转到下一个路由器的MAC地址。</li>
+</ul>
+<p>tips:指定注意的是，路由器并不是按照整个IP地址进行运算，而是按照IP的网络前缀进行查找，因此查找转发表的过程就是寻找前缀匹配的过程。</p>
+<ol start="2">
+<li><p>最长前缀匹配：有些地址采用了路由聚合，使用最长前缀匹配可以提高效率。</p>
+<blockquote>
+<p>tips:关于特定主机路由和默认路由，主机路由为指定路由器进，默认路由器为必须按照指定路由处理。</p>
+</blockquote>
+</li>
+<li><p>分组转发的特点:</p>
+</li>
+</ol>
+<ul>
+<li>1.提取出收到分组的目的地址。</li>
+<li>2.有特定主机路由写特定主机，否则按照最长前缀匹配。</li>
+<li>3.子网掩码与目标IP地址and运算</li>
+<li>4.如果有默认路由，则指明默认路由的端口，否则报错。</li>
+</ul>
+<ol start="4">
+<li>二叉线索查表转发表：用于二叉线索(一种特殊结构的数),按照层次进行数据查找。<blockquote>
+<p>tips；还配合压缩技术进行。</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="6-网际控制报文协议ICMP-Internet-Control-Message-Protocol"><a href="#6-网际控制报文协议ICMP-Internet-Control-Message-Protocol" class="headerlink" title="6.网际控制报文协议ICMP(Internet Control Message Protocol)"></a>6.网际控制报文协议ICMP(Internet Control Message Protocol)</h2><p>简介:分为两种1.差错询问报文和询问报文</p>
+<ol>
+<li>差错询问报文共四种</li>
+</ol>
+<ul>
+<li>1.终点不可达:无法交付</li>
+<li>2.时间超过:数据报生成时间为0时，会被路由器丢弃</li>
+<li>3.参数问题:首部字段不正确</li>
+<li>4.改变路由(重定向):寻找新路由（找更好的路由）</li>
+</ul>
+<ol start="2">
+<li>无法使用ICMP的情况</li>
+</ol>
+<ul>
+<li>1.ICMP错误报告</li>
+<li>2.一个分片数据后续的分片</li>
+<li>3.多播地址的数据报</li>
+<li>4.目的地址为特殊地址</li>
+</ul>
+<ol start="3">
+<li>询问报文</li>
+</ol>
+<ul>
+<li>1.会送请求或者回答回送</li>
+<li>2.时间戳请求或者时间戳回答<blockquote>
+<p>tips:ICMP的一个重要应用就是ping(packet Internet Grouper),用来探测连通性，ping是应用层直接使用网络的一个例子。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h2 id="7-IPv6"><a href="#7-IPv6" class="headerlink" title="7.IPv6"></a>7.IPv6</h2><p>简介：IPv6仍然支持无连接传送，并将协议数据单元PDU称为分组(packet),而不是数据报(datagram).</p>
+<ol>
+<li>基本首部</li>
+</ol>
+<ul>
+<li>1.版本：占4位，指明了协议版本。IPv6为6.</li>
+<li>2.通信量类：占8位，区分不同的数据报类别和优先级，与IPv4区别服务类似。</li>
+<li>3.流标号：占20位，资源预分配机制，&#x3D;。<blockquote>
+<p>tips：流，互联网上特定源点到特定终点(单播或者多播)的一系列数据报(例如实时音频或者视频传输),而这个”流”经过的路由器都保证指明的服务质量。</p>
+</blockquote>
+</li>
+<li>4.有效荷载长度:占16位，指明IPv6除基本首部之外的字节数。</li>
+<li>5.下一个首部：相当于IPv4的扩展首部。</li>
+<li>6.跳转限制：每经过一个路由器限制次数便-1.</li>
+<li>7.源地址，128位，数据报发送端的IP地址。</li>
+<li>8.目的地址，128位，数据报目的地的IP地址。</li>
+</ul>
+<blockquote>
+<p>tips:IPv6将主机和路由器均称为节点。</p>
+</blockquote>
+<ol start="2">
+<li>IPv6地址</li>
+</ol>
+<ul>
+<li>1.单播:传统的点对点通信。</li>
+<li>2.多播：一对多通信，值得注意的是，IPv6将广播作为多播的一个特例。</li>
+<li>3.任播：终点为一组计算机，只交付给这组中的一个。</li>
+</ul>
+<ol start="3">
+<li><p>计法：冒号16进制计法。并进行零压缩。<br>地址分类：1.未指明地址。2.环回地址。3.多播地址。4.本地站点单播地址。5.本地链路单播地址。6.全球单播地址。</p>
+</li>
+<li><p>IPv4到IPv6的过度</p>
+</li>
+</ol>
+<ul>
+<li><ol>
+<li>双协议栈，即同时使用IPv4到IPv6的主机(或路由器)。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>隧道技术：一种包装技术，比如将IPv6包装成Ipv4</li>
+</ol>
+</li>
+</ul>
+<ol start="4">
+<li>ICMPv6:面向报文的协议，主要利用报文进行差错报告，获取信息，探测邻站和管理通信。</li>
+</ol>
+<hr>
+<h2 id="8-互联网的路由选择协议"><a href="#8-互联网的路由选择协议" class="headerlink" title="8.互联网的路由选择协议"></a>8.互联网的路由选择协议</h2><ol>
+<li>路由协议的核心是路由算法<br>算法必须具备的一些特点：</li>
+</ol>
+<ul>
+<li>1.正确和完整的。</li>
+<li>2.计算上简单</li>
+<li>3.稳定性</li>
+<li>4.公平的</li>
+<li>5.最佳的</li>
+</ul>
+<p>值得主要注意的是，路由选择策略分为静态路由选择策略和动态路由选择策略，<br>静态路由选择策略称为非自适应路由选择，虽然简单开销小，但是无法适应网络状态的变化。<br>动态路由选择策略又称自适应路由选择，能够较好的适应网络状态的变化。</p>
+<ol start="2">
+<li>多层次的路由选择协议：整个互联网被划分为较小的自治系统(autonomous system)AS。</li>
+</ol>
+<p>(1)内部网关协议(IGP Interior Gataway Protocol):一个自治系统内部使用的路由选择协议。  </p>
+<p>(2)外部网关协议(EGP):用于处于两个不同内部网关协议AS的路由选择，即连接不同内部网关协议的协议。</p>
+<blockquote>
+<p>tips:自治系统之间的路由选择称为域间路由选择。</p>
+</blockquote>
+<blockquote>
+<p>tips2:自治系统内部的路由选择叫做域内路由选择。</p>
+</blockquote>
+<ol start="3">
+<li>内部网关协议之RIP协议(Routing Information Protocal):基于距离的向量路由选择协议。</li>
+</ol>
+<ul>
+<li><p>1.RIP的距离称为跳数，每经过一个网络，跳数+1，到达16即丢弃，RIP仅适用于小型互联网。</p>
+</li>
+<li><p>2.RIP协议的特点：</p>
+<ul>
+<li>1.仅交换相邻路由器交换信息。</li>
+<li>2.交换的信息为当前本路由器所知道的所有信息</li>
+<li>3.固定的时间间隔交换信息。<blockquote>
+<p>tips:距离向量算法：找出每个目的的网络最短距离。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips2:这种算法的缺点是坏消息传的慢</p>
+</blockquote>
+<ol start="4">
+<li>内部网关协议之OSPF(Open Short Path First),最短路径优先使用了Dijkstra的最短路径算法SPF。</li>
+</ol>
+<ul>
+<li>1.主要特征为使用链路状态协议。</li>
+<li>2.主要特点为：<ul>
+<li>1.向本自治系统的所有路由器发送信息，这里使用的泛洪法：路由器通过所有输出端口向所有相邻的路由器发送信息。</li>
+<li>2.发送的信息为本路由器和相邻的路由器的链路状态。</li>
+<li>3.当链路状态发生变化或者隔一段时间(如30分钟),路由器向所有的路由器采用泛洪法发送信息。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:RIP和OSPF的重要区别在于OSPF一个自治系统内的每一个路由器都能够构建出本自治区的拓扑网络，而RIP不知道，并且只有到达了下一个路由器才知道下一条该如何走。</p>
+</blockquote>
+<blockquote>
+<p>tips2:值得注意的是，OSPF能够对链路状态数据库进行较快的更新，使得各个路由器能够及时更新路由表，OSPF的更新过程收敛得快是重要优点。</p>
+</blockquote>
+<ul>
+<li><p>3.区域划分:为了使得OSPF能够局限于某个区域而不是整个AS进而减少通信量，OSFP使用区域划分，上层区域也叫做主干区域(即与其他AS相连的区域)，而其他区域被称为区域边界路由器。</p>
+<blockquote>
+<p>tips:主干区域的路由器被称为主干路由器，而主干区域与其他区域相连的路由器被称为自治系统边界路由器。</p>
+</blockquote>
+</li>
+<li><p>4.OSPF五种分组类型:</p>
+<ul>
+<li>1.问候(Hello)分组:用于维持和发现邻站的可达性。</li>
+<li>2.数据库描述(Database Description)分组:用于给邻站描述自己链路状态的数据库的信息摘要。</li>
+<li>3.链路状态请求(Link State Request):向对方请求发送某些链路状态项目的详细信息。</li>
+<li>4.链路更新状态：用泛洪法对全网更新链路状态信息。(核心部分)</li>
+<li>5.链路确认状态(Link State Acknowledgment)分组:对链路的更新分组进行确认。<blockquote>
+<p>tips：值得注意的是，除开问候分组的其他分组作用均是用于链路状态数据库的同步，此处同步的意思是不同路由器的链路状态数据库的内容是一样的，两个同步的路由器叫做”完全邻接的”。最后，不完全邻接的路由器表明物理上相邻但链路数据库并不一致。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li>外部网关协议BGP(边界网关协议)</li>
+</ol>
+<ul>
+<li><p>1.关于eBGP和iBGP,eGBP指两个边界路由器之间建立的连接，而iBGP指AS内部传递的BGP报文，</p>
+<blockquote>
+<p>tips:值得注意的是，这些报文都使用TCP协议进行传输。</p>
+</blockquote>
+</li>
+<li><p>2.BGP路由格式:”前缀,BGP属性”.</p>
+<blockquote>
+<p>tips:前缀,即BGP路由的终点。</p>
+</blockquote>
+</li>
+<li><p>3.BGP路由选择</p>
+<ul>
+<li>1.本地偏好值最高的路由优先选择。</li>
+<li>2.选择具有AS跳数最少的路由</li>
+<li>3.使用热土豆路由选择算法</li>
+</ul>
+</li>
+<li><p>4.BGP四种报文</p>
+<ul>
+<li>1.Open打开报文:用来与BGP连接建立对等端关系。</li>
+<li>2.Update更新报文：用来通告某一路由的信息，以及列出要撤销的路由。</li>
+<li>3.KeepAlive保活报文:用来周期性的证实和对等端的连通性。</li>
+<li>4.NotIfICation通知报文:用来发送检测到的差错。</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li>三种不同的自治系统：</li>
+</ol>
+<ul>
+<li>1.末梢AS(stub AS)</li>
+<li>2.穿越AS(transit AS)</li>
+<li>3.对等AS(peering AS)</li>
+</ul>
+<hr>
+<h2 id="9-路由器的构成"><a href="#9-路由器的构成" class="headerlink" title="9.路由器的构成"></a>9.路由器的构成</h2><ol>
+<li><p>路由器：具有多种输入端口和输出端口的专用计算机，任务为转发分组。</p>
+</li>
+<li><p>路由器的结构可以被划分为两部分:1.控制部分(或者控制层面，路由选择部分)。2.数据层面。</p>
+</li>
+</ol>
+<ul>
+<li>1.控制部分：核心部分是路由选择处理机，处理机根据选定的路由选择协议构造出路由表，并定期交换信息维护路由表。</li>
+<li>2.数据层面:分为三部分1.交换结构。2.输入端口。3.输出端口(注意，这里的端口是硬件)。交换结构根据转发表对分组进行处理。<blockquote>
+<p>tips:交换结构可以看成在路由器中的网络。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="3">
+<li><p>转发和路由选择的区别：转发是指路由器根据转发表转发数据，仅仅涉及一个路由器。路由选择则涉及许多路由器。</p>
+</li>
+<li><p>路由表和转发表：路由表一般包涵目的地址的IP地址表示。转发表由路由表得出，其中包涵IP与MAC地址的映射关系。</p>
+<blockquote>
+<p>tips:路由器转发速度称为线速。</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="10-IP多播"><a href="#10-IP多播" class="headerlink" title="10.IP多播"></a>10.IP多播</h2><ol>
+<li><p>IP多播利用网际管理协议IGMP(Internet Group Management Prootocol)<br>,IP多播需要分组，需要借助多播路由器，并且可以由没有加入多播组的主机发出。</p>
+</li>
+<li><p>IGMP工作两个阶段：</p>
+</li>
+</ol>
+<ul>
+<li>1.主机加入新的多播组时，该主机向多播组的多播地址发送一条IGMP报文。</li>
+<li>2.组成员是动态的，多播路由器需要周期性的探测本地局域网的主机以便知道这些主机是否还继续是组的成员。</li>
+</ul>
+<h2 id="11-虚拟专用网VPN和网络地址转换NAT"><a href="#11-虚拟专用网VPN和网络地址转换NAT" class="headerlink" title="11.虚拟专用网VPN和网络地址转换NAT"></a>11.虚拟专用网VPN和网络地址转换NAT</h2><ol>
+<li><p>专用地址，用于机构内部通信，不能与互联网上的主机通信。在互联网的所有路由器，对目的地址是专用地址的数据报一律不转发。</p>
+<blockquote>
+<p>tips:对于专用网络，可以在内部有一定自由的IP地址自动分配，不过在与外界连接时，需要进行IP地址转换。</p>
+</blockquote>
+</li>
+<li><p>虚拟专用网络VPN:公用的互联网作为本地机构各个专用网之间的通信载体。</p>
+</li>
+<li><p>外联网(Extranet VPN):即某个机构的VPN需要外部的机构参与(即相连)。</p>
+</li>
+<li><p>NAT：安装在互联网路由器上的软件，这种路由器叫做NAT路由器，作用为将专用网的IP地址转化为互联网的IP地址。</p>
+</li>
+<li><p>多协议标签交换MPLS(MultiProtocol Lable Switching):<br>使用面向连接技术，使每个分组携带的一个叫作标签(label)的小整数，进而用分组提高交换机(即标签交换路由器)的转发分组速率。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/21/Internet/6.%E5%BA%94%E7%94%A8%E5%B1%82/" rel="prev" title="6.应用层">
+      <i class="fa fa-chevron-left"></i> 6.应用层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/%E6%A6%82%E8%AE%BA/" rel="next" title="概论">
+      概论 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%BD%91%E7%BB%9C%E5%B1%82%E6%8F%90%E4%BE%9B%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">1.网络层提供的两种服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BD%91%E7%BB%9C%E5%B1%82%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%B1%82%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">2.网络层的两个层面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AEIP-Internet-Protocol-%E7%AE%80%E4%BB%8B%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">3.网际协议IP(Internet Protocol)简介。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%8C%E6%AF%8F%E4%B8%80%E6%AC%A1%E8%BD%AC%E5%8F%91%E9%83%BD%E7%A7%B0%E4%B8%BA%E8%B7%B3-hop-%E5%B8%B8%E5%B8%B8%E4%BD%BF%E7%94%A8%E4%B8%8B%E4%B8%80%E8%B7%B3-next-hop-gt-tips-%E4%BA%92%E8%81%94%E7%BD%91%E5%8F%AF%E4%BB%A5%E7%94%B1%E5%A4%9A%E7%A7%8D%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94%E8%80%8C%E6%88%90%E3%80%82"><span class="nav-number">4.</span> <span class="nav-text">值得注意的是，每一次转发都称为跳(hop)常常使用下一跳(next hop)&gt;tips:互联网可以由多种异构网络互联而成。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-IP%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%85%B6%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">4.IP地址及其表示方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-IP%E5%B1%82%E8%BD%AC%E5%8F%91%E5%88%86%E7%BB%84%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">5.IP层转发分组的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP-Internet-Control-Message-Protocol"><span class="nav-number">7.</span> <span class="nav-text">6.网际控制报文协议ICMP(Internet Control Message Protocol)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-IPv6"><span class="nav-number">8.</span> <span class="nav-text">7.IPv6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E5%8D%8F%E8%AE%AE"><span class="nav-number">9.</span> <span class="nav-text">8.互联网的路由选择协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-number">10.</span> <span class="nav-text">9.路由器的构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-IP%E5%A4%9A%E6%92%AD"><span class="nav-number">11.</span> <span class="nav-text">10.IP多播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E8%99%9A%E6%8B%9F%E4%B8%93%E7%94%A8%E7%BD%91VPN%E5%92%8C%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2NAT"><span class="nav-number">12.</span> <span class="nav-text">11.虚拟专用网VPN和网络地址转换NAT</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

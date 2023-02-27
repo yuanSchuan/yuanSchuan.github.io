@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.应用层简介 应用层主要为了解决某一类问题，而这些问题的解决必须通过位于不同主机中的多个应用进程之间的通信和协同工作来完成。 许多应用层的协议基于客户端服务器方式，即P2P的对等通信方式。值得注意的是，客户和服务器都是指涉及的两个应用进程。主要特征就是客户是服务请求方，服务器是服务提供方。   2.DNS域名系统 DNS作用:提供名字与IP地址的转换。  tips:域名只是逻辑概念，与计算机所在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.应用层">
+<meta property="og:url" content="http://example.com/2022/10/21/Internet/6.%E5%BA%94%E7%94%A8%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.应用层简介 应用层主要为了解决某一类问题，而这些问题的解决必须通过位于不同主机中的多个应用进程之间的通信和协同工作来完成。 许多应用层的协议基于客户端服务器方式，即P2P的对等通信方式。值得注意的是，客户和服务器都是指涉及的两个应用进程。主要特征就是客户是服务请求方，服务器是服务提供方。   2.DNS域名系统 DNS作用:提供名字与IP地址的转换。  tips:域名只是逻辑概念，与计算机所在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-21T03:33:44.000Z">
+<meta property="article:modified_time" content="2022-10-24T01:41:15.809Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/21/Internet/6.%E5%BA%94%E7%94%A8%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>6.应用层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/21/Internet/6.%E5%BA%94%E7%94%A8%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          6.应用层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-21 11:33:44" itemprop="dateCreated datePublished" datetime="2022-10-21T11:33:44+08:00">2022-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-24 09:41:15" itemprop="dateModified" datetime="2022-10-24T09:41:15+08:00">2022-10-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-应用层简介"><a href="#1-应用层简介" class="headerlink" title="1.应用层简介"></a>1.应用层简介</h2><ol>
+<li>应用层主要为了解决某一类问题，而这些问题的解决必须通过位于不同主机中的多个应用进程之间的通信和协同工作来完成。</li>
+<li>许多应用层的协议基于客户端服务器方式，即P2P的对等通信方式。值得注意的是，客户和服务器都是指涉及的两个应用进程。主要特征就是客户是服务请求方，服务器是服务提供方。</li>
+</ol>
+<hr>
+<h2 id="2-DNS域名系统"><a href="#2-DNS域名系统" class="headerlink" title="2.DNS域名系统"></a>2.DNS域名系统</h2><ol>
+<li><p>DNS作用:提供名字与IP地址的转换。</p>
+<blockquote>
+<p>tips:域名只是逻辑概念，与计算机所在的地理位置无关。</p>
+</blockquote>
+</li>
+<li><p>DNS的系统：采用联机分布式数据库系统。DNS的名字大多在本地进行解析，少量需要在互联网通信。</p>
+</li>
+<li><p>DNS采用层次树的命名方法。任何一个连接在互联网的主机或者路由器，都有唯一的层次结构名字，即域名。域名多级，分别为顶级域名(.com等),二级域名，三级域名。</p>
+<blockquote>
+<p>tips:域指名字空间中一个可被管理的划分。域还可以继续划分为子域。</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:顶级域名分为:国家顶级域名，通用顶级域名，基础结构顶级域名。值得注意的式，我国二级域名划分为类别域名(比如.ac为科研机构)和行政区域名(比如北京为bj)。</p>
+</blockquote>
+<ol start="4">
+<li><p>域名服务器:域名服务器一个服务器所管辖的范围称为区，因此DNS服务器的管辖范围不是域而是区。</p>
+<blockquote>
+<p>tips；为了保证DNS工作不会因为一个服务器故障而中断，DNS域名服务器会把数据复制到几个域名服务器保存。其中一个为主域名服务器，其他为辅助域名服务器。</p>
+</blockquote>
+</li>
+<li><p>DNS查询步骤：</p>
+</li>
+</ol>
+<ul>
+<li>1.主机先向本地域名服务器查询，本地服务器使用递归查询。<br>(没找到)</li>
+<li>2.本地域名服务器采用迭代查询，它向根域名服务器查询。</li>
+<li>3.根域名服务器告诉本地域名服务器下一次应查询的顶级域名服务器IP地址。</li>
+<li>4.根域名服务器告诉本地域名服务器下一次应该查询的权限域名服务器IP地址。</li>
+<li>5.本地域名服务器向指定权限域名服务器查询。</li>
+<li>6.权限域名服务器告诉本地域名服务器，所查询的主机IP地址。</li>
+<li>7.本地域名服务将查询结果告诉主机。</li>
+</ul>
+<hr>
+<h2 id="3-文件传送协议FTP-file-transfer-protocol"><a href="#3-文件传送协议FTP-file-transfer-protocol" class="headerlink" title="3.文件传送协议FTP(file transfer protocol)"></a>3.文件传送协议FTP(file transfer protocol)</h2><ol>
+<li>FTP基本工作步骤：</li>
+</ol>
+<ul>
+<li>1.工作步骤：(1)打开熟知端口，使得客户进程能够连接。(2)等待客户进程发出连接请求。(3)启动从属进程处理客户进程的请求，并在处理完后关闭子进程。从属进程在运行期间根据需要还可以创建其他子进程。(4)回到等待状态。主进程与从属进程的处理是并行发生的。</li>
+</ul>
+<ol start="2">
+<li><p>服务器的从属进程：控制进程和数据传送进程。<br>控制连接主要用于主要用于发送服务端的控制进程。在连接后，控制连接会创建数据传送进程和数据连接用于传送数据。</p>
+</li>
+<li><p>NFS网络文件系统：NFS允许应用进程打开一个远地文件，并能在该文件的某一个特定位置上开始读写数据，而不需要复制整个文件。</p>
+</li>
+</ol>
+<hr>
+<h2 id="4-简单文件传送协议：TFTP-Trivial-File-Transfer-Protocol"><a href="#4-简单文件传送协议：TFTP-Trivial-File-Transfer-Protocol" class="headerlink" title="4.简单文件传送协议：TFTP(Trivial File Transfer Protocol)"></a>4.简单文件传送协议：TFTP(Trivial File Transfer Protocol)</h2><ol>
+<li>使用UDP数据报进行通讯。</li>
+<li>主要特点</li>
+</ol>
+<ul>
+<li>1.每次数据报大小为512.最后一次不足512.</li>
+<li>2.按序号编号，从1开始。</li>
+<li>3.支持ASCII或二进制传送</li>
+<li>4.对文件进行读写</li>
+<li>5.使用很简单的首部。</li>
+</ul>
+<hr>
+<h2 id="5-远程终端协议TELNET"><a href="#5-远程终端协议TELNET" class="headerlink" title="5.远程终端协议TELNET"></a>5.远程终端协议TELNET</h2><ol>
+<li>作用：主要使用TCP远程登陆，因此也称终端仿真协议，现在已经很少使用</li>
+</ol>
+<hr>
+<h2 id="6-万维网WWW-World-Wide-Web"><a href="#6-万维网WWW-World-Wide-Web" class="headerlink" title="6.万维网WWW(World Wide Web)"></a>6.万维网WWW(World Wide Web)</h2><ol>
+<li><p>简介：大规模，联机式的信息储存场所。万维网的链接方法能够很方便的从互联网上一个站点访问另一个站点。WWW是分布式的超媒体系统，是超文本系统的扩充。</p>
+</li>
+<li><p>链接，即超链接：在使用文档后即可从本文档链接到其他可能相隔很远的文档。</p>
+</li>
+<li><p>万维网工作：万维网以客户服务器方式工作，当客户程序向服务器程序发出请求，服务器程序向客户程序送回客户所要的万维网文档。</p>
+</li>
+</ol>
+<blockquote>
+<p>tip1:比如浏览器就是用户主机上的万维网客户程序。万维网文档所驻留的主机则运行服务器程序，而这台主机称为万维网服务器。</p>
+</blockquote>
+<ol start="4">
+<li>统一资源定位符URL(Uniform resource locator):用于标志万维网的各种文档，并使得每一个文档都在整个互联网的服务范围内具有唯一标识符URL.<br>主要格式为:协议:&#x2F;&#x2F;主机名(主机所在域名):&#x2F;端口(通常省略，使用默认端口名)&#x2F;路径</li>
+</ol>
+<blockquote>
+<p>tips:URL相当于文件名在网络范围的扩展，因此URL是与互联网相连的机器上的任何可访问的指针。</p>
+</blockquote>
+<ol start="5">
+<li><p>超文本传输协议HTTP(HyperText Markup Language):用于万维网客户程序与万维网服务器程序之间的交互协议。</p>
+</li>
+<li><p>Http：使用TCP进行可靠传输，协议本身无连接，无状态。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/" rel="prev" title="5.运输层">
+      <i class="fa fa-chevron-left"></i> 5.运输层
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/21/Internet/4-%E7%BD%91%E7%BB%9C%E5%B1%82/" rel="next" title="4.网络层">
+      4.网络层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BA%94%E7%94%A8%E5%B1%82%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">1.应用层简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-DNS%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">2.DNS域名系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%96%87%E4%BB%B6%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AEFTP-file-transfer-protocol"><span class="nav-number">3.</span> <span class="nav-text">3.文件传送协议FTP(file transfer protocol)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AE%EF%BC%9ATFTP-Trivial-File-Transfer-Protocol"><span class="nav-number">4.</span> <span class="nav-text">4.简单文件传送协议：TFTP(Trivial File Transfer Protocol)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%8D%8F%E8%AE%AETELNET"><span class="nav-number">5.</span> <span class="nav-text">5.远程终端协议TELNET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%B8%87%E7%BB%B4%E7%BD%91WWW-World-Wide-Web"><span class="nav-number">6.</span> <span class="nav-text">6.万维网WWW(World Wide Web)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

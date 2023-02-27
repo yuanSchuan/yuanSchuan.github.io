@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.前置： 值得注意的是，物理层并不特指传输媒介，相反，物理层讨论的是怎样才能在连接各种计算机的传输媒体上传输数据比特流。也就是尽量屏蔽因为各种媒介带来的传输媒体和通信手段的差异。使得数据链路层只需要考虑本层的协议和服务。 关于规程：也就是物理层的协议。   2.物理层的主要任务描述为确定与传输媒介有关的的一些特性。 机械特性：比如接口的形状，引脚个数等。做出标准化规定。 电子特性：电压范围。 功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.物理层">
+<meta property="og:url" content="http://example.com/2022/10/06/Internet/2-%E7%89%A9%E7%90%86%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.前置： 值得注意的是，物理层并不特指传输媒介，相反，物理层讨论的是怎样才能在连接各种计算机的传输媒体上传输数据比特流。也就是尽量屏蔽因为各种媒介带来的传输媒体和通信手段的差异。使得数据链路层只需要考虑本层的协议和服务。 关于规程：也就是物理层的协议。   2.物理层的主要任务描述为确定与传输媒介有关的的一些特性。 机械特性：比如接口的形状，引脚个数等。做出标准化规定。 电子特性：电压范围。 功">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-06T06:22:41.000Z">
+<meta property="article:modified_time" content="2022-10-06T06:25:24.115Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/06/Internet/2-%E7%89%A9%E7%90%86%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2.物理层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/06/Internet/2-%E7%89%A9%E7%90%86%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2.物理层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-06 14:22:41 / 修改时间：14:25:24" itemprop="dateCreated datePublished" datetime="2022-10-06T14:22:41+08:00">2022-10-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-前置："><a href="#1-前置：" class="headerlink" title="1.前置："></a>1.前置：</h2><ol>
+<li>值得注意的是，物理层并不特指传输媒介，相反，物理层讨论的是怎样才能在连接各种<br>计算机的传输媒体上传输数据比特流。也就是尽量屏蔽因为各种媒介带来的传输媒体和通信手段的差异。<br>使得数据链路层只需要考虑本层的协议和服务。</li>
+<li>关于规程：也就是物理层的协议。</li>
+</ol>
+<hr>
+<h2 id="2-物理层的主要任务描述为确定与传输媒介有关的的一些特性。"><a href="#2-物理层的主要任务描述为确定与传输媒介有关的的一些特性。" class="headerlink" title="2.物理层的主要任务描述为确定与传输媒介有关的的一些特性。"></a>2.物理层的主要任务描述为确定与传输媒介有关的的一些特性。</h2><ol>
+<li>机械特性：比如接口的形状，引脚个数等。做出标准化规定。</li>
+<li>电子特性：电压范围。</li>
+<li>功能特性：某一电平的电压意义。</li>
+<li>过程特性：不同功能的各种可能事件出现顺序。</li>
+</ol>
+<blockquote>
+<p>tips:关于传输方式，1.并行传输。2.串行传输。<br>1.并行传输：一般计算机内部使用，一次传输多个比特（多个管线）。<br>2.串行传输：一般在网络传输时使用（因为经济原因），每次传输一个，即每个比特按照时间线传输。因此物理层还要完成传输方式的转换。</p>
+</blockquote>
+<p>值得注意的是，因为物理的连接方式，传输媒介很多，因此物理层为此而定制的协议也是非常多的。</p>
+<hr>
+<h2 id="3-数据通信的基础知识："><a href="#3-数据通信的基础知识：" class="headerlink" title="3.数据通信的基础知识："></a>3.数据通信的基础知识：</h2><ol>
+<li>数据通信系统分为3大部分：</li>
+</ol>
+<ul>
+<li>1.源系统（发送端。发送方）</li>
+<li>2.传输系统（传输网络）</li>
+<li>3.目的系统（接收端，接收方）。</li>
+</ul>
+<p>（1）源系统，一般分成以下两部分：源点和发送器。</p>
+<ul>
+<li>1.源点又称源站或者信源，源点设备产生要传输的数据。</li>
+<li>2.发送器，通常源点生成的数字比特流要通过发送器编码后才能才能够在传输设备中进行传输。</li>
+</ul>
+<blockquote>
+<p>tips:典型的发送器为调制器。值得注意的是，现代许多计算器使用内置的调制调解器，用户在外面看不见。</p>
+</blockquote>
+<p>（2）目的系统：目的系统一般包括接收器和终点。</p>
+<ul>
+<li>1.接收器，接收传输系统传输过来的信号，并将它转化成能够被目的设备处理的信息。</li>
+</ul>
+<blockquote>
+<p>tips:典型的接收器是解调器。值得注意的是，解调器提取发送端置入的消息，还原发送端产生的数字比特流。</p>
+</blockquote>
+<ul>
+<li>2.终点，又称目的站或者信宿。将接收器获取数字比特流，然后把信息输出。</li>
+</ul>
+<blockquote>
+<p>tips1:通信目的是传送消息，比如视频。<br>tips2:数据是运送消息的实体，数据的定义为特定方式表示的信息，通常为有意义的符号序列，这种信息可以用计算器或者其他机器（或人）处理和产生。<br>tips3:信号：数据电气或者电磁表现。</p>
+</blockquote>
+<hr>
+<h2 id="4-关于信号：根据信号中代表消息的参数取值方式不同可以将信息分为以下两类："><a href="#4-关于信号：根据信号中代表消息的参数取值方式不同可以将信息分为以下两类：" class="headerlink" title="4.关于信号：根据信号中代表消息的参数取值方式不同可以将信息分为以下两类："></a>4.关于信号：根据信号中代表消息的参数取值方式不同可以将信息分为以下两类：</h2><ol>
+<li>模拟信号，又称连续信号。代表消息的参数取值是连续的。</li>
+<li>数字信号，又称离散信号。代表消息的参数取值是离散的。在使用时间域（简称时域）的波形表示数字信号时，代表不同离散值的基本波形称为码元。</li>
+</ol>
+<blockquote>
+<p>tips1:关于时间域，可以理解为一段持续时间，对于传输的码元来说，一个码元是一段时间内的持续信号，用于记录数据。<br>tips2:离散就是连续的反面，比如二进制比特流就是离散的。两种码元，分别为0，1</p>
+</blockquote>
+<hr>
+<h2 id="5-信道：信道用来表示向某一方向传送信息的媒介。"><a href="#5-信道：信道用来表示向某一方向传送信息的媒介。" class="headerlink" title="5.信道：信道用来表示向某一方向传送信息的媒介。"></a>5.信道：信道用来表示向某一方向传送信息的媒介。</h2><blockquote>
+<p>tips：我们常说的通信电路一般包涵一条发送信道和接收信道。二者并不等同。</p>
+</blockquote>
+<p>信道的通信方式有3种：</p>
+<ol>
+<li>单向通信，也称单工通信。只有一个方向而没有反方向交互。比如无线电广播就是这种类型。</li>
+<li>双向交替通信，也称半双工通信。虽然双向发送信息，但是两端不能同时发送。</li>
+</ol>
+<blockquote>
+<p>tips:民间说的单工通信有时候也代指半双工。</p>
+</blockquote>
+<ol start="3">
+<li>双向同时通信，也称全双工通信，即通信的双方可以同时发送和接收信息。</li>
+</ol>
+<blockquote>
+<p>tips:信源的信号称为基带信号（基本频带信号）。比如计算机输出的图像文件的数据信号。这种信号包涵了较多的低频分量，甚至直流分量，无法被信道传输。要信道传输这种信号必须将信号进程调制（即将信号变成特定的传输格式）。</p>
+</blockquote>
+<hr>
+<h2 id="6-调制：将信号变成特定的传输格式。"><a href="#6-调制：将信号变成特定的传输格式。" class="headerlink" title="6.调制：将信号变成特定的传输格式。"></a>6.调制：将信号变成特定的传输格式。</h2><p>调制分为2种:1.基带调制（编码）。2.带通调制。</p>
+<ol>
+<li>基带调制，仅仅对原基带信号进行波形变换，使得该信号能够被信号传输。</li>
+</ol>
+<blockquote>
+<p>tips1:因为变换后还是基带信号，因此叫做基带调制。<br>tips2:把数字信号转化成另一种数字信号，虽然是基带调制，但大家称之为编码。<br>tips3:将数据变成计算机能够识别的语言叫编码，将数据变成人类能够识别的语言叫解码。</p>
+</blockquote>
+<p>常见的编码格式：</p>
+<ul>
+<li>1.不归零制：正电平代表1，负电平代表0.</li>
+<li>2.归零制：正脉冲代表1，负脉冲代表0.</li>
+<li>3.曼切斯特编码：周期中心向下跳代表1.向上跳代表0.</li>
+<li>4.差分曼切斯特编码：每一位的中心始终有跳变，位开始边界有跳变称为0，没有为0.</li>
+</ul>
+<blockquote>
+<p>tips:曼切斯特编码频率比不归零制高，同步能力中，曼切斯特编码能够从波形本身提取初时钟频率，因此拥有自同步能力，而不归零制没有。</p>
+</blockquote>
+<p>基本的基带调节方法：1.调幅（AM）。2.调频(FM)。3.调相（PM）。</p>
+<ul>
+<li>（1）调幅即对载波的振幅随基带数字信号变化而变化。比如0对应无载波。</li>
+<li>（2）调频即载波的频率随基带数字变化而变化。比如0频率位f1。</li>
+<li>（3）调相即载波的初始相位随基带数字信号变化而变化。</li>
+<li>（4）正交振幅调制：使用调频调幅调相混合对基带信号进行调制。</li>
+</ul>
+<ol start="2">
+<li>带通调制：带通调制使用载波（carrier）将基带信号搬移到较高的频段，并转化成模拟信号，这样能够更好的在模拟信道内传输。</li>
+</ol>
+<blockquote>
+<p>tips:经过载波调节后的信号称为带通信号。</p>
+</blockquote>
+<blockquote>
+<p>tips2:值得注意的是，一个码元携带的信息不是固定的，由调制方式和编码方式决定。比如一个频率可以表示101，001等。</p>
+</blockquote>
+<hr>
+<h2 id="6-信道与传输："><a href="#6-信道与传输：" class="headerlink" title="6.信道与传输："></a>6.信道与传输：</h2><ol>
+<li>码间串扰：信号在信道中一定会经过衰减，衰减后的信号如果波形失去了清晰的界限，码元间也失去了清晰的界限使得信号无法识别和恢复称为码间串扰。</li>
+</ol>
+<blockquote>
+<p>tips:信号在信道中衰减的原因有很多，比如噪声，传输媒体的质量。<br>tips2:噪音由信道产生，所有信道一定会产生噪声，根据信道的因素产生的噪声也不同。<br>tips3:数字信号的优点在于虽然信号在信道不可避免的产生失真，但是拥有很强的抗干扰能力，能够识别出并且恢复。</p>
+</blockquote>
+<ol start="2">
+<li><p>奈氏准则：在带宽为W（Hz）的信道中，若不考虑噪声影响，则码元传输的最高速率是2W(码元&#x2F;秒)。传输速率超过此上限，就会出现严重的码间串扰问题，使接收端对码元的判决（即识别）成为不可能。</p>
+</li>
+<li><p>信噪比：信号平均功率&#x2F;噪声平均之比&#x3D;S&#x2F;N。信噪比(dB,分贝)&#x3D;10log10(S&#x2F;N)<br>tips:因为信号越强，噪音造成的干扰越小，即信噪比越大，因此信噪比是十分重要的。</p>
+</li>
+<li><p>香农公式（信息的极限信息传输速率）：C&#x3D;Wlog2(1+S&#x2F;N)(bit&#x2F;s)<br>其中W为信道的带宽，S为信道内所传信号的平均功率，N为信道内部的高斯噪声功率。</p>
+</li>
+</ol>
+<blockquote>
+<p>tips:香浓公式表明信道的带宽或信道中信噪比越大，信息的极限输出速率就越高。<br>tips2:如果带宽确定了，信噪比无法再提高，那么可以通过让每个码元携带更多比特的信息量提高传输效率。值得注意的是，这种方式的识别困难度很大，并且信噪必须达到相应的度。比如8bit共有256中排列，接受端必须在有噪声干扰的信号中准确判断是256种中的哪一个。</p>
+</blockquote>
+<hr>
+<h2 id="7-传输媒体，又称传输媒介，传输介质：是发送器和接收器之间的物理通路。可分为导引型传输媒体（guide）和非导引型传输媒体。"><a href="#7-传输媒体，又称传输媒介，传输介质：是发送器和接收器之间的物理通路。可分为导引型传输媒体（guide）和非导引型传输媒体。" class="headerlink" title="7.传输媒体，又称传输媒介，传输介质：是发送器和接收器之间的物理通路。可分为导引型传输媒体（guide）和非导引型传输媒体。"></a>7.传输媒体，又称传输媒介，传输介质：是发送器和接收器之间的物理通路。可分为导引型传输媒体（guide）和非导引型传输媒体。</h2><ol>
+<li>导引型传输媒体:电磁波被导引沿着固定媒体（比如铜线或光纤）传播。</li>
+<li>非导引型传输媒体:是指自由空间，在非导引型传输媒体中的电磁波的传输称为无线传输。</li>
+</ol>
+<hr>
+<h2 id="8-引导型传输媒介。"><a href="#8-引导型传输媒介。" class="headerlink" title="8.引导型传输媒介。"></a>8.引导型传输媒介。</h2><ol>
+<li>双绞线：使用两根绝缘铜导线并排放在一起，然后使用规则的方法绞合构成的双绞线。</li>
+</ol>
+<blockquote>
+<p>tips:可以使用增加绞合度的方法可以提高抗电磁干扰能力以及不同先制安的串扰，常见的为使用铝箔F或铜制S成的编制层进行屏蔽。普通屏蔽记为UTP,使用银额外再屏蔽记为FTP。根据外部编制层x可以写成x|UTF或者x|FTP。比如银外加银即F|FTP<br>tips2:双绞线一般有效为几公里，增强版为10几公里。</p>
+</blockquote>
+<ol start="2">
+<li>同轴电缆：(内部由铜质芯线或者绞合线)绝缘层)网状编制的屏蔽层)以及绝缘保护套）组成。</li>
+</ol>
+<blockquote>
+<p>tips:由于技术进步，现在基本都使用双绞线作用于传输，目前同轴电缆主要用于电视接入。</p>
+</blockquote>
+<ol start="3">
+<li>光缆：利用光导纤维（光纤）传递光脉冲进行通信，有光脉冲为1，无光脉冲为0.由于可见光频率非常高，因此光纤的传输带宽也远远高于目前其他材料。</li>
+</ol>
+<blockquote>
+<p>tips1:光脉冲的使用：在发送端使用电脉冲激发二极管或者半导体激光器发射光脉冲。接收端使用光电二极管将光脉冲还原成电脉冲。</p>
+</blockquote>
+<blockquote>
+<p>tips2:光纤材料：由非常透明的石英玻璃拉成细丝。主要由纤芯和包层构成的双层通信圆柱体。而光脉冲则通过纤芯传导。</p>
+</blockquote>
+<blockquote>
+<p>tips3:光脉冲的传递：1.多模光纤：通过一定的入射角使得多个角度发送的光脉冲通过全反射传送信号，好处在于多个角度射入的光脉冲可以在同一条光纤中传递，提高利用率，但是光脉冲在传输过程中会逐渐展宽，造成失真，因此只适合短距离传输。<br>tips4:这样的传递在数公里内几乎没有损耗。</p>
+</blockquote>
+<ol start="4">
+<li>单模光纤：直线传播，可以在100公里的传输下不使用中继器。缺点在于很细造价高，发射光源必须使用昂贵的半导体激光器，不可以使用发光二极管。</li>
+</ol>
+<blockquote>
+<p>tips:光纤的优点：1.损耗少，对远距离传输很经济。2.抗雷电和电磁干扰性能好。3.无串音干扰，保密性好。不易被窃听。4.体积小，重量轻。</p>
+</blockquote>
+<ol start="5">
+<li>架空明线（铜线或者铁线）：虽然安装简单，但是通信质量差受环境气候影响，许多国家已经停止了假设空明线。</li>
+</ol>
+<hr>
+<h2 id="9-非引导型传输媒介：无限传输的频段很短，主要为低LF，中MF，高HF。甚低V，特低U-超低S，极低E，以及对应的高。"><a href="#9-非引导型传输媒介：无限传输的频段很短，主要为低LF，中MF，高HF。甚低V，特低U-超低S，极低E，以及对应的高。" class="headerlink" title="9.非引导型传输媒介：无限传输的频段很短，主要为低LF，中MF，高HF。甚低V，特低U,超低S，极低E，以及对应的高。"></a>9.非引导型传输媒介：无限传输的频段很短，主要为低LF，中MF，高HF。甚低V，特低U,超低S，极低E，以及对应的高。</h2><blockquote>
+<p>tips:紫外线以及更高频段暂时无法用于通信，而更低部分一般不用于通信。</p>
+</blockquote>
+<p>多径效应：即传播过程中可能出现障碍物阻挡信号传播，而进行多次反射后到达，这样一般会出现极高的失真。</p>
+<blockquote>
+<p>tips2:短波通信（高频通信）使用电离层反射，但因为电离层的不稳定而产生衰弱现象，多径效应也使得短波通信质量较差。</p>
+</blockquote>
+<blockquote>
+<p>tips:无限信道传输数字信号必须使误码率（比特错误率）不大于容许范围。<br>与误码率相关的三个概念（1）其他条件不变，信噪比越大，误码率越低。（2）信噪比不变，更高的数据率调制技术的误码率更高。（3）移动用户可能不断改变自己的位置，用户设备的物理层需要自适应，即根据环境选择最合适的调制和编码技术。</p>
+</blockquote>
+<p>微波接力：要实现微波的远距离通信，必须在一条微博通道建造若干个中继站，用于将前一个站点的信号<br>放大后在发送往下一个站。<br>微波接力优点：</p>
+<ul>
+<li>（1）频率高，频段范围宽，容量大。</li>
+<li>（2）工业干扰和天电干扰比微波频率低得多，因此传输质量较高。</li>
+<li>（3）与电缆通信相比，建设投资少，易跨越山区，江河。</li>
+</ul>
+<p>微波接力缺点：</p>
+<ul>
+<li>（1）必须直视（视距LOS,Line of Sign），不能有障碍物。并且会因为有时候会因为信号会分成几条略有差别的路径到达造成失真。</li>
+<li>（2）受恶劣天气影响。</li>
+<li>（3）与电缆比隐蔽性和保密性差</li>
+<li>（4）对大量中继站的维护需要耗费较多的人力物力。</li>
+</ul>
+<h2 id="卫星通信优点在于范围广，缺点在于有较大的传播时延。"><a href="#卫星通信优点在于范围广，缺点在于有较大的传播时延。" class="headerlink" title="卫星通信优点在于范围广，缺点在于有较大的传播时延。"></a>卫星通信优点在于范围广，缺点在于有较大的传播时延。</h2><h2 id="10-信道复用技术"><a href="#10-信道复用技术" class="headerlink" title="10.信道复用技术"></a>10.信道复用技术</h2><ol>
+<li>复用（multiplexing）：即使一个共享信道传递多个发送端的信息。复用会更贵，但信道数量足够经济还是合算的。需要使用复用器（将信和合起来）和分用器（将对应信息分别交给相应的用户）对信号进入信道进行调制。</li>
+<li>基本的复用技术分为频分复用FDM(Frequency Division Mutiplexing)和时分复用TDM(Time Division Muitplexing)。</li>
+</ol>
+<ul>
+<li>FDM：可以同时传输多个信号，使用调制将各路信号搬移到适当频率。</li>
+</ul>
+<blockquote>
+<p>tips:FDM分别占用不用的带宽资源。（这里的带宽是频带带宽而不是数据的发送率）。</p>
+</blockquote>
+<ul>
+<li>TDM:同一时刻传输一个信号，将信号分成不同时间时间传递。</li>
+</ul>
+<blockquote>
+<p>tips:TDM是不同时间占用同一个频度。关于FDMA(A&#x3D;Access),TDMA。频分多址接入和时分多址接入，即可以让多个用户在不同地点接入该信道。</p>
+</blockquote>
+<ol start="3">
+<li>S(static)TDM，统计时分复用，为时分的改进。某一个用户的时隙并不是周期性出现而是根据使用存入缓存中，然后将缓存的信息发送。称为异步时分复用。而普通TDM为同步时分复用。</li>
+</ol>
+<blockquote>
+<p>tips1：使用STDM的集中器称为智能复用器。<br>tiips2:如果所有用户不间断的向STDM发送数据，那么STDM将无法应付。因为它基于的假设是个用户间歇性工作。</p>
+</blockquote>
+<p>值得注意的是：在进行通信时，复用器和分用器总是成对使用。复用器和分用器之间是用户共享的高速信道。分用器的作用正好和复用器的作用相反，它把高速信道传送过来的数据进行分用，分别教送给相应用户。</p>
+<hr>
+<h2 id="11-波分复用"><a href="#11-波分复用" class="headerlink" title="11.波分复用"></a>11.波分复用</h2><blockquote>
+<p>前置知识：</p>
+<ul>
+<li>因为光载波的频率很高，因此使用波长示而不是频率。</li>
+<li>波长：指波峰之间的距离。</li>
+<li>频率：指波峰至波谷所用的时间。</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>波分复用WDAM(WaveLength Division Multiplexing)是指，经过调制后的光载波信号，一条光纤能够承载多个光载波信号传输。</p>
+</li>
+<li><p>密集波分复用DWDM(Dense…):与普通部分复用的区别在于能够复用几十路甚至更多光载波信号。</p>
+</li>
+</ol>
+<blockquote>
+<p>tips1:光复用器和光分用器分别为合波器合分波器。<br>tips2:光纤中的信号也会衰减，并且需要使用相应的光放大器加强信号。</p>
+</blockquote>
+<hr>
+<h2 id="12-码分复用（Code-Division-Multiplexing）"><a href="#12-码分复用（Code-Division-Multiplexing）" class="headerlink" title="12.码分复用（Code Division Multiplexing）"></a>12.码分复用（Code Division Multiplexing）</h2><ol>
+<li>码分复用是一种信道复用的方法，主要用不同的码型，因此用户之间不会造成干扰。</li>
+<li>码片： 以一个比特的时间再划分m个短的时间间隔，比如比特1划分为0001100。</li>
+<li>扩频：将一个比特划分为码片的过程就是扩频，扩频的方式有两种</li>
+</ol>
+<ul>
+<li>直接序列扩DSSS:Direct Seuence Spread Spectrum;</li>
+<li>调频扩频FHSS:Frequency Hopping Spread Spectrum;</li>
+</ul>
+<blockquote>
+<p>tips:值得注意的是，扩频是一种通信方式</p>
+</blockquote>
+<hr>
+<h2 id="13-数字传输系统及宽带接入技术"><a href="#13-数字传输系统及宽带接入技术" class="headerlink" title="13.数字传输系统及宽带接入技术"></a>13.数字传输系统及宽带接入技术</h2><ol>
+<li>最初的数字传输系统中使用的传输标准是脉冲编码调制PCM。现在的高速的数字传输系统使用同步光纤信号网SONET(美国标准)或者同步数字标准SDH(国际标准)。</li>
+<li>用户到互联网的宽带接入方法有非对称数字用户线ADSL(数字技术对现有模拟电话用户线进行改造)，光纤同轴混合网HFC(在有线电视网的基础上开发)和FTTx(即光纤到…)</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/05/BlogsBuiding/blogmatters/" rel="prev" title="blogmatters">
+      <i class="fa fa-chevron-left"></i> blogmatters
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/07/Internet/3-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" rel="next" title="3.数据链路层">
+      3.数据链路层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">1.前置：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%89%A9%E7%90%86%E5%B1%82%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1%E6%8F%8F%E8%BF%B0%E4%B8%BA%E7%A1%AE%E5%AE%9A%E4%B8%8E%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BB%8B%E6%9C%89%E5%85%B3%E7%9A%84%E7%9A%84%E4%B8%80%E4%BA%9B%E7%89%B9%E6%80%A7%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">2.物理层的主要任务描述为确定与传输媒介有关的的一些特性。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">3.数据通信的基础知识：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%85%B3%E4%BA%8E%E4%BF%A1%E5%8F%B7%EF%BC%9A%E6%A0%B9%E6%8D%AE%E4%BF%A1%E5%8F%B7%E4%B8%AD%E4%BB%A3%E8%A1%A8%E6%B6%88%E6%81%AF%E7%9A%84%E5%8F%82%E6%95%B0%E5%8F%96%E5%80%BC%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C%E5%8F%AF%E4%BB%A5%E5%B0%86%E4%BF%A1%E6%81%AF%E5%88%86%E4%B8%BA%E4%BB%A5%E4%B8%8B%E4%B8%A4%E7%B1%BB%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">4.关于信号：根据信号中代表消息的参数取值方式不同可以将信息分为以下两类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BF%A1%E9%81%93%EF%BC%9A%E4%BF%A1%E9%81%93%E7%94%A8%E6%9D%A5%E8%A1%A8%E7%A4%BA%E5%90%91%E6%9F%90%E4%B8%80%E6%96%B9%E5%90%91%E4%BC%A0%E9%80%81%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AA%92%E4%BB%8B%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">5.信道：信道用来表示向某一方向传送信息的媒介。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%B0%83%E5%88%B6%EF%BC%9A%E5%B0%86%E4%BF%A1%E5%8F%B7%E5%8F%98%E6%88%90%E7%89%B9%E5%AE%9A%E7%9A%84%E4%BC%A0%E8%BE%93%E6%A0%BC%E5%BC%8F%E3%80%82"><span class="nav-number">6.</span> <span class="nav-text">6.调制：将信号变成特定的传输格式。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BF%A1%E9%81%93%E4%B8%8E%E4%BC%A0%E8%BE%93%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">6.信道与传输：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93%EF%BC%8C%E5%8F%88%E7%A7%B0%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BB%8B%EF%BC%8C%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%EF%BC%9A%E6%98%AF%E5%8F%91%E9%80%81%E5%99%A8%E5%92%8C%E6%8E%A5%E6%94%B6%E5%99%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E7%89%A9%E7%90%86%E9%80%9A%E8%B7%AF%E3%80%82%E5%8F%AF%E5%88%86%E4%B8%BA%E5%AF%BC%E5%BC%95%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93%EF%BC%88guide%EF%BC%89%E5%92%8C%E9%9D%9E%E5%AF%BC%E5%BC%95%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93%E3%80%82"><span class="nav-number">8.</span> <span class="nav-text">7.传输媒体，又称传输媒介，传输介质：是发送器和接收器之间的物理通路。可分为导引型传输媒体（guide）和非导引型传输媒体。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%BC%95%E5%AF%BC%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BB%8B%E3%80%82"><span class="nav-number">9.</span> <span class="nav-text">8.引导型传输媒介。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E9%9D%9E%E5%BC%95%E5%AF%BC%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BB%8B%EF%BC%9A%E6%97%A0%E9%99%90%E4%BC%A0%E8%BE%93%E7%9A%84%E9%A2%91%E6%AE%B5%E5%BE%88%E7%9F%AD%EF%BC%8C%E4%B8%BB%E8%A6%81%E4%B8%BA%E4%BD%8ELF%EF%BC%8C%E4%B8%ADMF%EF%BC%8C%E9%AB%98HF%E3%80%82%E7%94%9A%E4%BD%8EV%EF%BC%8C%E7%89%B9%E4%BD%8EU-%E8%B6%85%E4%BD%8ES%EF%BC%8C%E6%9E%81%E4%BD%8EE%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%9A%84%E9%AB%98%E3%80%82"><span class="nav-number">10.</span> <span class="nav-text">9.非引导型传输媒介：无限传输的频段很短，主要为低LF，中MF，高HF。甚低V，特低U,超低S，极低E，以及对应的高。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%AB%E6%98%9F%E9%80%9A%E4%BF%A1%E4%BC%98%E7%82%B9%E5%9C%A8%E4%BA%8E%E8%8C%83%E5%9B%B4%E5%B9%BF%EF%BC%8C%E7%BC%BA%E7%82%B9%E5%9C%A8%E4%BA%8E%E6%9C%89%E8%BE%83%E5%A4%A7%E7%9A%84%E4%BC%A0%E6%92%AD%E6%97%B6%E5%BB%B6%E3%80%82"><span class="nav-number">11.</span> <span class="nav-text">卫星通信优点在于范围广，缺点在于有较大的传播时延。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">12.</span> <span class="nav-text">10.信道复用技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E6%B3%A2%E5%88%86%E5%A4%8D%E7%94%A8"><span class="nav-number">13.</span> <span class="nav-text">11.波分复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8%EF%BC%88Code-Division-Multiplexing%EF%BC%89"><span class="nav-number">14.</span> <span class="nav-text">12.码分复用（Code Division Multiplexing）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E6%95%B0%E5%AD%97%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%AE%BD%E5%B8%A6%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="nav-number">15.</span> <span class="nav-text">13.数字传输系统及宽带接入技术</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

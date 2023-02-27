@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1.运输层协议概述 运输粗的分用和复用：   1.复用指不同应用程序使用同一个运输层协议 2.接收方在剥去报文的首部后能够把这些数据正确交付给目的应用进程。 tips:值得注意的是，网络层为主机之间的通信提供服务。而运输层在网络层的基础上，为应用进程之间通讯提供服务。     运输层协议：两个运输实体之间提供端到端的逻辑通信服务。这些服务会因为运输层使用的不同协议出现很大的不同。   1.UDP:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.运输层">
+<meta property="og:url" content="http://example.com/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/index.html">
+<meta property="og:site_name" content="川山">
+<meta property="og:description" content="1.运输层协议概述 运输粗的分用和复用：   1.复用指不同应用程序使用同一个运输层协议 2.接收方在剥去报文的首部后能够把这些数据正确交付给目的应用进程。 tips:值得注意的是，网络层为主机之间的通信提供服务。而运输层在网络层的基础上，为应用进程之间通讯提供服务。     运输层协议：两个运输实体之间提供端到端的逻辑通信服务。这些服务会因为运输层使用的不同协议出现很大的不同。   1.UDP:">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-17T00:36:14.000Z">
+<meta property="article:modified_time" content="2022-10-24T01:40:17.266Z">
+<meta property="article:author" content="yuanSchuan">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>5.运输层 | 川山</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">川山</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/Internet/5-%E8%BF%90%E8%BE%93%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="yuanSchuan">
+      <meta itemprop="description" content="既然选择远方，便不顾风雨亦兼程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="川山">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          5.运输层
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-17 08:36:14" itemprop="dateCreated datePublished" datetime="2022-10-17T08:36:14+08:00">2022-10-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-24 09:40:17" itemprop="dateModified" datetime="2022-10-24T09:40:17+08:00">2022-10-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-运输层协议概述"><a href="#1-运输层协议概述" class="headerlink" title="1.运输层协议概述"></a>1.运输层协议概述</h2><ol>
+<li>运输粗的分用和复用：</li>
+</ol>
+<ul>
+<li>1.复用指不同应用程序使用同一个运输层协议</li>
+<li>2.接收方在剥去报文的首部后能够把这些数据正确交付给目的应用进程。<blockquote>
+<p>tips:值得注意的是，网络层为主机之间的通信提供服务。而运输层在网络层的基础上，为应用进程之间通讯提供服务。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="2">
+<li>运输层协议：两个运输实体之间提供端到端的逻辑通信服务。这些服务会因为运输层使用的不同协议出现很大的不同。</li>
+</ol>
+<ul>
+<li>1.UDP:无连接，尽最大可能交付数据。</li>
+<li>2.TCP:面向连接，尽管网络不可靠，但由TCP提供的逻辑通信信道相当于一条全双工的可靠信道。</li>
+</ul>
+<hr>
+<h2 id="2-运输层的两个主要协议"><a href="#2-运输层的两个主要协议" class="headerlink" title="2.运输层的两个主要协议"></a>2.运输层的两个主要协议</h2><ol>
+<li>两个协议分别为:1.UDP(User Datagram Protocol).2.TCP(Transmission Control Protocol)<blockquote>
+<p>tips:运输层的数据单位叫做运输协议数据单元TPDU(Transport Protocol Data Unit)</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>1.UDP:不需要建立连接,收到报文不需要确认，不提供可靠交付。</li>
+<li>2.TCP:面向连接的服务，传输数据前必须建立连接，结束后要释放连接，并且不提供广播和多播服务，因为TCP的可靠性，所以会额外增加许多开销。</li>
+</ul>
+<ol start="2">
+<li>端口号:一台主机的多个进程可以同时进行通信，为了使得相应进程能够获取到对应的数据，因此给每种进程划分出端口号，相应的进程的收发数据就从这个端口进行。<blockquote>
+<p>tips；值得注意的是，软件和硬件的端口不是同一种，软件的端口号是指分配的一块地址的名字，硬件的端口号是指连接硬件的接口，</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>tips2:目前1~1023端口被花费给一些知名的程序，这类端口被称为登记端口号。客户端使用的端口号称为短暂端口号。</p>
+</blockquote>
+<ol start="3">
+<li>用户数据报协议(UDP)特点:</li>
+</ol>
+<ul>
+<li>1.无连接。</li>
+<li>2.尽最大努力交付。</li>
+<li>3.面向报文。</li>
+<li>4.没有拥塞控制。</li>
+<li>5.UDP支持一对一，一对多，多对一和多对多通信。</li>
+<li>6.首部开销小。</li>
+</ul>
+<ol start="4">
+<li>UDP首部格式:</li>
+</ol>
+<ul>
+<li>1.源端口</li>
+<li>2.目的端口</li>
+<li>3.长度</li>
+<li>4.检验和</li>
+</ul>
+<ol start="5">
+<li>传输控制协议TCP的特点：</li>
+</ol>
+<ul>
+<li>1.TCP面向连接，即需要建立连接。</li>
+<li>2.只能点对点通信。</li>
+<li>3.提供可靠交付，即TCP连接的数据无差错，不丢失，不重复。</li>
+<li>4.面向字节流，即TCP仅仅将数据看成一串无结构的字节流。<blockquote>
+<p>tips:TCP建立的是虚连接，即逻辑连接。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>tips2: TCP连接的端口为套接字(IP:端口)</p>
+</blockquote>
+<ol start="6">
+<li>可靠传输的工作原理</li>
+</ol>
+<ul>
+<li><p>1.需要解决的问题：1.传输信道不产生差错。2.无论发送方的数据多快，接收方都来得及接收。</p>
+</li>
+<li><p>2.解决方法：</p>
+<ul>
+<li><p>1.产生差错：使用超时重传，每次发送完一个分组时，设置一个超时计时器，如果在超时计时器过期之前收到确认，就撤销超时计时器，否则重新发送分组。</p>
+</li>
+<li><p>2.停止等待协议：即每次发送完一个分组就等待发送，等待对方确认，收到确认后再发送下一个分组。</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>tips:超时计数器需要注意的三点：1.必须暂时保留已发送的分组副本(用于超时重发)。2.分租和确认分组都需要进行编号。3.重传计时器的时间需要比数据接收的时间长一些，因为需要确认返回的时间。</p>
+</blockquote>
+<ul>
+<li><p>3.确认丢失和确认迟到：用于接收方返回给发送方一些报文。</p>
+</li>
+<li><p>4.信道利用率：停止等待协议优点是简单，但信道利用率太低，因此当使用流水线传输的时候，就需要使用ARQ协议和滑动窗口协议。<br>ARQ协议：发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置。<br>滑动窗口：三个指针，1.指向已发送已确认数据的数据的结尾+2.指向已发送但未确认数据的结尾+3.指向允许发送但尚未发送的结尾+剩下的为不允许发送。</p>
+<blockquote>
+<p>tips：之所以使用滑动窗口的原因在于控制发送发速率使得接收方能够接收。</p>
+</blockquote>
+</li>
+</ul>
+<ol start="7">
+<li>TCP报文段的首部格式：</li>
+</ol>
+<ul>
+<li>1.源端口和目的端口:各占2字节。</li>
+<li>2.序号:4字节。</li>
+<li>3.确认号：4字节，期望收到对方下一个报文的第一个数据字节的序号。<blockquote>
+<p>tips:若确认号为n，那么说明序号n-1为止的所有数据都已经确认收到。</p>
+</blockquote>
+</li>
+<li>4.数据偏移：占4位，注意是位不是字节。</li>
+<li>5.保留:6位。</li>
+<li>6.紧急URG(URgent):紧急报文，尽快传送，不要按照原来的排队顺序传送。URG&#x3D;1时有效。</li>
+<li>7.确认号ACK:ack&#x3D;1时有效。</li>
+<li>8.推送(PuSH):立即发送，不要等到缓存满。</li>
+<li>9.复位：重置位。</li>
+<li>10.同步：同步序号</li>
+<li>11.终止：用于释放一个连接</li>
+<li>12.窗口：2字节，指发送本报文段一方的接收窗口。</li>
+<li>13.检验和：2字节，</li>
+<li>14.紧急指针：2字节。指出紧急报文的字节数</li>
+<li>15.选项：长度可变，最长40字节。</li>
+</ul>
+<ol start="8">
+<li>TCP的流量控制</li>
+</ol>
+<ul>
+<li>1.利用滑动窗口实现流量控制，而流量控制就是让发送方的发送速率不要太快，使得接收方能够接收。</li>
+<li>2.TCP窗口的单位是字节，不是报文段。</li>
+</ul>
+<ol start="9">
+<li>TCP的拥塞控制</li>
+</ol>
+<ul>
+<li>1.介绍：计算机网络中的链路容量(即带宽)，交换节点的缓存和处理机等都是网络资源。若在某一段时间内，若对网络中的某一项资源的需求超过了该资源所能提供的部分，网络性能变坏就称为拥塞(congestion)。即∑对资源的需求&gt;可用资源</li>
+</ul>
+<p>值得注意是，单纯的提高某部分的网络性能并不能很好的解决拥塞，反而会造成严重的网络资源浪费，解决方法为使用拥塞控制：防止过多的数据注入到网络中，防止网络中的链路或者路由器不至于过载。</p>
+<ul>
+<li>2.拥塞控制的4种算法：1.慢开始。2.拥塞避免。3.快重传。4.快恢复。<ul>
+<li>1.慢开始和拥塞避免(一般一起使用)。慢开始：即注入网络的数据字节由小逐渐变大，也就是逐渐增大拥塞窗口的数值。</li>
+<li>2.拥塞避免：即避免拥塞窗口增长的过于缓慢。</li>
+<li>3.快重传和快恢复：快重传：快重传首先不要求接收方等待自己发送数据才捎带确认，而是立即发送确认，使用快重传能够让对方早知道发生了个别报文段的丢失。</li>
+<li>4.快恢复：对于丢失的个别报文段，执行快恢复算法。</li>
+</ul>
+</li>
+</ul>
+<ol start="10">
+<li><p>流量控制和拥塞控制的区别：1.流量控制减少发送量的原因是接收方来不及接收。拥塞控制的原因在于穿过通道被堵塞，导致的包括超时重传等错误，而接收方有能力接收目前网络中发送的数据。</p>
+<blockquote>
+<p>tips:死锁，即拥塞状态导致的网络吞量变成了0。</p>
+</blockquote>
+</li>
+<li><p>主动列队管理(AQM)</p>
+</li>
+</ol>
+<ul>
+<li>1.主要用于防止网络出现全局同步的现象。</li>
+</ul>
+<ol start="12">
+<li>TCP运输连接管理</li>
+</ol>
+<ul>
+<li>1.TCP的运输连接的三个阶段：1.连接建立。2.数据传送。3.连接释放。</li>
+<li>2.TCP连接建立：1A向B发出请求连接报文段。2.B收到后，如果同意建立连接，则向A发送确认。3.A收到B的确认后，再向B发送收到确认。这是三次握手，四次魔兽是指B发送给A的报文可以拆分成确认报文和同步报文。</li>
+<li>3.TCP释放：1.A向B发送释放报文段，停止发送数据，关闭TCP连接。2.B收到释放报文的报文段后发出确认，B层TCP通知应用层，然后TCP连接处于半关闭状态。如果B没有要向A发送的数据，即重复A的行为即可。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/13/mysql/mysql/" rel="prev" title="mysql">
+      <i class="fa fa-chevron-left"></i> mysql
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/21/Internet/6.%E5%BA%94%E7%94%A8%E5%B1%82/" rel="next" title="6.应用层">
+      6.应用层 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BF%90%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.运输层协议概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%90%E8%BE%93%E5%B1%82%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%B8%BB%E8%A6%81%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">2.运输层的两个主要协议</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">yuanSchuan</p>
+  <div class="site-description" itemprop="description">既然选择远方，便不顾风雨亦兼程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuanSchuan</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
